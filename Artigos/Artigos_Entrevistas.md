@@ -2,7 +2,7 @@
 
 O desenvolvimento deste software baseia-se em um tripé conceitual validado por pesquisas acadêmicas nas áreas de psicologia, tecnologia e ciências comportamentais. Os artigos de referência fornecem:
 1.  O princípio geral da gamificação como ferramenta de engajamento.
-2.  A validação prática de sua aplicação em saúde e bem-estar.
+2.  A validação prática da gamificação em diferentes fatores humanos e sociais.
 3.  O embasamento psicológico que explica por que a abordagem funciona.
 
 ---
@@ -17,10 +17,12 @@ O artigo **["A Gamificação como Ferramenta de Engajamento"](https://ojs.focopu
 
 ### 2. A Validação Prática em Aplicativos de Saúde (Baseado em Leonardo)
 
-O artigo **["Effectiveness of a gamified mobile app for promoting physical activity and healthy eating in young adults"](https://pmc.ncbi.nlm.nih.gov/articles/PMC12002541/)** serve como uma validação empírica e direta da nossa proposta. Trata-se de um ensaio clínico randomizado que comprova a eficácia de um aplicativo gamificado — muito similar ao nosso — para promover hábitos saudáveis.
+O artigo **["Relationship between gamification elements and social and human factors using the simple additive weighting method"](https://pmc.ncbi.nlm.nih.gov/articles/PMC12002541/)** serve como uma validação empírica e direta da nossa proposta. Trata-se de um ensaio clínico randomizado que compara diferentes tipos de gamificação para aumento no desempenho.
 
-* **Aplicação no Projeto:** Este estudo é a prova de que a abordagem funciona na prática. Os resultados positivos do artigo nos dão a confiança de que a aplicação de **streaks (sequências), recompensas e competição social** é uma estratégia eficaz para gerar mudanças comportamentais mensuráveis. Ele demonstra que um aplicativo com essas características é uma ferramenta com potencial real para ajudar os usuários a alcançar seus objetivos de saúde.
+* **Aplicação no Projeto:** Este estudo é a prova de que a abordagem funciona na prática. Os resultados positivos do artigo nos dão a confiança de que a aplicação de **streaks (sequências), recompensas e competição social** é uma estratégia eficaz para gerar mudanças comportamentais mensuráveis. Ele demonstra que um aplicativo com essas características é uma ferramenta com potencial real para ajudar os usuários a alcançar seus objetivos.
 
+quote:
+"That means that the 24 gamification elements studied can help promote SHFs, which influences the productivity of software development teams. In addition, this study identified a relationship of importance to facilitate the choice of gamification elements in designing strategies that encourage SHFs."
 ---
 
 ### 3. O Embasamento Psicológico do Engajamento (Baseado em Gabriel)
