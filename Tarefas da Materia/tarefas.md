@@ -47,4 +47,3 @@
 - [ ] Rastrear mudanças!
 
 ---
-*Itens marcados com asterisco (*) são obrigatórios/prioritários

@@ -25,13 +25,19 @@ O artigo **["Effectiveness of a gamified mobile app for promoting physical activ
 
 ### 3. O Embasamento Psicológico do Engajamento (Baseado em Gabriel)
 
+#### Artigo Acadêmico:
 O artigo **["Beyond the Game: A Theoretical Framework for Gamification in Non-Gaming Contexts"](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4750266)** fornece a base psicológica que explica *por que* a gamificação é eficaz. A estrutura teórica apresentada, alinhada com a **Teoria da Autodeterminação (Self-Determination Theory - SDT)**, argumenta que a motivação intríseca é sustentada por três necessidades psicológicas fundamentais: **Competência, Autonomia e Relações Sociais (Relatedness)**.
 
-* **Aplicação no Projeto:** Nosso software foi projetado para satisfazer essas três necessidades:
-    * **Competência:** O sentimento de ser capaz e eficaz é nutrido através de **níveis, missões concluídas e o acúmulo de streaks**. Cada meta batida reforça a percepção do usuário sobre sua própria capacidade.
-    * **Autonomia:** A liberdade de escolha é garantida ao permitir que os usuários definam seus próprios hábitos, escolham com quem interagir e decidam entre um ambiente **cooperativo (times) ou competitivo (ranking)**.
-    * **Relações Sociais:** A necessidade de conexão é atendida pelas funcionalidades sociais. Compartilhar o progresso e participar de desafios em grupo cria um senso de comunidade e **responsabilidade mútua**, que serve como uma poderosa rede de apoio.
+#### Reportagem Complementar:
+A reportagem **["Gamificação transforma estudo para o Enem em aprendizado mais interativo"](https://www.cnnbrasil.com.br/educacao/gamificacao-transforma-estudo-para-o-enem-em-aprendizado-mais-interativo)** da CNN Brasil complementa a base teórica ao demonstrar aplicações práticas da gamificação no contexto educacional brasileiro. A matéria destaca como elementos como **pontuações, medalhas e rankings** transformam o estudo em uma experiência mais envolvente, validando empiricamente os princípios da SDT em um contexto cultural familiar.
 
+* **Aplicação no Projeto:** 
+    * **Do Artigo:** Nosso software foi projetado para satisfazer as três necessidades psicológicas fundamentais:
+        * **Competência:** O sentimento de ser capaz e eficaz é nutrido através de **níveis, missões concluídas e o acúmulo de streaks**. Cada meta batida reforça a percepção do usuário sobre sua própria capacidade.
+        * **Autonomia:** A liberdade de escolha é garantida ao permitir que os usuários definam seus próprios hábitos, escolham com quem interagir e decidam entre um ambiente **cooperativo (times) ou competitivo (ranking)**.
+        * **Relações Sociais:** A necessidade de conexão é atendida pelas funcionalidades sociais. Compartilhar o progresso e participar de desafios em grupo cria um senso de comunidade e **responsabilidade mútua**, que serve como uma poderosa rede de apoio.
+    
+    * **Da Reportagem:** A validação prática da gamificação no contexto educacional brasileiro reforça que elementos como **sistemas de pontuação e recompensas visuais** são culturalmente aceitos e eficazes no público brasileiro. Como citado na reportagem: *"A gamificação consegue transformar uma tarefa que pode ser vista como monótona em algo mais dinâmico e estimulante"* - princípio que aplicamos diretamente na construção de hábitos saudáveis.
 ---
 
 ### Conclusão
@@ -60,7 +66,11 @@ O objetivo foi construir uma argumentação sólida e multifacetada, onde cada a
 
 #### 3. Profundidade Teórica: Explicar o **"Porquê"**
 
-* **Objetivo da Busca:** Encontrar um framework teórico que explicasse os mecanismos psicológicos por trás do sucesso da gamificação.
-* **Critério de Inclusão:** Artigos que conectassem as mecânicas de gamificação a teorias da motivação humana, como a Teoria da Autodeterminação (Competência, Autonomia, Relações Sociais).
+* **Objetivo da Busca:** Encontrar um framework teórico que explicasse os mecanismos psicológicos por trás do sucesso da gamificação, complementado por evidências práticas em contexto brasileiro.
+* **Critério de Inclusão:** 
+    * **Artigo:** Textos que conectassem as mecânicas de gamificação a teorias da motivação humana, como a Teoria da Autodeterminação (Competência, Autonomia, Relações Sociais).
+    * **Reportagem:** Matérias que demonstrassem aplicações práticas da gamificação no contexto brasileiro, validando a aceitação cultural dos elementos gamificados.
 * **Critério de Exclusão:** Foram descartados artigos que apenas listavam funcionalidades sem aprofundar em sua base psicológica ou que focavam apenas nos aspectos técnicos da implementação.
-* **Artigo Selecionado:** O artigo de **Gabriel** foi selecionado por fornecer exatamente essa base teórica, permitindo-nos justificar cada funcionalidade do nosso app com base nas necessidades psicológicas fundamentais que ela visa atender.
+* **Fontes Selecionadas:** 
+    * **Artigo de Gabriel:** Selecionado por fornecer a base teórica sólida da SDT.
+    * **Reportagem de Gabriel:** Escolhida por demonstrar a eficácia prática da gamificação em um contexto educacional brasileiro, validando que os elementos que planejamos implementar são culturalmente aceitos e comprovadamente eficazes no público-alvo nacional.
