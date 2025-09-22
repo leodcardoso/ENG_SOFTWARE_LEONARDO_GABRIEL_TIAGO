@@ -69,7 +69,7 @@
 
 * A dificuldade de manter consistência quando perde o ritmo.
 
-> "Tem algo que te deixou descon-fortável ou que eu não perguntei?"
+> "Tem algo que te deixou desconfortável ou que eu não perguntei?"
 
 * Gostaria de saber mais sobre como o app lidaria com períodos de baixa motivação.
 

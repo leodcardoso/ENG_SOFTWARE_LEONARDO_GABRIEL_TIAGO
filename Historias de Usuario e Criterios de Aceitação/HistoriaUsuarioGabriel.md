@@ -1,10 +1,10 @@
 ## História de Usuário 1
-- **Como** usuário, **eu quero** colocar meus objetivos de maneira rápida e sem burocracia, **para** conseguir ter motivo para usar o APP.
+- **Como** usuário, **eu quero** que o aplicativo me notifique assim que eu alcançar uma colocação nova num streak, **para** aumentar a minha motivação.
 
 ### Critérios de Aceitação
-- O usuário deve conseguir criar objetivos em até 3 passos.
-- O usuário deve conseguir criar objetivos com no máximo 5 minutos.
-![Diagrama de Sequência - HU1 (Gabriel): Criar Objetivos Rapidamente](../Diagramas/Diagrama_HU_Gabriel.svg)
+- O usuário deve receber uma notificação quando alcançar uma nova colocação num streak.
+- A notificação deve indicar a nova colocação alcançada e quem perdeu o streak.
+
 ---
 
 ## História de Usuário 2
@@ -17,9 +17,8 @@
 ---
 
 ## História de Usuário 3
-- **Como** usuário, **eu quero** ter a possibilidade de criar uma conta fácil, com Google ou Facebook, **para** começar a usar o APP mais rápido.
+- **Como** usuário, **eu quero** ter a possibilidade de enviar uma notificação para que todos os outros usuários do grupo também façam uma atividade no momento, **para** que todos possam se motivar e apoiar uns aos outros.
 
 ### Critérios de Aceitação
-- O usuário deve conseguir criar uma conta usando sua conta do Google.
-- O usuário deve conseguir criar uma conta usando sua conta do Facebook.
-- Ter o mínimo de dados para criar a conta (nome, email e senha).
+- O usuário deve conseguir enviar uma notificação para todos os membros do grupo.
+- A notificação deve incluir informações sobre a atividade a ser realizada.
