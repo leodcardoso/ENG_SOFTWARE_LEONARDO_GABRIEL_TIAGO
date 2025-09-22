@@ -2,9 +2,9 @@
 
 - Muitas pessoas enfrentam uma dificuldade constante em manter o foco e a disciplina necessários para construir hábitos positivos a longo prazo. A ausência de motivação contínua e de uma rede de apoio eficaz são as principais barreiras que frequentemente levam ao abandono de importantes objetivos pessoais, criando um ciclo de frustração.
 
--Para enfrentar esse desafio, o projeto propõe o desenvolvimento de um software que utiliza a  como principal ferramenta de engajamento. Através de sistemas de pontos, níveis e recompensas, a plataforma transforma o acompanhamento de metas em uma experiência lúdica, fortalecida pela interação social que incentiva uma competição saudável e um senso de responsabilidade mútua entre amigos.
+  -Para enfrentar esse desafio, o projeto propõe o desenvolvimento de um software que utiliza a  como principal ferramenta de engajamento. Através de sistemas de pontos, níveis e recompensas, a plataforma transforma o acompanhamento de metas em uma experiência lúdica, fortalecida pela interação social que incentiva uma competição saudável e um senso de responsabilidade mútua entre amigos.
 
--O objetivo final é criar um ambiente digital que torne o desenvolvimento pessoal mais atraente e sustentável. Ao unir a tecnologia com a interação social positiva, o software visa ser um catalisador para a disciplina e o foco, ajudando os usuários a alcançarem seus objetivos de forma consistente e motivadora.
+  -O objetivo final é criar um ambiente digital que torne o desenvolvimento pessoal mais atraente e sustentável. Ao unir a tecnologia com a interação social positiva, o software visa ser um catalisador para a disciplina e o foco, ajudando os usuários a alcançarem seus objetivos de forma consistente e motivadora.
 
 ## Viabilidade
 
@@ -26,4 +26,5 @@
 ### Relevância
 
 - *(Adicionar aqui uma descrição da relevância do projeto, como por exemplo: "O projeto promove o desenvolvimento pessoal por meio da tecnologia, incentivando boas práticas, disciplina e interação social entre os usuários.")*
+
 
