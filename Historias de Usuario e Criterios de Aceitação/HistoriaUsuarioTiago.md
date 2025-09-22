@@ -5,6 +5,8 @@
 #### Critérios de Aceitação
 * Deve existir um botão para "Criar Desafio" onde posso convidar amigos.
 
+Diagramas/Diagrama_HU_Tiago1.svg
+
 ---
 
 ### História 2: Hábitos Privados
