@@ -36,7 +36,7 @@
 
 ## Validação e Revisão (Aula 6 e 7):
 - [ ] Planejar, executar e documentar a revisão / inspeção dos requisitos*
-- [ ] Criar um protótipo de média fidelidade após a revisão*
+- [x] Criar um protótipo de média fidelidade após a revisão*
 - [ ] Especificar como os artefatos acima atendem os requisitos
 - [ ] Preparar uma demonstração de como o protótipo atende os requisitos
 

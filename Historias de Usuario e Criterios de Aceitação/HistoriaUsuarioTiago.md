@@ -5,8 +5,6 @@
 #### Critérios de Aceitação
 * Deve existir um botão para "Criar Desafio" onde posso convidar amigos.
 
-![Diagrama HUE Tiago](../Diagramas/Diagrama_HU_Tiago1.svg)
-
 ---
 
 ### História 2: Hábitos Privados
@@ -25,3 +23,8 @@
 
 #### Critérios de Aceitação
 * Todo hábito deve ter uma opção para ser marcado como "Concluído".
+
+---
+### Diagrama de Sequência
+
+![Diagrama HUE Tiago3](../Diagramas/Diagrama_HU_Tiago.svg)
