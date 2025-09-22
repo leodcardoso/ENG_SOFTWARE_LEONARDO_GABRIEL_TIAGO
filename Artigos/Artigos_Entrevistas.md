@@ -21,8 +21,8 @@ O artigo **["Relationship between gamification elements and social and human fac
 
 * **Aplicação no Projeto:** Este estudo é a prova de que a abordagem funciona na prática. Os resultados positivos do artigo nos dão a confiança de que a aplicação de **streaks (sequências), recompensas e competição social** é uma estratégia eficaz para gerar mudanças comportamentais mensuráveis. Ele demonstra que um aplicativo com essas características é uma ferramenta com potencial real para ajudar os usuários a alcançar seus objetivos.
 
-quote:
-*"That means that the 24 gamification elements studied can help promote SHFs, which influences the productivity of software development teams. In addition, this study identified a relationship of importance to facilitate the choice of gamification elements in designing strategies that encourage SHFs."
+* quote:
+* "That means that the 24 gamification elements studied can help promote SHFs, which influences the productivity of software development teams. In addition, this study identified a relationship of importance to facilitate the choice of gamification elements in designing strategies that encourage SHFs."
 ---
 
 ### 3. O Embasamento Psicológico do Engajamento (Baseado em Gabriel)
