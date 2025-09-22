@@ -30,8 +30,8 @@
 - [x] Como a seleção leva a requisitos de seu projeto (incluir citações / quotes)*
 
 ## Definições de requisitos (Aula 5):
-- [ ] Histórias de Usuário*, incluindo critérios de aceitação
-- [ ] Diagramas de sequência alinhado com a HU*
+- [x] Histórias de Usuário*, incluindo critérios de aceitação
+- [x] Diagramas de sequência alinhado com a HU*
 - [ ] Como os artefatos acima são embasados pela pesquisa anterior (incluir citações / quotes)
 
 ## Validação e Revisão (Aula 6 e 7):
