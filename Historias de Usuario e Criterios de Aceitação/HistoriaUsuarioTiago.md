@@ -5,7 +5,7 @@
 #### Critérios de Aceitação
 * Deve existir um botão para "Criar Desafio" onde posso convidar amigos.
 
-![1](ENG_SOFTWARE_LEONARDO_GABRIEL_TIAGO/Diagramas/Diagrama_HU_Tiago1.svg)
+![1](Diagramas/Diagrama_HU_Tiago1.svg)
 
 ---
 
