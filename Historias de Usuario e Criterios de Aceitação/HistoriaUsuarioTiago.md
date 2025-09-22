@@ -1,4 +1,4 @@
-![1](https://github.com/user-attachments/assets/0b01735c-5552-47fd-87ee-216a31096f7a)### História 1: Desafios em Grupo
+### História 1: Desafios em Grupo
 
 * **Como** usuário, **eu quero** criar desafios em grupo, **para** poder competir ou colaborar com meus amigos.
 
