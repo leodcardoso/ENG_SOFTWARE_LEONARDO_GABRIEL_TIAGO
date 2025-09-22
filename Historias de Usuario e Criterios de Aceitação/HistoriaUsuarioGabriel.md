@@ -4,7 +4,7 @@
 ### Critérios de Aceitação
 - O usuário deve conseguir criar objetivos em até 3 passos.
 - O usuário deve conseguir criar objetivos com no máximo 5 minutos.
-
+![Diagrama de Sequência - HU1 (Gabriel): Criar Objetivos Rapidamente](../Diagramas/Diagrama_HU_Gabriel.svg)
 ---
 
 ## História de Usuário 2
