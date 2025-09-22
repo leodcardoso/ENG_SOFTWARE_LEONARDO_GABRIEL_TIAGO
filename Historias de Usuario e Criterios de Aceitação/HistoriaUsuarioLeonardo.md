@@ -18,7 +18,7 @@
 
 ## História de Usuário 3
 - **Como** usuário, **gostaria** da existência de um coringa **para** não perder o progresso devido a imprevistos.  
-
+![Diagrama de Sequência - HU3 (Leonardo): Utilização do Coringa](../Diagramas/Diagrama_HU_Leonardo.svg)
 ### Critérios de Aceitação
 - Coringa limitado que volta somente após um tempo.  
 - Só pode ser usado em um hábito não concluído.  
