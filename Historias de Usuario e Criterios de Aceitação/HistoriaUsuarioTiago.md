@@ -5,7 +5,7 @@
 #### Critérios de Aceitação
 * Deve existir um botão para "Criar Desafio" onde posso convidar amigos.
 
-![Diagrama HUE Tiago](../Diagramas/Diagrama_HU_Tiago1.svg)
+![Diagrama HUE Tiago1](../Diagramas/Diagrama_HU_Tiago1.svg)
 
 ---
 
@@ -17,6 +17,8 @@
 * Na tela de criação ou edição do hábito, deve haver uma opção para "Tornar Privado".
 * Um hábito privado não pode aparecer no feed de atividades dos amigos.
 
+![Diagrama HUE Tiago2](../Diagramas/Diagrama_HU_Tiago2.svg)
+
 ---
 
 ### História 3: Troféus por Conquista
@@ -25,3 +27,6 @@
 
 #### Critérios de Aceitação
 * Todo hábito deve ter uma opção para ser marcado como "Concluído".
+
+
+![Diagrama HUE Tiago3](../Diagramas/Diagrama_HU_Tiago3.svg)
