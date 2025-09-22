@@ -23,7 +23,8 @@
 
 ### Relevância
 
-- *(Adicionar aqui uma descrição da relevância do projeto, como por exemplo: "O projeto promove o desenvolvimento pessoal por meio da tecnologia, incentivando boas práticas, disciplina e interação social entre os usuários.")*
+- Este projeto é relevante por enfrentar o desafio universal da manutenção de hábitos, combatendo o ciclo de frustração que leva ao abandono de metas. Utilizando a gamificação e a interação social, a ferramenta transforma o desenvolvimento pessoal em uma experiência motivadora e colaborativa. Ao fazer isso, o software posiciona a tecnologia como uma forte aliada do bem-estar, oferecendo uma solução prática para promover disciplina, foco e criar uma rede de apoio eficaz entre os usuários.
+
 
 
 
