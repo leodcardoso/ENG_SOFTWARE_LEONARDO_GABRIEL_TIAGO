@@ -89,6 +89,7 @@ Os diagramas de sequência foram desenvolvidos para representar os fluxos de int
 1. **Diagrama de Gabriel**: Representa o fluxo de notificações e interações sociais
 2. **Diagrama de Leonardo**: Ilustra o sistema de carta coringa para manutenção de streaks
 3. **Diagrama de Tiago**: Mostra o fluxo de desafios em grupo e troféus
+![Diagrama da HU do Tiago](../Diagramas/Diagrama_HU_Tiago.svg)
 
 [Referência aos diagramas na pasta Diagramas]
 
