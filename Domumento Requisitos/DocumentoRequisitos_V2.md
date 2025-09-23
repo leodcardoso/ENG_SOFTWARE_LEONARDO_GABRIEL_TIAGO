@@ -85,8 +85,8 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. **[REFINADO]** O usuário receberá uma notificação quando usar o coringa e outra quando ele estiver disponível novamente.
 5. Registro do uso do coringa para histórico do usuário.
 ![Completo_sem_coringa](V2/Leonardo_V2/notificao_amigos.png)
-![Notificação Cooringa](V2/Leonardo_V2/notificao_cor.png)
-![Cooldown](V2/Leonardo_V2/cooldown.png)
+![Notificação Cooringa](V2/Leonardo_V2/notificao_cor.jpg)
+![Cooldown](V2/Leonardo_V2/cooldown.jpg)
 ### Histórias de Tiago (Revisadas)
 
 #### HU1: Desafios em Grupo
