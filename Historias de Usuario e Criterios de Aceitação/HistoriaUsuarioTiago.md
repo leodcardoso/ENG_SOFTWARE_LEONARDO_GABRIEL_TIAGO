@@ -6,7 +6,7 @@
 1.  Deve existir um botão visível para "Criar Desafio" na interface principal ou na área social.
 2.  Ao criar um desafio, o usuário deve poder definir um nome, uma meta clara (ex: "Correr 20 km no total") e uma data de término.
 3.  O criador do desafio deve poder selecionar amigos de uma lista para enviar os convites.
-4.  Os amigos convidados devem receber uma notificação para aceitar ou recusar a participação no desafio.
+4.  Os amigos convidados podem ver detalhes dos desafios.
 5.  Deve haver uma tela específica para cada desafio, onde todos os participantes possam visualizar o progresso individual e coletivo em direção à meta.
 
 ---
@@ -29,39 +29,14 @@
 * **Como** usuário, **eu quero** marcar um hábito como "concluído", **para que** ele saia da minha lista diária e vire um troféu.
 
 #### Critérios de Aceitação
-1.  Todo hábito ativo deve ter uma opção acessível para ser marcado como "Concluído" ou "Arquivado".
+1.  Todo hábito ativo deve ter uma opção acessível para ser marcado como "Concluído".
 2.  Ao ser marcado como concluído, o hábito deve ser removido da lista de tarefas diárias para não gerar mais notificações.
 3.  O hábito concluído deve ser movido para uma seção separada chamada "Troféus" ou "Conquistas" no perfil do usuário.
 4.  Na seção de troféus, o hábito deve exibir um resumo do desempenho, como a maior sequência (streak) alcançada e a data de conclusão.
-5.  O usuário deve ter a opção de "reativar" um troféu, movendo o hábito de volta para a lista de atividades diárias.
+5.  O usuário deve ter a opção de criar uma sequencia igual a alguma que já foi concluida.
 
 ---
 ### Diagrama de Sequência
 
 ![Diagrama HUE Tiago3](../Diagramas/Diagrama_HU_Tiago.svg)
 
-### História 1: Desafios em Grupo
-
-* **Como** usuário, **eu quero** criar desafios em grupo, **para** poder competir ou colaborar com meus amigos.
-
-#### Critérios de Aceitação
-* Deve existir um botão para "Criar Desafio" onde posso convidar amigos.
-
----
-
-### História 2: Hábitos Privados
-
-* **Como** usuário, **eu quero** deixar alguns hábitos privados, **para que** meus amigos não vejam tudo o que eu estou fazendo.
-
-#### Critérios de Aceitação
-* Na tela de criação ou edição do hábito, deve haver uma opção para "Tornar Privado".
-* Um hábito privado não pode aparecer no feed de atividades dos amigos.
-
----
-
-### História 3: Troféus por Conquista
-
-* **Como** usuário, **eu quero** marcar um hábito como "concluído", **para que** ele saia da minha lista diária e vire um troféu.
-
-#### Critérios de Aceitação
-* Todo hábito deve ter uma opção para ser marcado como "Concluído". add nesse texto
