@@ -62,7 +62,7 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. A notificação deve indicar claramente quais hábitos estão pendentes.
 5. Suporte a múltiplos hábitos por dia.
 6. **[NOVO]** Se todos os hábitos já estiverem concluídos, exibir mensagem "Todos hábitos concluídos".
-
+![Hábitos Completos](V2/Leonardo_V2/habitos_completo.png)
 #### HU2: Ranking de Amigos
 
 **Como** usuário do aplicativo, **gostaria** de visualizar um ranking com meus amigos, **para** promover um incentivo maior devido à competição.
@@ -73,7 +73,7 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 3. Indicação do próprio usuário no ranking.
 4. Ordenação do ranking do maior para o menor.
 5. **[REFINADO]** Capacidade de adicionar/remover amigos do ranking através de botões dedicados em cada entrada do ranking.
-
+![Gerenciar Amigo](V2/Leonardo_V2/gerenciar_amigo.png)
 #### HU3: Carta Coringa para Hábitos
 
 **Como** usuário, **gostaria** da existência de um coringa **para** não perder o progresso devido a imprevistos.
@@ -85,6 +85,9 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. **[REFINADO]** O usuário receberá uma notificação quando usar o coringa e outra quando ele estiver disponível novamente.
 5. Registro do uso do coringa para histórico do usuário.
 
+![Completo_sem_coringa](V2/Leonardo_V2/notificao_amigos.jpg)
+![Notificação Cooringa](V2/Leonardo_V2/notificao_cor.png)
+![Cooldown](V2/Leonardo_V2/cooldown.jpg)
 ### Histórias de Tiago (Revisadas)
 
 #### HU1: Desafios em Grupo
