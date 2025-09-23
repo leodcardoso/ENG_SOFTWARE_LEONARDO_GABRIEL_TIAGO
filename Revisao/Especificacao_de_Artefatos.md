@@ -59,7 +59,7 @@ Esta funcionalidade proporciona flexibilidade ao usuário, reconhecendo que ocas
 
 ---
 
-### HU1 - Tiago: Desafios em Grupo
+## HU1 - Tiago: Desafios em Grupo
 
 A HU1 implementa um sistema de desafios em grupo, permitindo que os usuários compitam ou colaborem com amigos para atingir metas coletivas. Os critérios de aceitação garantem um ambiente interativo e funcional:
 
@@ -71,7 +71,7 @@ Esta funcionalidade promove a interação social e a motivação mútua, transfo
 
 ---
 
-### HU2 - Tiago: Hábitos Privados
+## HU2 - Tiago: Hábitos Privados
 
 A HU2 introduz um controle de privacidade, garantindo que os usuários possam manter certos hábitos confidenciais. Os critérios de aceitação asseguram total discrição:
 
@@ -82,7 +82,7 @@ Esta funcionalidade oferece controle e discrição ao usuário, permitindo o aco
 
 ---
 
-### HU3 - Tiago: Troféus por Conquistas
+## HU3 - Tiago: Troféus por Conquistas
 
 A HU3 implementa um ciclo de vida para os hábitos, permitindo que sejam concluídos e transformados em conquistas permanentes. Os critérios de aceitação garantem o reconhecimento do esforço:
 
