@@ -29,3 +29,37 @@
 
 
 
+### 📁 Organização dos Diretórios
+
+```
+📦 ENG_SOFTWARE_LEONARDO_GABRIEL_TIAGO/
+├── 📄 README.md                          # Visão geral do projeto
+├── 📁 Artigos/
+│   └── 📄 Artigos_Reportagem.md          # Embasamento teórico e critérios de seleção
+├── 📁 Embasamento/
+│   ├── 📄 Embasamento_Gabriel.md         # Teoria da Autodeterminação aplicada
+│   ├── 📄 Embasamento_Tiago.md           # Gamificação como ferramenta de engajamento
+|   └── 📄 Embasamento_Leonardo.md
+├── 📁 Entrevistas/
+│   ├── 📄 EntrevistaGabriel.md           # Pesquisa com usuários 
+│   ├── 📄 EntrevistaLeonardo.md          # Pesquisa com usuários 
+│   └── 📄 EntrevistaTiago.md             # Pesquisa com usuários 
+├── 📁 Historias de Usuario e Criterios de Aceitação/
+│   ├── 📄 HistoriaUsuarioGabriel.md      # HU1-3: Notificações e interface social
+│   ├── 📄 HistoriaUsuarioLeonardo.md     # HU1-3: Lembretes, ranking e coringa
+│   └── 📄 HistoriaUsuarioTiago.md        # HU1-3: Desafios, privacidade e troféus
+├── 📁 Diagramas/                         
+│   ├── 📄 Diagrama_HU_Gabriel.svg        # Sequência das funcionalidades sociais
+│   ├── 📄 Diagrama_HU_Leonardo.svg       # Sequência do sistema de coringa
+│   └── 📄 Diagrama_HU_Tiago.svg          # Sequência dos desafios e troféus
+├── 📁 Prototipo/
+│   ├── 📁 PrototipoGabriel/              # Interfaces de notificações e social
+│   ├── 📁 PrototipoLeonardo/             # Interfaces de ranking e coringa
+│   └── 📁 PrototipoTiago/                # Interfaces de perfil e desafios
+├── 📁 Revisao/
+|   ├── 📄
+|   ├── 📄
+│   └── 📄 Leonardo.md                    # Planejamento e resultados da 
+└── 📁 Tarefas da Materia/
+    └── 📄 tarefas.md                     # Checklist de atividades da disciplina
+```
