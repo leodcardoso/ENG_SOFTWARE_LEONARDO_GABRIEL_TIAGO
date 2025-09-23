@@ -67,7 +67,7 @@
 │   ├── 📄 Revisão.md                         # Planejamento e execução da revisão
 │   └── 📄 Especificacao_de_Artefatos.md      # Especificação detalhada das HUs
 │
-├── 📁 Domumento Requisitos/                  # Aula 8
+├── 📁 Documento Requisitos/                  # Aula 8
 │   ├── 📄 DocumentoRequisitos_V1.md          # Primeira versão dos requisitos
 │   ├── 📄 DocumentoRequisitos_V2.md          # Segunda versão com refinamentos
 │   └── 📁 V2/                                # Protótipos e diagramas da V2
