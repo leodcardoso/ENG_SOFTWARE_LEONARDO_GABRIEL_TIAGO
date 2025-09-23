@@ -113,7 +113,7 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. A pontuação e as sequências (streaks) de um hábito privado não devem ser contabilizadas em desafios públicos ou rankings competitivos.
 5. O usuário deve poder alterar a privacidade de um hábito (de público para privado e vice-versa) a qualquer momento.
 
-![Tela de Criação de Desafio V2](../V2/Tiago_V2/2criarDesafioV2.png)
+![Tela de Criação de Desafio V2](V2/Tiago_V2/2criarDesafioV2.png)
 ![Tela de Perfil V2](../V2/Tiago_V2/2perfilV2.png)
 
 #### HU3: Troféus por Conquista
