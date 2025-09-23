@@ -71,7 +71,7 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 1. Visualização do ranking das pessoas adicionadas.
 2. **[REFINADO]** O ranking será atualizado em tempo real a cada ação que altere a pontuação.
 3. Indicação do próprio usuário no ranking.
-4. **[REFINADO]** Ordenação do ranking do maior para o menor.
+4. Ordenação do ranking do maior para o menor.
 5. **[REFINADO]** Capacidade de adicionar/remover amigos do ranking através de botões dedicados em cada entrada do ranking.
 
 #### HU3: Carta Coringa para Hábitos
