@@ -9,9 +9,21 @@ O desenvolvimento deste software baseia-se em um tripé conceitual validado por 
 
 ### 1. O Princípio da Gamificação como Ferramenta de Engajamento (Baseado em Tiago)
 
-O artigo **["A Gamificação como Ferramenta de Engajamento"](https://ojs.focopublicacoes.com.br/foco/article/view/4122/2901)** estabelece a premissa central do nosso projeto: o uso de mecânicas de jogos em contextos não relacionados a jogos para aumentar a motivação e o engajamento. O autor demonstra como elementos como **pontos, missões (desafios) e rankings (leaderboards)** transformam tarefas rotineiras em atividades mais lúdicas e prazerosas.
+#### Artigo Acadêmico:
+O artigo **["JOGANDO PARA APRENDER: COMO A GAMIFICAÇÃO ESTÁ MUDANDO A EDUCAÇÃO"](https://ojs.focopublicacoes.com.br/foco/article/view/4122/2901)** estabelece a premissa central do nosso projeto: o uso de mecânicas de jogos para aumentar a motivação e o engajamento em contextos não lúdicos. O estudo demonstra que a aplicação de elementos como **pontos, missões (desafios) e rankings** torna o processo de aprendizagem mais interativo e eficaz, aumentando a participação e a retenção de informações ao fornecer **metas claras e feedback imediato**.
 
-* **Aplicação no Projeto:** Nosso software adota diretamente esses elementos. O sistema de **pontos e níveis** oferece um feedback imediato e uma sensação de progresso, enquanto as **missões** criam metas claras e alcançáveis. Essa estrutura, conforme aponta o artigo, é fundamental para manter os usuários focados e engajados no processo de construção de hábitos.
+#### Reportagem Complementar:
+A reportagem **["Gamificação no trabalho: como engajar equipes e gerar resultados"](https://querobolsa.com.br/revista/gamificacao)** complementa essa visão, tratando a gamificação como uma ferramenta estratégica para garantir a motivação a longo prazo. O texto destaca que o sucesso de um sistema gamificado depende da criação de uma percepção de **progresso contínuo** e do uso de **reconhecimento** para validar os esforços do usuário e mantê-lo focado nos resultados desejados.
+
+### Aplicação no Projeto:
+
+Nosso software foi desenhado para integrar as abordagens de ambas as fontes, transformando a construção de hábitos em um processo dinâmico, recompensador e estratégico.
+
+* **Do Artigo Acadêmico ("Jogando para Aprender"):** A aplicação dos conceitos de feedback e metas claras é direta:
+    * **Feedback Imediato e Metas Claras:** O sistema de **pontos e níveis** oferece uma validação instantânea a cada hábito concluído, reforçando o comportamento positivo. As **missões** funcionam como desafios que transformam o usuário em um participante ativo, criando objetivos claros e alcançáveis que guiam sua jornada.
+
+* **Da Reportagem Complementar ("Quero Bolsa"):** A estratégia de engajamento a longo prazo é implementada através de:
+    * **Progresso Contínuo e Reconhecimento:** A mecânica de ***streaks*** (sequências) é a principal representação do progresso, pois recompensa a **consistência ao longo do tempo** e cria um forte ciclo de motivação. Para solidificar o sentimento de conquista, os **troféus e medalhas**, desbloqueados ao atingir marcos importantes, funcionam como um reconhecimento tangível do esforço e da dedicação do usuário.
 
 ---
 
