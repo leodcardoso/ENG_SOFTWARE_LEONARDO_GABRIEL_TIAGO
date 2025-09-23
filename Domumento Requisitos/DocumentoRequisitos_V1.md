@@ -127,12 +127,19 @@ Desenvolvemos protótipos de média fidelidade que ilustram as principais funcio
 
 ### Protótipo de Leonardo
 1.  **Tela de Perfil**
+   
 ![Tela de Perfil](../Prototipos/Prototipo_Leonardo/flu1.png)
+
 2. **Tela com Informações do Habito**
+   
 ![Tela com Informações do Habito](../Prototipos/Prototipo_Leonardo/flu2.jpg)
+
 3. **Tela com hábito concluído por meio do coringa.**
+
 ![Tela com hábito concluído por meio do coringa.](../Prototipos/Prototipo_Leonardo/flu3.jpg)
+
 4. **Habito concluído vai para o final**
+
 ![Habito concluído vai para o final](../Prototipos/Prototipo_Leonardo/flu4.png)
 
 
