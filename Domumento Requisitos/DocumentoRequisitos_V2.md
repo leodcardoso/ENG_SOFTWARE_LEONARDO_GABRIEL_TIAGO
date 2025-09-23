@@ -49,6 +49,10 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 5. **[REFINADO]** O botão deve mudar de cor de azul para verde quando a notificação for enviada.
 6. **[NOVO]** Grupos vazios não terão a opção de envio de notificação disponível.
 
+![Botão pra enviar notificação](V2/Gabriel_V2/2_Pagina_meta.png)
+![Mensagem a ser enviada](V2/Gabriel_V2/4_Mensagem_Escrita.png)
+![Notificação](V2/Gabriel_V2/5_Mensagem_enviada.png)
+
 ### Histórias de Leonardo (Revisadas)
 
 #### HU1: Notificações de Hábitos
