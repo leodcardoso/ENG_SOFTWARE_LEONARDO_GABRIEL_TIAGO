@@ -84,6 +84,7 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 3. **[REFINADO]** O coringa retorna após 24 horas (cooldown).
 4. **[REFINADO]** O usuário receberá uma notificação quando usar o coringa e outra quando ele estiver disponível novamente.
 5. Registro do uso do coringa para histórico do usuário.
+
 ![Completo_sem_coringa](V2/Leonardo_V2/notificao_amigos.jpg)
 ![Notificação Cooringa](V2/Leonardo_V2/notificao_cor.png)
 ![Cooldown](V2/Leonardo_V2/cooldown.jpg)
