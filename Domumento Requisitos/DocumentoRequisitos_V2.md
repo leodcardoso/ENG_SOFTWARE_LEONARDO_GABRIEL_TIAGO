@@ -100,7 +100,7 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 6. **[NOVO]** Se o criador do desafio sair do grupo, a propriedade será transferida para o participante mais antigo.
 7. **[NOVO]** Deve existir um botão para registrar o progesso diário.
 
-![Tela de Criação de Desafio V2 Variante](V2/Tiago_V2/2crirarDesafioV2.png)
+![Tela de Criação de Desafio V2 Variante](V2/Tiago_V2/2crirarDesafio_V2.png)
 
 #### HU2: Hábitos Privados
 
@@ -113,7 +113,7 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. A pontuação e as sequências (streaks) de um hábito privado não devem ser contabilizadas em desafios públicos ou rankings competitivos.
 5. O usuário deve poder alterar a privacidade de um hábito (de público para privado e vice-versa) a qualquer momento.
 
-![Tela de Criação de Desafio V2](V2/Tiago_V2/2criarDesafio_V2.png)
+![Tela de Criação de Desafio V2](V2/Tiago_V2/2criarDesafioV2.png)
 ![Tela de Perfil V2](V2/Tiago_V2/1perfilV2.png)
 
 #### HU3: Troféus por Conquista
