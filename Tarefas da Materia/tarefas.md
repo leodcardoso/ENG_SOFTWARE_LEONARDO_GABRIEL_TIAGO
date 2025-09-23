@@ -35,14 +35,14 @@
 - [ ] Como os artefatos acima são embasados pela pesquisa anterior (incluir citações / quotes)
 
 ## Validação e Revisão (Aula 6 e 7):
-- [ ] Planejar, executar e documentar a revisão / inspeção dos requisitos*
+- [x] Planejar, executar e documentar a revisão / inspeção dos requisitos*
 - [x] Criar um protótipo de média fidelidade após a revisão*
-- [ ] Especificar como os artefatos acima atendem os requisitos
+- [x] Especificar como os artefatos acima atendem os requisitos
 - [x] Preparar uma demonstração de como o protótipo atende os requisitos
   - [x] **Pelo menos 5 critérios por HU e 1 fluxo de telas por membro da equipe!!!**
 
 ## Iteração (Aula 8):
-- [ ] Concluir V1 (processo como um todo)
+- [x] Concluir V1 (processo como um todo)
 - [ ] Definir plano de gerenciamento (processo, rastreabilidade, ferramentas)
 - [ ] Implementar gerenciamento: gerar V2 do documento de requisitos
 - [ ] Rastrear mudanças!
