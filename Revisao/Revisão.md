@@ -67,7 +67,7 @@
 | Item Revisado | Observação | Ação Sugerida |
 | :--- | :--- | :--- |
 | Criador do Desafio| Não está definido o que acontece se o criador do desafio sair do grupo ou excluir a conta. | Definir regra de negócio: ou o desafio é encerrado, ou a "propriedade" do desafio é transferida para o próximo participante mais antigo. |
-| Atualização do Progresso| Não está claro quando ou como o progresso de um desafio é atualizado. | Especificar que o progresso será atualizado assim que um usuário registrar uma atividade relevante para o desafio. |
+| Atualização do Progresso| Não está claro  como o progresso de um desafio é atualizado. | Especificar que o progresso será atualizado assim que um usuário registrar uma atividade. |
 
 ### Documentação HU2 - Tiagos
 | Item Revisado | Observação | Ação Sugerida |
