@@ -15,7 +15,7 @@ Itens a revisar:
 - Há omissões que impediriam a implementação?
 
 - Critérios são testáveis?
-- 
+
 Documentação HU1:
 | Item revisado         | Observação                                                       | Ação sugerida                                      |
 | --------------------- | ---------------------------------------------------------------- | -------------------------------------------------- |
