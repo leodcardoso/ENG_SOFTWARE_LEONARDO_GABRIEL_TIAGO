@@ -33,7 +33,7 @@ O artigo **["Relationship between gamification elements and social and human fac
 
 * **Aplicação no Projeto:** Este estudo é a prova de que a abordagem funciona na prática. Os resultados positivos do artigo nos dão a confiança de que a aplicação de **streaks (sequências), recompensas e competição social** é uma estratégia eficaz para gerar mudanças comportamentais mensuráveis. Ele demonstra que um aplicativo com essas características é uma ferramenta com potencial real para ajudar os usuários a alcançar seus objetivos.
 
-A reportagem **["Como as amizades podem influenciar seus hábitos – para o bem e para o mal"](https://www.bbc.com/portuguese/vert-fut-48701790)**,
+* A reportagem **["Como as amizades podem influenciar seus hábitos – para o bem e para o mal"](https://www.bbc.com/portuguese/vert-fut-48701790)**,
 da BBC News Brasil, reforça a importância do convívio social na criação e manutenção de hábitos. O texto mostra que nossas escolhas e comportamentos não acontecem de forma isolada, mas são profundamente moldados pelas pessoas com quem convivemos. Amigos podem atuar como incentivo positivo — por exemplo, ao estimular a prática de exercícios físicos ou a adoção de uma alimentação mais saudável —, mas também podem contribuir para hábitos prejudiciais, como o consumo excessivo de álcool ou o sedentarismo. A matéria destaca ainda que esse processo ocorre muitas vezes de forma inconsciente, já que tendemos a reproduzir padrões de comportamento do nosso círculo social, demonstrando como as interações cotidianas podem facilitar ou dificultar a adesão a novos hábitos.
 ---
 
