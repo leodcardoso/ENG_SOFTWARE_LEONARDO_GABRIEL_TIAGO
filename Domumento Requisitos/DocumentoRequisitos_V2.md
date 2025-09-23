@@ -98,6 +98,9 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. Os amigos convidados podem ver detalhes dos desafios.
 5. Deve haver uma tela específica para cada desafio, onde todos os participantes possam visualizar o progresso individual e coletivo em direção à meta.
 6. **[NOVO]** Se o criador do desafio sair do grupo, a propriedade será transferida para o participante mais antigo.
+7. **[NOVO]** Deve existir um botão para registrar o progesso diário.
+
+![Tela de Criação de Desafio V2](../V2/Tiago_V2/2criarDesafioV2.png)
 
 #### HU2: Hábitos Privados
 
@@ -110,6 +113,9 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. A pontuação e as sequências (streaks) de um hábito privado não devem ser contabilizadas em desafios públicos ou rankings competitivos.
 5. O usuário deve poder alterar a privacidade de um hábito (de público para privado e vice-versa) a qualquer momento.
 
+![Tela de Criação de Desafio V2](../V2/Tiago_V2/2criarDesafioV2.png)
+![Tela de Perfil V2](../V2/Tiago_V2/2perfilV2.png)
+
 #### HU3: Troféus por Conquista
 
 **Como** usuário, **eu quero** marcar um hábito como "concluído", **para que** ele saia da minha lista diária e vire um troféu.
@@ -121,7 +127,13 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. Na seção de troféus, o hábito deve exibir um resumo do desempenho, como a maior sequência (streak) alcançada e a data de conclusão.
 5. O usuário deve ter a opção de criar uma sequência igual a alguma que já foi concluída.
 6. **[NOVO]** Adicionar funcionalidade de "Reativar Hábito" a partir da tela de troféus, movendo-o de volta para a lista ativa.
-7. **[NOVO]** Quando um hábito for concluído, enviar notificação para amigos próximos.
+
+![Tela de Edição de Hábito V2.1](../V2/Tiago_V2/4editarHabito_V2_1.png)
+![Tela de Edição de Hábito V2.2](../V2/Tiago_V2/4editarHabito_V2_2.png)
+
+### Diagrama V2 Tiago
+
+![Diagrama HU Tiago V2](../V2/Tiago_V2/Diagrama_HU_TiagoV2.svg)
 
 ## Requisitos Não-Funcionais (Novos)
 
