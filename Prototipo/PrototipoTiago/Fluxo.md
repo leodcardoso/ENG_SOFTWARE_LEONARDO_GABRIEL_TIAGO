@@ -14,22 +14,22 @@
 
 Esta tela é acessada a partir do botão `Criar Novo Desafio` na tela de perfil. Aqui, o usuário define uma meta, um prazo e convida amigos para participarem de um desafio em grupo.
 
-![Tela de Criar Desafio](./Prototipo/PrototipoTiago/2crirarDesafio.png)
+![Tela de Criar Desafio](./2crirarDesafio.png)
 
 ### 3. Tela Meus Troféus (`3meusTrofeus.png`)
 
 Esta seção funciona como uma galeria de conquistas. O usuário pode visualizar seu histórico de sucessos, suas maiores sequências e as datas em que atingiu seus objetivos.
 
-![Tela Meus Troféus](./Prototipo/PrototipoTiago/3meusTrofeus.png)
+![Tela Meus Troféus](./3meusTrofeus.png)
 
 ### 4. Tela de Editar Hábito (`4editarHabito.png`)
 
 Acessada ao clicar em um hábito existente na tela de perfil, esta interface permite ao usuário alterar o nome, a categoria e a privacidade de um hábito.
 
-![Tela de Editar Hábito](./Prototipo/PrototipoTiago/4editarHabito.png)
+![Tela de Editar Hábito](./4editarHabito.png)
 
 ### 5. Tela de Ranking (`5ranking.png`)
 
 Esta tela exibe a classificação geral e semanal dos usuários com base na pontuação. É acessada quando o usuário clica na sua própria estatística de ranking na tela de perfil.
 
-![Tela de Ranking](./Prototipo/PrototipoTiago/5ranking.png)
+![Tela de Ranking](./5ranking.png)
