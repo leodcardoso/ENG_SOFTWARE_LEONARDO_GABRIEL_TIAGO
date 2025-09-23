@@ -8,13 +8,13 @@ Método: Revisão por inspeção (cada membro lê a HU e os critérios de aceita
 
 Itens a revisar:
 
--HU está compreensível?
+- HU está compreensível?
 
--Critérios de aceitação estão claros e suficientes?
+- Critérios de aceitação estão claros e suficientes?
 
--Há omissões que impediriam a implementação?
+- Há omissões que impediriam a implementação?
 
--Critérios são testáveis?
+- Critérios são testáveis?
 Documentação HU1:
 | Item revisado         | Observação                                                       | Ação sugerida                                      |
 | --------------------- | ---------------------------------------------------------------- | -------------------------------------------------- |
