@@ -38,7 +38,7 @@
 - [ ] Planejar, executar e documentar a revisão / inspeção dos requisitos*
 - [x] Criar um protótipo de média fidelidade após a revisão*
 - [ ] Especificar como os artefatos acima atendem os requisitos
-- [ ] Preparar uma demonstração de como o protótipo atende os requisitos
+- [x] Preparar uma demonstração de como o protótipo atende os requisitos
   - [x] **Pelo menos 5 critérios por HU e 1 fluxo de telas por membro da equipe!!!**
 
 ## Iteração (Aula 8):

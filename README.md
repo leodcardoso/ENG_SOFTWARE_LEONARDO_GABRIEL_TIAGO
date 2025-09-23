@@ -34,32 +34,37 @@
 ```
 📦 ENG_SOFTWARE_LEONARDO_GABRIEL_TIAGO/
 ├── 📄 README.md                              # Visão geral do projeto
+|   # Aula 4
 ├── 📁 Artigos/
 │   └── 📄 Artigos_Reportagem.md              # Embasamento teórico e critérios de seleção
+|   # Aula 5
 ├── 📁 Embasamento/
 │   ├── 📄 Embasamento_Gabriel.md             # Teoria da Autodeterminação aplicada
 │   ├── 📄 Embasamento_Tiago.md               # Gamificação como ferramenta de engajamento
 |   └── 📄 Embasamento_Leonardo.md
+|   # Aula 4
 ├── 📁 Entrevistas/
 │   ├── 📄 Entrevistas_Gabriel.md             # Pesquisa com usuários 
 │   ├── 📄 Entrevistas_Leonardo.md            # Pesquisa com usuários 
 │   └── 📄 Entrevistas_Tiago.md               # Pesquisa com usuários 
+|   # Aula 5
 ├── 📁 Historias de Usuario e Criterios de Aceitação/
 │   ├── 📄 Historias_de_usuario_Gabriel.md    # HU1-3: Notificações e interface social
 │   ├── 📄 Historias_de_usuario_Leonardo.md   # HU1-3: Lembretes, ranking e coringa
 │   └── 📄 Historias_de_usuario_Tiago.md      # HU1-3: Desafios, privacidade e troféus
+|   # Aula 5
 ├── 📁 Diagramas/                         
 │   ├── 📄 Diagrama_HU_Gabriel.svg            # Sequência das funcionalidades sociais
 │   ├── 📄 Diagrama_HU_Leonardo.svg           # Sequência do sistema de coringa
 │   └── 📄 Diagrama_HU_Tiago.svg              # Sequência dos desafios e troféus
+|   # Aula 6 e 7
 ├── 📁 Prototipos/
 │   ├── 📁 Prototipo_Gabriel/                 # Interfaces de notificações e social
 │   ├── 📁 Prototipo_Leonardo/                # Interfaces de ranking e coringa
 │   └── 📁 Prototipo_Tiago/                   # Interfaces de perfil e desafios
+|   # Aula 6 e 7
 ├── 📁 Revisao/
-|   ├── 📄
-|   ├── 📄
-│   └── 📄 Leonardo.md                        # Planejamento e resultados da 
+│   └── 📄 Revisão.md                         # Planejamento e revisão
 └── 📁 Tarefas da Materia/
     └── 📄 Tarefas.md                         # Checklist de atividades da disciplina
 ```
