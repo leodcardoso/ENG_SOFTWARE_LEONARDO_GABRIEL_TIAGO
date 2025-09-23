@@ -15,7 +15,7 @@
 
 ### Aula 3:
 - [x] **Atualizar o Trello com:**
-  - [ ] Quais atividades farão
+  - [] Quais atividades farão
   - [] Quem será responsável por qual atividade
 - [x] **Atualizar o Git (readme) com:**
   - [x] O objetivo do projeto
@@ -39,6 +39,7 @@
 - [x] Criar um protótipo de média fidelidade após a revisão*
 - [ ] Especificar como os artefatos acima atendem os requisitos
 - [ ] Preparar uma demonstração de como o protótipo atende os requisitos
+  - [x] **Pelo menos 5 critérios por HU e 1 fluxo de telas por membro da equipe!!!**
 
 ## Iteração (Aula 8):
 - [ ] Concluir V1 (processo como um todo)
