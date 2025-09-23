@@ -87,8 +87,10 @@ Os principais insights obtidos das entrevistas foram:
 Os diagramas de sequência foram desenvolvidos para representar os fluxos de interação mais importantes do sistema:
 
 1. **Diagrama de Gabriel**: Representa o fluxo de notificações e interações sociais
-2. **Diagrama de Leonardo**: Ilustra o sistema de carta coringa para manutenção de streaks
-3. **Diagrama de Tiago**: Mostra o fluxo de desafios em grupo e troféus
+![Diagrama da HU do Gabriel](../Diagramas/Diagrama_HU_Gabriel.svg)
+3. **Diagrama de Leonardo**: Ilustra o sistema de carta coringa para manutenção de streaks
+![Diagrama da HU do Leonardo](../Diagramas/Diagrama_HU_Leonardo.svg)
+4. **Diagrama de Tiago**: Mostra o fluxo de desafios em grupo e troféus
 ![Diagrama da HU do Tiago](../Diagramas/Diagrama_HU_Tiago.svg)
 
 [Referência aos diagramas na pasta Diagramas]
