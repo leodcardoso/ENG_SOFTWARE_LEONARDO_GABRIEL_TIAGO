@@ -27,6 +27,8 @@ A HU3 implementa um sistema de apoio social. Os critérios de aceitação garant
 
 Esta funcionalidade responde diretamente à necessidade de apoio social identificada nas entrevistas, onde participantes indicaram que a "falta de apoio social" tem um impacto significativo (classificado entre 2-3/5) na manutenção de hábitos. O sistema permite motivação mútua sem criar pressão excessiva.
 
+---
+
 ## HU1 - Leonardo: Notificações de Hábitos
 A HU1 implementa um sistema de lembretes para hábitos não realizados. Os critérios de aceitação garantem notificações relevantes e oportunas:
 
@@ -54,3 +56,38 @@ A HU3 implementa um recurso de exceção para dias difíceis. Os critérios de a
 - Informa ao usuário a quantidade restante de cartas coringa disponíveis
 
 Esta funcionalidade proporciona flexibilidade ao usuário, reconhecendo que ocasionalmente podem surgir imprevistos que dificultem a realização de todos os hábitos programados.
+
+---
+
+### HU1 - Tiago: Desafios em Grupo
+
+A HU1 implementa um sistema de desafios em grupo, permitindo que os usuários compitam ou colaborem com amigos para atingir metas coletivas. Os critérios de aceitação garantem um ambiente interativo e funcional:
+
+* Permite definir nome, meta e data de término para cada desafio.
+* Possibilita convidar amigos para participar a partir da lista de contatos.
+* Oferece uma tela dedicada para visualizar o progresso individual e coletivo.
+
+Esta funcionalidade promove a interação social e a motivação mútua, transformando a construção de hábitos em uma atividade coletiva.
+
+---
+
+### HU2 - Tiago: Hábitos Privados
+
+A HU2 introduz um controle de privacidade, garantindo que os usuários possam manter certos hábitos confidenciais. Os critérios de aceitação asseguram total discrição:
+
+* Permite marcar qualquer hábito como privado através de uma opção clara na tela de edição.
+* Garante que hábitos privados e seus pontos não sejam exibidos em feeds de amigos ou rankings.
+
+Esta funcionalidade oferece controle e discrição ao usuário, permitindo o acompanhamento de metas pessoais sem exposição social.
+
+---
+
+### HU3 - Tiago: Troféus por Conquistas
+
+A HU3 implementa um ciclo de vida para os hábitos, permitindo que sejam concluídos e transformados em conquistas permanentes. Os critérios de aceitação garantem o reconhecimento do esforço:
+
+* Permite que um hábito ativo seja marcado como concluído, retirando-o da lista de tarefas diárias.
+* Move o hábito concluído para uma galeria permanente de "Meus Troféus".
+* Exibe um resumo do desempenho no troféu, como a maior sequência e a data da conquista.
+
+Esta funcionalidade valoriza o esforço de longo prazo do usuário, criando um registro de suas conquistas e mantendo a lista de tarefas focada nos hábitos atuais.
