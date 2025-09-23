@@ -88,9 +88,15 @@ Os diagramas de sequência foram desenvolvidos para representar os fluxos de int
 
 1. **Diagrama de Gabriel**: Representa o fluxo de notificações e interações sociais
 ![Diagrama da HU do Gabriel](../Diagramas/Diagrama_HU_Gabriel.svg)
-3. **Diagrama de Leonardo**: Ilustra o sistema de carta coringa para manutenção de streaks
+
+---
+
+2. **Diagrama de Leonardo**: Ilustra o sistema de carta coringa para manutenção de streaks
 ![Diagrama da HU do Leonardo](../Diagramas/Diagrama_HU_Leonardo.svg)
-4. **Diagrama de Tiago**: Mostra o fluxo de desafios em grupo e troféus
+
+---
+
+3. **Diagrama de Tiago**: Mostra o fluxo de desafios em grupo e troféus
 ![Diagrama da HU do Tiago](../Diagramas/Diagrama_HU_Tiago.svg)
 
 [Referência aos diagramas na pasta Diagramas]
@@ -100,12 +106,40 @@ Os diagramas de sequência foram desenvolvidos para representar os fluxos de int
 Desenvolvemos protótipos de média fidelidade que ilustram as principais funcionalidades:
 
 ### Protótipo de Gabriel
-- Fluxo de notificações sociais e compartilhamento de conquistas
+1.  **Perfil do Usuário**
+    ![Tela de Perfil](../Prototipos/Prototipo_Gabriel/1_Perfil.png)
+
+2.  **Progresso de Hábitos**
+    ![Tela de Progresso de Hábitos](../Prototipos/Prototipo_Gabriel/2_Habitos_Progresso.png)
+
+3.  **Hábito Marcado como Concluído**
+    ![Tela de Hábito Concluído](../Prototipos/Prototipo_Gabriel/3_Marcado_concluido.png)
+
+4.  **Notificação Enviada**
+    ![Tela de Notificação Enviada](../Prototipos/Prototipo_Gabriel/4_Notificacao_Enviada.png)
+
+---
 
 ### Protótipo de Leonardo
 - Sistema de carta coringa e visualização de hábitos
 
-### Protótipo de Tiago
-- Tela de perfil, criação de desafios, troféus, edição de hábitos e ranking
+---
 
-[Referência aos protótipos na pasta Prototipos]
+### Protótipo de Tiago
+# Fluxo de Telas do Aplicativo
+
+1.  **Tela de Perfil**
+    ![Tela de Perfil](../Prototipos/Prototipo_Tiago/1_Perfil.png)
+
+2.  **Tela de Criação de Desafio**
+    ![Tela de Criar Desafio](../Prototipos/Prototipo_Tiago/2_Criar_Desafio.png)
+
+3.  **Tela Meus Troféus**
+    ![Tela Meus Troféus](../Prototipos/Prototipo_Tiago/3_Meus_Trofeus.png)
+
+4.  **Tela de Edição de Hábito**
+    ![Tela de Editar Hábito](../Prototipos/Prototipo_Tiago/4_Editar_Habito.png)
+
+5.  **Tela de Ranking**
+    ![Tela de Ranking](../Prototipos/Prototipo_Tiago/5_Ranking.png)
+
