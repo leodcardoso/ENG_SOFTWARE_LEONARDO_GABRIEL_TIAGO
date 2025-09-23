@@ -8,7 +8,7 @@
 * Para ir à tela de **Criar Desafio (2)**, ele clica no botão no final da página.
 * Para ir à tela de **Editar Hábito (4)**, ele mantém pressionado em um hábito da lista "Hábitos em Progresso".
 
-![Tela de Perfil](./Prototipo/PrototipoTiago/1perfil.png)
+![Tela de Perfil](./PrototipoTiago/1perfil.png)
 
 ### 2. Tela de Criar Novo Desafio (`2crirarDesafio.png`)
 
