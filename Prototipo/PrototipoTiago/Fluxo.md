@@ -9,6 +9,7 @@
 * Para ir à tela de **Editar Hábito (4)**, ele mantém pressionado em um hábito da lista "Hábitos em Progresso".
 
 ![Tela de Perfil](./1perfil.png)
+<img src="./1Perfil.png" alt="Tela de Perfil" width="400">
 
 ### 2. Tela de Criar Novo Desafio (`2crirarDesafio.png`)
 
@@ -24,7 +25,7 @@ Esta seção funciona como uma galeria de conquistas. O usuário pode visualizar
 
 ### 4. Tela de Editar Hábito (`4editarHabito.png`)
 
-Acessada ao clicar em um hábito existente na tela de perfil, esta interface permite ao usuário alterar o nome, a categoria e a privacidade de um hábito.
+Acessada ao clicar e segurar em um hábito existente na tela de perfil, esta interface permite ao usuário alterar o nome, a categoria e a privacidade de um hábito.
 
 ![Tela de Editar Hábito](./4editarHabito.png)
 
