@@ -6,9 +6,9 @@
 
 * Para ir à tela de **Ranking (5)**, o usuário clica no ícone de troféu abaixo da sua foto.
 * Para ir à tela de **Criar Desafio (2)**, ele clica no botão no final da página.
-* Para ir à tela de **Editar Hábito (4)**, ele clica em um hábito da lista "Hábitos em Progresso".
+* Para ir à tela de **Editar Hábito (4)**, ele mantém pressionado em um hábito da lista "Hábitos em Progresso".
 
-![Tela de Perfil](./Prototipo/PrototipoTiago/1Perfil.png)
+![Tela de Perfil](./Prototipo/PrototipoTiago/1perfil.png)
 
 ### 2. Tela de Criar Novo Desafio (`2crirarDesafio.png`)
 
