@@ -44,9 +44,10 @@
 |   └── 📄 Embasamento_Leonardo.md
 |   # Aula 4
 ├── 📁 Entrevistas/
-│   ├── 📄 Entrevistas_Gabriel.md             # Pesquisa com usuários 
-│   ├── 📄 Entrevistas_Leonardo.md            # Pesquisa com usuários 
-│   └── 📄 Entrevistas_Tiago.md               # Pesquisa com usuários 
+|   ├── 📄 Roteiro.md                         # Roteiro usado nas entrevistas
+│   ├── 📄 Entrevistas_Gabriel.md              
+│   ├── 📄 Entrevistas_Leonardo.md             
+│   └── 📄 Entrevistas_Tiago.md                
 |   # Aula 5
 ├── 📁 Historias de Usuario e Criterios de Aceitação/
 │   ├── 📄 Historias_de_usuario_Gabriel.md    # HU1-3: Notificações e interface social
