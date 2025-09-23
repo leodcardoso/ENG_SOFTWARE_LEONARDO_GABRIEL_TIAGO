@@ -9,7 +9,7 @@
 * Para ir à tela de **Editar Hábito (4)**, ele mantém pressionado em um hábito da lista "Hábitos em Progresso".
 
 ![Tela de Perfil](./1perfil.png)
-<img src="./1Perfil.png" alt="Tela de Perfil" width="400">
+<img src="./Prototipo/PrototipoTiago/1Perfil.png" alt="Tela de Perfil" width="400">
 
 ### 2. Tela de Criar Novo Desafio (`2crirarDesafio.png`)
 
