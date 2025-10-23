@@ -27,14 +27,14 @@ Nosso software foi desenhado para integrar as abordagens de ambas as fontes, tra
 
 ---
 
-### 2. A Validação Prática em Aplicativos de Saúde (Baseado em Leonardo)
+### 2. Comparação entre diferentes tipos de gamificação e fatores sociais humanos (Baseado em Leonardo)
 
 O artigo **["Relationship between gamification elements and social and human factors using the simple additive weighting method"](https://pmc.ncbi.nlm.nih.gov/articles/PMC12002541/)** serve como uma validação empírica e direta da nossa proposta. Trata-se de um ensaio clínico randomizado que compara diferentes tipos de gamificação para aumento no desempenho.
 
 * **Aplicação no Projeto:** Este estudo é a prova de que a abordagem funciona na prática. Os resultados positivos do artigo nos dão a confiança de que a aplicação de **streaks (sequências), recompensas e competição social** é uma estratégia eficaz para gerar mudanças comportamentais mensuráveis. Ele demonstra que um aplicativo com essas características é uma ferramenta com potencial real para ajudar os usuários a alcançar seus objetivos.
 
-* quote:
-* "That means that the 24 gamification elements studied can help promote SHFs, which influences the productivity of software development teams. In addition, this study identified a relationship of importance to facilitate the choice of gamification elements in designing strategies that encourage SHFs."
+* A reportagem **["Como as amizades podem influenciar seus hábitos – para o bem e para o mal"](https://www.bbc.com/portuguese/vert-fut-48701790)**,
+da BBC News Brasil, reforça a importância do convívio social na criação e manutenção de hábitos. O texto mostra que nossas escolhas e comportamentos não acontecem de forma isolada, mas são profundamente moldados pelas pessoas com quem convivemos. Amigos podem atuar como incentivo positivo — por exemplo, ao estimular a prática de exercícios físicos ou a adoção de uma alimentação mais saudável —, mas também podem contribuir para hábitos prejudiciais, como o consumo excessivo de álcool ou o sedentarismo. A matéria destaca ainda que esse processo ocorre muitas vezes de forma inconsciente, já que tendemos a reproduzir padrões de comportamento do nosso círculo social, demonstrando como as interações cotidianas podem facilitar ou dificultar a adesão a novos hábitos.
 ---
 
 ### 3. O Embasamento Psicológico do Engajamento (Baseado em Gabriel)

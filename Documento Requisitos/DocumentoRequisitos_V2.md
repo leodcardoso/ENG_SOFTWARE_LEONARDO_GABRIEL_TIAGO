@@ -49,6 +49,10 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 5. **[REFINADO]** O botão deve mudar de cor de azul para verde quando a notificação for enviada.
 6. **[NOVO]** Grupos vazios não terão a opção de envio de notificação disponível.
 
+![Botão pra enviar notificação](V2/Gabriel_V2/2_Pagina_meta.png)
+![Mensagem a ser enviada](V2/Gabriel_V2/4_Mensagem_Escrita.png)
+![Notificação](V2/Gabriel_V2/5_Mensagem_enviada.png)
+
 ### Histórias de Leonardo (Revisadas)
 
 #### HU1: Notificações de Hábitos
@@ -62,7 +66,7 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. A notificação deve indicar claramente quais hábitos estão pendentes.
 5. Suporte a múltiplos hábitos por dia.
 6. **[NOVO]** Se todos os hábitos já estiverem concluídos, exibir mensagem "Todos hábitos concluídos".
-
+![Hábitos Completos](V2/Leonardo_V2/habitos_completo.png)
 #### HU2: Ranking de Amigos
 
 **Como** usuário do aplicativo, **gostaria** de visualizar um ranking com meus amigos, **para** promover um incentivo maior devido à competição.
@@ -71,9 +75,9 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 1. Visualização do ranking das pessoas adicionadas.
 2. **[REFINADO]** O ranking será atualizado em tempo real a cada ação que altere a pontuação.
 3. Indicação do próprio usuário no ranking.
-4. **[REFINADO]** Ordenação do ranking do maior para o menor.
+4. Ordenação do ranking do maior para o menor.
 5. **[REFINADO]** Capacidade de adicionar/remover amigos do ranking através de botões dedicados em cada entrada do ranking.
-
+![Gerenciar Amigo](V2/Leonardo_V2/gerenciar_amigo.png)
 #### HU3: Carta Coringa para Hábitos
 
 **Como** usuário, **gostaria** da existência de um coringa **para** não perder o progresso devido a imprevistos.
@@ -85,6 +89,9 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. **[REFINADO]** O usuário receberá uma notificação quando usar o coringa e outra quando ele estiver disponível novamente.
 5. Registro do uso do coringa para histórico do usuário.
 
+![Completo_sem_coringa](V2/Leonardo_V2/notificao_amigos.jpg)
+![Notificação Cooringa](V2/Leonardo_V2/notificao_cor.png)
+![Cooldown](V2/Leonardo_V2/cooldown.jpg)
 ### Histórias de Tiago (Revisadas)
 
 #### HU1: Desafios em Grupo
@@ -98,6 +105,9 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. Os amigos convidados podem ver detalhes dos desafios.
 5. Deve haver uma tela específica para cada desafio, onde todos os participantes possam visualizar o progresso individual e coletivo em direção à meta.
 6. **[NOVO]** Se o criador do desafio sair do grupo, a propriedade será transferida para o participante mais antigo.
+7. **[NOVO]** Deve existir um botão para registrar o progesso diário.
+
+![Tela de Criação de Desafio V2](V2/Tiago_V2/2criarDesafio_V2.png)
 
 #### HU2: Hábitos Privados
 
@@ -110,6 +120,9 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. A pontuação e as sequências (streaks) de um hábito privado não devem ser contabilizadas em desafios públicos ou rankings competitivos.
 5. O usuário deve poder alterar a privacidade de um hábito (de público para privado e vice-versa) a qualquer momento.
 
+![Tela de Criação de Desafio V2 Variante](V2/Tiago_V2/2crirarDesafioV2.png)
+![Tela de Perfil V2](V2/Tiago_V2/1perfilV2.png)
+
 #### HU3: Troféus por Conquista
 
 **Como** usuário, **eu quero** marcar um hábito como "concluído", **para que** ele saia da minha lista diária e vire um troféu.
@@ -121,7 +134,13 @@ Nesta seção, apresentamos as histórias de usuário atualizadas com os refinam
 4. Na seção de troféus, o hábito deve exibir um resumo do desempenho, como a maior sequência (streak) alcançada e a data de conclusão.
 5. O usuário deve ter a opção de criar uma sequência igual a alguma que já foi concluída.
 6. **[NOVO]** Adicionar funcionalidade de "Reativar Hábito" a partir da tela de troféus, movendo-o de volta para a lista ativa.
-7. **[NOVO]** Quando um hábito for concluído, enviar notificação para amigos próximos.
+
+![Tela de Edição de Hábito V2.1](V2/Tiago_V2/4editarHabito_V2_1.png)
+![Tela de Edição de Hábito V2.2](V2/Tiago_V2/4editarHabito_V2_2.png)
+
+### Diagrama V2 Tiago
+
+![Diagrama HU Tiago V2](V2/Tiago_V2/Diagrama_HU_TiagoV2.svg)
 
 ## Requisitos Não-Funcionais (Novos)
 

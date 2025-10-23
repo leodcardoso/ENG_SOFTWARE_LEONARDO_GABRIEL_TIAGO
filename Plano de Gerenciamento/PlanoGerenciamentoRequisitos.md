@@ -13,46 +13,32 @@ Este documento define os processos, ferramentas e responsabilidades relacionadas
 
 **Cadência:**
 - Sessões de elicitação a cada 2 semanas durante o ciclo de desenvolvimento inicial
-- Sessões de validação mensais com usuários após MVP
 
 **Documentação:**
 - Todas as entrevistas serão gravadas (com consentimento) e transcritas
-- Insights serão catalogados em uma planilha compartilhada com tags por categoria
 
 ### 1.2 Análise de Requisitos
 
 **Processo:**
-1. **Categorização**: Requisitos serão categorizados como:
-   - Funcional (F)
-   - Não-funcional (NF)
-   - Restrição (R)
 
-2. **Avaliação de qualidade**: Cada requisito será avaliado quanto a:
+1. **Avaliação de qualidade**: Cada requisito será avaliado quanto a:
    - Clareza
    - Testabilidade
    - Viabilidade técnica
    - Consistência com outros requisitos
 
-3. **Refinamento**: Os requisitos imprecisos serão refinados em reuniões semanais de revisão.
+2. **Refinamento**: Os requisitos imprecisos serão refinados em reuniões semanais de revisão.
 
 ### 1.3 Validação de Requisitos
 
 **Técnicas:**
 - **Revisões por pares**: Cada requisito será revisado por pelo menos dois membros da equipe.
-- **Prototipação**: Protótipos interativos serão usados para validar requisitos com usuários.
-- **Inspeções formais**: Para requisitos críticos, usaremos revisões estruturadas.
+- **Prototipação**: Protótipos interativos serão usados para validar requisitos.
 
 **Critérios de aceitação:**
-- Todo requisito deve ter pelo menos 3 critérios de aceitação específicos e testáveis
-- Requisitos complexos devem incluir um diagrama de sequência ou fluxograma
+- Todo requisito deve ter pelo menos 1 critérios de aceitação específicos e testáveis
 
 ### 1.4 Priorização de Requisitos
-
-**Método MoSCoW:**
-- **Must Have (M)**: Funcionalidades essenciais para o MVP
-- **Should Have (S)**: Importantes, mas não críticas para o MVP
-- **Could Have (C)**: Desejáveis se houver tempo e recursos
-- **Won't Have (W)**: Escopo definido para versões futuras
 
 **Critérios de priorização:**
 - Valor para o usuário (baseado em feedback)
@@ -65,8 +51,8 @@ Este documento define os processos, ferramentas e responsabilidades relacionadas
 ### 2.1 Processo de Controle de Mudanças
 
 1. **Solicitação de mudança**:
-   - Qualquer stakeholder pode solicitar mudanças através do formulário padrão
-   - A solicitação deve descrever a mudança, justificativa e impacto estimado
+   - Qualquer stakeholder pode solicitar mudanças
+   - A  mudança deve ter justificativa e impacto estimado
 
 2. **Avaliação**:
    - Impacto no escopo, cronograma e recursos
@@ -74,7 +60,7 @@ Este documento define os processos, ferramentas e responsabilidades relacionadas
    - Análise técnica preliminar
 
 3. **Aprovação**:
-   - Mudanças de baixo impacto: aprovação pelo líder técnico
+   - Mudanças de baixo impacto: aprovação pelo responsável de implementar
    - Mudanças de médio impacto: aprovação pelo comitê de mudanças (reunião semanal)
    - Mudanças de alto impacto: aprovação por todos os stakeholders
 
@@ -91,7 +77,7 @@ Este documento define os processos, ferramentas e responsabilidades relacionadas
   - Y: revisões menores e correções
 
 **Controle de versão no GitHub**:
-- Cada versão oficial será marcada com uma tag
+- Cada versão oficial será marcada
 - Branches separados para desenvolvimento de novas funcionalidades
 - Pull requests obrigatórios com pelo menos uma aprovação
 
@@ -142,7 +128,6 @@ Este documento define os processos, ferramentas e responsabilidades relacionadas
 
 **Garantia de qualidade**:
 - Auditorias mensais de documentação
-- Feedback contínuo de usuários através de entrevistas
 - Revisões por pares para todas as histórias de usuário
 
 ## 4. Ferramentas e Templates
