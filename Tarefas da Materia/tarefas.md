@@ -43,8 +43,8 @@
 
 ## Iteração (Aula 8):
 - [x] Concluir V1 (processo como um todo)
-- [ ] Definir plano de gerenciamento (processo, rastreabilidade, ferramentas)
-- [ ] Implementar gerenciamento: gerar V2 do documento de requisitos
-- [ ] Rastrear mudanças!
+- [x] Definir plano de gerenciamento (processo, rastreabilidade, ferramentas)
+- [x] Implementar gerenciamento: gerar V2 do documento de requisitos
+- [x] Rastrear mudanças!
 
 ---
