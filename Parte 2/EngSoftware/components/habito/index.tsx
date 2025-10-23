@@ -10,6 +10,22 @@ type Props = ViewProps & {
     progresso: number;
 }
 
+type Props2 = ViewProps & {
+    titulo: string;
+    tempoConcluido: number // espera a quantidade de horas que o hábito foi concluído
+}
+
+function horasTexto(tempoConcluido: number){
+    let dias: number = Math.round(tempoConcluido / 24);
+    let horas = tempoConcluido % 24;
+
+    if (dias > 0){
+        return `Concluido a ${dias} dias e ${horas} horas   `
+    }else{
+        return `Concluido a ${horas} horas `
+    }
+}
+
 
 export function HabitoProgresso({titulo, progresso, ... rest}: Props) {
   return (
@@ -20,3 +36,14 @@ export function HabitoProgresso({titulo, progresso, ... rest}: Props) {
   );
 
 };
+
+
+export function HabitoConcluido({titulo, tempoConcluido, ... rest}: Props2) {
+  return (
+    <View style={styles.habitCard}>
+        <Text>{titulo}</Text>
+        <Text>{horasTexto(tempoConcluido)}</Text>
+        <Text>✔️</Text>
+    </View>
+  );
+}
