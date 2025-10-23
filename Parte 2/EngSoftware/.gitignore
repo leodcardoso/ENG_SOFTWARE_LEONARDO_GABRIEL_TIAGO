@@ -1,0 +1,76 @@
+# Node
+node_modules/**
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
+*.log
+
+# Expo / React Native
+.expo/
+.expo-shared/
+dist/
+web-build/
+expo-env.d.ts
+
+# EAS (local build artifacts)
+.eas/build/
+
+# Metro / caches
+.metro-health-check*
+.cache/
+node_modules/.cache/
+
+# Coverage / test outputs
+coverage/
+.nyc_output/
+jest-html-reporters-attach/
+test-results/
+
+# Native projects (managed workflow)
+# If you eject/prebuild and want to commit native code, remove these ignores.
+ios/
+android/
+
+# Signing / secrets
+*.orig.*
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# OS-specific
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.Trash-*
+*.swp
+*.swo
+*~
+
+# Env files
+.env
+.env.*
+.env*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Editors / IDEs
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.history/
+*.code-workspace
+
+# Project-specific
+app-example/

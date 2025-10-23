@@ -1,0 +1,27 @@
+# Node.js
+node_modules/
+
+# React Native
+android/.gradle/
+android/app/build/
+android/build/
+ios/Pods/
+ios/build/
+
+
+# Log files
+*.log
+
+# Environment files
+.env
+
+# IDEs and Editors
+.vscode/
+
+# npm logs
+npm-debug.log
+yarn-error.log
+
+# Expo
+.expo/
+.expo-shared/
