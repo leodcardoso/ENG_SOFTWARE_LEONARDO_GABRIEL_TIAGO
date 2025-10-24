@@ -57,8 +57,10 @@
 import { HabitoProgresso, HabitoConcluido } from '@/components/habito';
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Button } from 'react-native';
-
-
+import { router } from 'expo-router';
+function criaDesafio(): void {
+  router.push('/criaDesafio');
+}
 export default function Perfil() {
   return (
     <SafeAreaView style={styles.container}>
@@ -85,9 +87,7 @@ export default function Perfil() {
         <HabitoConcluido titulo="test2342341" tempoConcluido={2}/>
 
         {/* Botões */}
-        <TouchableOpacity style={styles.button}>
-          <Text>Criar Novo Desafio</Text>
-        </TouchableOpacity>
+        <Button title="Criar Desafio" onPress={criaDesafio} />
         <TouchableOpacity style={styles.button}>
           <Text>Adicionar Amigos</Text>
         </TouchableOpacity>
