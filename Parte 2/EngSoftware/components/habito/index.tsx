@@ -1,11 +1,11 @@
-
 import { TouchableOpacity, Text, ViewProps, View, Button} from "react-native" 
-import {styles} from "./styles";
+import {styles} from "./habitos";
 import { Circle } from "react-native-progress";
-
+import {router} from 'expo-router';
 
 
 type Props = ViewProps & {
+    idd:number;
     titulo: string;
     progresso: number;
 }
@@ -26,11 +26,22 @@ function horasTexto(tempoConcluido: number){
     }
 }
 
+function AbreHabito(idd: number){
+    // navegar para a pagina do habito
+    // usar o idd para pegar os dados do habito
+    router.push(`/habito/${idd}`);
+}
 
-export function HabitoProgresso({titulo, progresso, ... rest}: Props) {
+
+
+export function HabitoProgresso({idd, titulo, progresso, ... rest}: Props) {
+    // preciso pegar o titulo e o progresso usando o idd no back
+    titulo = idd + " - " + titulo;
+
     if (progresso == 1){
         return (
             <View style={styles.habitCard}>
+                <Button title="Visualizar Habito" onPress={() => {AbreHabito(idd)}}/>
                 <Text>{titulo}</Text>
                 <Circle progress={progresso} showsText size={70} formatText={progress => `a${Math.round(progresso * 100)}%`} />
                 <Button title="Concluir Habito" onPress={() => {}} />
@@ -40,6 +51,7 @@ export function HabitoProgresso({titulo, progresso, ... rest}: Props) {
     }else{
         return (
             <View style={styles.habitCard}>
+                <Button title="Visualizar Habito" onPress={() => {AbreHabito(idd)}}/>
                 <Text>{titulo}</Text>
                 <Circle progress={progresso} showsText size={70} formatText={progress => `a${Math.round(progresso * 100)}%`} />
             
