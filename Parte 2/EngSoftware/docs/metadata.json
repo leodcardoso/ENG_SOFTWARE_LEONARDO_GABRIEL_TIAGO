@@ -1,0 +1,12 @@
+[
+  { "id": 1, "title": "README.md (root)", "path": "README.md", "status": "done" },
+  { "id": 2, "title": "EngSoftware README", "path": "Parte 2/EngSoftware/README.md", "status": "done" },
+  { "id": 3, "title": "Plano de Gestão da Qualidade", "path": "docs/qualidade/Plano_de_Gestao_da_Qualidade.md", "status": "todo" },
+  { "id": 4, "title": "Decisões de Arquitetura (ADR)", "path": "docs/arquitetura/Decisoes_de_Arquitetura.md", "status": "todo" },
+  { "id": 5, "title": "Diagrama de Arquitetura (.drawio)", "path": "docs/arquitetura/Diagrama_Arquitetura.drawio", "status": "todo" },
+  { "id": 6, "title": "Padrões - Observer/Strategy/Command", "path": "docs/padroes/Decisoes_de_Padroes.md", "status": "todo" },
+  { "id": 7, "title": "Demo PDF", "path": "docs/demo/Demonstracao.pdf", "status": "todo" },
+  { "id": 8, "title": "Slides", "path": "docs/demo/slides/Parte2_Slides.pdf", "status": "todo" },
+  { "id": 9, "title": "CHANGELOG", "path": "CHANGELOG.md", "status": "todo" },
+  { "id": 10, "title": "Tarefas da matéria", "path": "Parte 2/Tarefas.md", "status": "done" }
+]
