@@ -74,3 +74,8 @@ $RECYCLE.BIN/
 
 # Project-specific
 app-example/
+
+# Componentes shadcn/ui incompatíveis com Expo
+components/ui/
+globals.css
+Attributions.md
