@@ -1,7 +1,3 @@
-Aqui está a documentação completa em Markdown (`.md`), com o código PlantUML removido e substituído por um link para a imagem `der.svg` na mesma pasta.
-
------
-
 # 📘 Documentação do Banco de Dados (`db.json`)
 
 ## 1\. Visão Geral
