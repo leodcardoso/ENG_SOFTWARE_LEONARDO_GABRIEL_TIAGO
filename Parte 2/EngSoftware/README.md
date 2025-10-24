@@ -48,3 +48,68 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Configuração Adicional para Desenvolvimento Web
+
+### Instalação de Dependências Essenciais
+
+1. Instale os ícones e componentes de progresso:
+   ```bash
+   npm install react-native-vector-icons
+   npm install react-native-progress
+   ```
+
+2. Configure a navegação:
+   ```bash
+   npm install @react-navigation/native
+   npm install @react-navigation/native-stack
+   ```
+
+3. Instale as dependências nativas necessárias:
+   ```bash
+   npx expo install react-native-screens react-native-safe-area-context
+   ```
+
+### Solução de Problemas Comuns
+
+- Se os ícones não aparecerem, tente:
+  ```bash
+  npx expo install @expo/vector-icons
+  ```
+
+- Para problemas com componentes de progresso:
+  ```bash
+  npx expo install react-native-svg
+  ```
+
+- Para limpar o cache e reinstalar:
+  ```bash
+  npx expo start -c
+  ```
+
+// ...existing code...
+
+### Executando na Web
+
+1. Navegue até a pasta do projeto:
+   ```bash
+   cd "Parte 2\EngSoftware"
+   ```
+
+2. Instale todas as dependências:
+   ```bash
+   npm install
+   ```
+
+3. Inicie o projeto específico para web:
+   ```bash
+   npx expo start --web
+   ```
+
+**Nota**: Em caso de erros, verifique:
+- O console do navegador (F12)
+- O terminal do VS Code
+- Se todas as dependências foram instaladas corretamente
+- Se você está no diretório correto do projeto
+
+// ...existing code...
