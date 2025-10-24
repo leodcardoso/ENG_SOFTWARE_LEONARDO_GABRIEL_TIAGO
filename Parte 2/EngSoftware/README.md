@@ -73,6 +73,11 @@ Este comando moverá o código inicial para o diretório **app-example** e criar
   npx expo start -c
   ```
 
+-  Se quiser rodar o servidor protótipo (scripts/server.js) instale:
+   ```bash
+   npm install express body-parser
+   ```
+
 ### Executando na Web
 
 1. Navegue até a pasta do projeto:
