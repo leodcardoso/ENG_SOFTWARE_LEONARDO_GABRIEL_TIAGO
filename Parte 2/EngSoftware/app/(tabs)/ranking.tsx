@@ -4,96 +4,50 @@ import { Ionicons } from "@expo/vector-icons";
 // import DateTimePicker from '@react-native-community/datetimepicker';
 // import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 
-function salvaDesafio(nome:string, meta:string, data:string, amigos:any) {
-  // Lógica para salvar o desafio no banco de dados
-  console.log("Desafio salvo:", { nome, meta, data, amigos });
-  // preciso percorrer os amigos e salvar só os que foram selecionados
+// login
+// tela com os habitos completos e incompletos
+// tela de ranking dos amigos
+// tela do perfil
+// tela de criação de habitos
+// tela com o habito especifico
+
+
+function perfilAmigo(idd:number): void {
+  console.log("Perfil do amigo:", idd);
 }
 
-
-
-
+function adicionaAmigo(): void {
+  console.log("Adicionar novo amigo");
+}
 export default function CriarDesafioScreen() {
-  const [nome, setNome] = useState("");
-  const [meta, setMeta] = useState("");
-  const [data, setData] = useState("");
-  const [showPicker, setShowPicker] = useState(false);
   // preciso pegar os amigos do back
+  // aqui to assumindo que ja vem ordenado por pontuacao
   const [amigos, setAmigos] = useState([
-    { idd: 1, nome: "João Silva", imagem: "https://randomuser.me/api/portraits/men/1.jpg", selecionado: false },
-    { idd: 2, nome: "Ana Costa", imagem: "https://randomuser.me/api/portraits/women/2.jpg", selecionado: false },
-    { idd: 3, nome: "Carlos Santos", imagem: "https://randomuser.me/api/portraits/men/3.jpg", selecionado: false },
-    { idd: 4, nome: "Beatriz Lima", imagem: "https://randomuser.me/api/portraits/women/4.jpg", selecionado: false },
+    { idd: 1, nome: "João Silva", imagem: "https://randomuser.me/api/portraits/men/1.jpg", pontuacao: 1240 },
+    { idd: 2, nome: "Ana Costa", imagem: "https://randomuser.me/api/portraits/women/2.jpg", pontuacao: 980 },
+    { idd: 3, nome: "Carlos Santos", imagem: "https://randomuser.me/api/portraits/men/3.jpg", pontuacao: 1500 },
+    { idd: 4, nome: "Beatriz Lima", imagem: "https://randomuser.me/api/portraits/women/4.jpg", pontuacao: 1100 },
   ]);
-
-  const toggleAmigo = (idd:number) => {    setAmigos((prev) =>
-     prev.map((a) => (a.idd === idd ? { ...a, selecionado: !a.selecionado } : a))
-    ); };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Criar Novo Desafio</Text>
-      <View style={styles.card}>
-        <Text style={styles.label}>Nome do Desafio</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ex: Desafio dos 30 dias de exercício"
-          value={nome}
-          onChangeText={setNome}
-        />
-
-        <Text style={styles.label}>Meta</Text>
-        <TextInput
-          style={[styles.input, styles.textArea]}
-          placeholder="Descreva a meta do desafio..."
-          multiline
-          value={meta}
-          onChangeText={setMeta}
-        />
-
-        <Text style={styles.label}>Data de Término</Text>
-        <TouchableOpacity
-          style={styles.dateInput}
-          onPress={() => setShowPicker(true)}
-        >
-          <Text style={styles.dateText}>{data || "dd/mm/aaaa"}</Text>
-          <Ionicons name="calendar-outline" size={20} color="#888" />
-        </TouchableOpacity>
-
-        {showPicker && (
-          <DateTimePicker
-            value={new Date()}
-            mode="date"
-            display="default"
-            onChange={onChangeDate}
-          />
-        )}
-      </View>
-
-      <Text style={styles.subtitulo}>Convidar Amigos</Text>
-
       <FlatList
         data={amigos}
         keyExtractor={(item) => item.idd}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.amigoCard}
-            onPress={() => toggleAmigo(item.idd)}
+            onPress={() => perfilAmigo(item.idd)}
           >
             <View style={styles.amigoInfo}>
               <Image source={{ uri: item.imagem }} style={styles.foto} />
               <Text style={styles.nomeAmigo}>{item.nome}</Text>
+              <Text>{item.pontuacao}</Text>
             </View>
-            <View
-              style={[
-                styles.radio,
-                item.selecionado && styles.radioSelecionado,
-              ]}
-            />
           </TouchableOpacity>
         )}
       />
-      <Button title="Criar Desafio" onPress={() => {salvaDesafio(nome, meta, data, amigos)}} />
+      <Button title="Novo Amigo" onPress={() => {adicionaAmigo()}} />
     </View>
   );
 }
