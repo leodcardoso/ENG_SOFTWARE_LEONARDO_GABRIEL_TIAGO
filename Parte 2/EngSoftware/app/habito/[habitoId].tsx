@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {useRouter, useLocalSearchParams} from 'expo-router';
-
+import { Circle } from "react-native-progress";
 function CompletaHabito() {
     // precisoo alterar o botao indicando que ja foi completado
     // Lógica para completar o hábito
@@ -22,11 +22,11 @@ export default function HomePage() {
     
     
   return (
-    <View>
+    <View style={styles.habitCard}>
         <Text>{habitoId}</Text>
         <Text>{tituloHabito}</Text>
         <Text>{descricaoHabito}</Text>
-        <Text>{porcentagemHabito}%</Text>
+        <Circle progress={porcentagemHabito} showsText size={70} formatText={progress => `a${Math.round(porcentagemHabito * 100)}%`} />
         <View style={styles.statsRow}>
             <Text>{habitoSequencia} Sequencia</Text>
             <Text>{habitoCompletos} ultimos 14 dias</Text>
@@ -47,5 +47,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'pink',
   },
   statsRow: { flexDirection: 'row', gap: 10, marginTop: 5 },
-
+ habitCard: { backgroundColor: '#fff', padding: 15, borderRadius: 15, margin: 10, alignItems: 'center'},
 });
