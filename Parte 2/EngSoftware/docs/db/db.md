@@ -14,7 +14,7 @@ Toda a lógica de acesso, escrita e validação de regras de negócio é control
 
 O diagrama abaixo representa as entidades (coleções) e seus relacionamentos principais, conforme a estrutura definida.
 
-![Minha Foto](./diagramaDB.svg)
+![FotoDiagrama](./diagramaDB.png)
 
 -----
 
