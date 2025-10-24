@@ -95,6 +95,29 @@ Este comando moverá o código inicial para o diretório **app-example** e criar
    npx expo start --web
    ```
 
+## Executando o Servidor Protótipo (API)
+
+O projeto inclui um servidor de backend protótipo (API) que é usado para simular a comunicação com um banco de dados (lendo e escrevendo no `db.json`).
+
+O aplicativo Expo (web ou mobile) precisará que este servidor esteja rodando para buscar e salvar dados.
+
+1.  **Instale as dependências do servidor** (só precisa fazer uma vez):
+    ```bash
+    npm install express body-parser
+    ```
+
+2.  **Inicie o servidor** (em um terminal separado):
+    ```bash
+    node scripts/server.js
+    ```
+
+3.  Se tudo funcionar, você verá a confirmação no terminal:
+    ```
+    Server running on http://localhost:3000
+    ```
+
+Isso indica que sua API está no ar e pronta para receber requisições.
+
 **Nota**: Em caso de erros, verifique:
 - O console do navegador (F12)
 - O terminal do VS Code
