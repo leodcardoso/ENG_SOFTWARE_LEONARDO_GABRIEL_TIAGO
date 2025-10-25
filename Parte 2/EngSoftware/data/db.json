@@ -6,7 +6,7 @@
     "challenges": 3,
     "achievements": 7,
     "notifications": 6,
-    "docs": 1,                     
+    "docs": 1,
     "commands": 101,
     "auditLog": 201
   },
@@ -28,8 +28,14 @@
         "remindersDefault": "08:00",
         "privateByDefault": false
       },
-      "friends": [2, 3],
-      "stats": { "points": 420, "level": 4 }
+      "friends": [
+        2,
+        3
+      ],
+      "stats": {
+        "points": 420,
+        "level": 4
+      }
     },
     {
       "id": 2,
@@ -37,10 +43,25 @@
       "email": "leo@example.com",
       "role": "developer",
       "createdAt": "2025-10-23T09:05:00Z",
-      "profile": { "avatar": null, "bio": "Backend / arquitetura", "locale": "pt-BR", "timezone": "America/Sao_Paulo" },
-      "settings": { "notifications": true, "remindersDefault": "07:30", "privateByDefault": false },
-      "friends": [1, 4],
-      "stats": { "points": 310, "level": 3 }
+      "profile": {
+        "avatar": null,
+        "bio": "Backend / arquitetura",
+        "locale": "pt-BR",
+        "timezone": "America/Sao_Paulo"
+      },
+      "settings": {
+        "notifications": true,
+        "remindersDefault": "07:30",
+        "privateByDefault": false
+      },
+      "friends": [
+        1,
+        4
+      ],
+      "stats": {
+        "points": 310,
+        "level": 3
+      }
     },
     {
       "id": 3,
@@ -48,10 +69,24 @@
       "email": "gabriel@example.com",
       "role": "developer",
       "createdAt": "2025-10-23T09:10:00Z",
-      "profile": { "avatar": null, "bio": "Frontend / gamificação", "locale": "pt-BR", "timezone": "America/Sao_Paulo" },
-      "settings": { "notifications": true, "remindersDefault": "20:00", "privateByDefault": false },
-      "friends": [1],
-      "stats": { "points": 295, "level": 3 }
+      "profile": {
+        "avatar": null,
+        "bio": "Frontend / gamificação",
+        "locale": "pt-BR",
+        "timezone": "America/Sao_Paulo"
+      },
+      "settings": {
+        "notifications": true,
+        "remindersDefault": "20:00",
+        "privateByDefault": false
+      },
+      "friends": [
+        1
+      ],
+      "stats": {
+        "points": 295,
+        "level": 3
+      }
     },
     {
       "id": 4,
@@ -59,10 +94,39 @@
       "email": "tiago@example.com",
       "role": "developer",
       "createdAt": "2025-10-23T09:15:00Z",
-      "profile": { "avatar": null, "bio": "Padrões e testes", "locale": "pt-BR", "timezone": "America/Sao_Paulo" },
-      "settings": { "notifications": true, "remindersDefault": "12:00", "privateByDefault": true },
-      "friends": [2],
-      "stats": { "points": 260, "level": 2 }
+      "profile": {
+        "avatar": null,
+        "bio": "Padrões e testes",
+        "locale": "pt-BR",
+        "timezone": "America/Sao_Paulo"
+      },
+      "settings": {
+        "notifications": true,
+        "remindersDefault": "12:00",
+        "privateByDefault": true
+      },
+      "friends": [
+        2
+      ],
+      "stats": {
+        "points": 260,
+        "level": 2
+      }
+    },
+    {
+      "id": 5,
+      "name": "Nome Teste",
+      "email": "teste@exemplo.com",
+      "passwordHash": "$2b$10$5AgR0/gMP8OSZapnOO6/t.uRS6tVCftMcOV5TkuZ4esVin8gMMLey",
+      "role": "developer",
+      "createdAt": "2025-10-25T16:35:16.153Z",
+      "profile": {},
+      "settings": {},
+      "friends": [],
+      "stats": {
+        "points": 0,
+        "level": 1
+      }
     }
   ],
   "habits": [
@@ -72,8 +136,12 @@
       "title": "Meditar",
       "description": "Meditação guiada de 10 minutos",
       "frequency": "daily",
-      "schedule": ["07:00"],
-      "reminders": ["07:00"],
+      "schedule": [
+        "07:00"
+      ],
+      "reminders": [
+        "07:00"
+      ],
       "streak": 5,
       "bestStreak": 12,
       "lastCheckIn": "2025-10-23",
@@ -89,8 +157,12 @@
       "title": "Ler 30 min",
       "description": "Leitura de livro técnico",
       "frequency": "daily",
-      "schedule": ["21:00"],
-      "reminders": ["20:45"],
+      "schedule": [
+        "21:00"
+      ],
+      "reminders": [
+        "20:45"
+      ],
       "streak": 2,
       "bestStreak": 7,
       "lastCheckIn": "2025-10-22",
@@ -98,7 +170,9 @@
       "active": true,
       "privacy": "private",
       "createdAt": "2025-09-10T20:00:00Z",
-      "jokerUsedDates": ["2025-10-10"]
+      "jokerUsedDates": [
+        "2025-10-10"
+      ]
     },
     {
       "id": 3,
@@ -106,8 +180,14 @@
       "title": "Academia",
       "description": "Treino de musculação",
       "frequency": "weekly",
-      "schedule": ["Mon", "Wed", "Fri"],
-      "reminders": ["18:00"],
+      "schedule": [
+        "Mon",
+        "Wed",
+        "Fri"
+      ],
+      "reminders": [
+        "18:00"
+      ],
       "streak": 0,
       "bestStreak": 5,
       "lastCheckIn": null,
@@ -123,8 +203,12 @@
       "title": "Commit diário",
       "description": "Fazer ao menos 1 commit no projeto",
       "frequency": "daily",
-      "schedule": ["23:00"],
-      "reminders": ["22:30"],
+      "schedule": [
+        "23:00"
+      ],
+      "reminders": [
+        "22:30"
+      ],
       "streak": 3,
       "bestStreak": 10,
       "lastCheckIn": "2025-10-22",
@@ -140,8 +224,12 @@
       "title": "Revisar PRs",
       "description": "Revisar PRs abertos no repositório",
       "frequency": "weekly",
-      "schedule": ["Thu"],
-      "reminders": ["10:00"],
+      "schedule": [
+        "Thu"
+      ],
+      "reminders": [
+        "10:00"
+      ],
       "streak": 1,
       "bestStreak": 4,
       "lastCheckIn": "2025-10-16",
@@ -210,10 +298,16 @@
       "id": 1,
       "title": "Desafio 7 dias de meditação",
       "creatorId": 3,
-      "participantIds": [1, 3],
+      "participantIds": [
+        1,
+        3
+      ],
       "startDate": "2025-10-20",
       "endDate": "2025-10-27",
-      "goal": { "habitId": 1, "checksRequired": 7 },
+      "goal": {
+        "habitId": 1,
+        "checksRequired": 7
+      },
       "progress": {
         "1": 6,
         "3": 7
@@ -224,10 +318,16 @@
       "id": 2,
       "title": "Semana do Commit",
       "creatorId": 3,
-      "participantIds": [2, 3],
+      "participantIds": [
+        2,
+        3
+      ],
       "startDate": "2025-10-27",
       "endDate": "2025-11-03",
-      "goal": { "habitId": 4, "checksRequired": 7 },
+      "goal": {
+        "habitId": 4,
+        "checksRequired": 7
+      },
       "progress": {
         "2": 0,
         "3": 1
@@ -236,37 +336,140 @@
     }
   ],
   "achievements": [
-    { "id": 1, "key": "first_checkin", "title": "Primeiro check-in", "points": 5, "description": "Complete o primeiro check-in de hábito" },
-    { "id": 2, "key": "7_day_streak", "title": "7 dias seguidos", "points": 50, "description": "Mantenha um streak de 7 dias" },
-    { "id": 3, "key": "mentor", "title": "Mentor", "points": 100, "description": "Ajude um amigo a completar um hábito" },
-    { "id": 4, "key": "commit_week", "title": "Semana de commits", "points": 30, "description": "Fazer commits todos os dias por uma semana" },
-    { "id": 5, "key": "pr_reviewer", "title": "Revisor", "points": 20, "description": "Revisar 5 PRs" },
-    { "id": 6, "key": "challenge_winner", "title": "Vencedor de desafio", "points": 80, "description": "Vencer um desafio entre participantes" }
+    {
+      "id": 1,
+      "key": "first_checkin",
+      "title": "Primeiro check-in",
+      "points": 5,
+      "description": "Complete o primeiro check-in de hábito"
+    },
+    {
+      "id": 2,
+      "key": "7_day_streak",
+      "title": "7 dias seguidos",
+      "points": 50,
+      "description": "Mantenha um streak de 7 dias"
+    },
+    {
+      "id": 3,
+      "key": "mentor",
+      "title": "Mentor",
+      "points": 100,
+      "description": "Ajude um amigo a completar um hábito"
+    },
+    {
+      "id": 4,
+      "key": "commit_week",
+      "title": "Semana de commits",
+      "points": 30,
+      "description": "Fazer commits todos os dias por uma semana"
+    },
+    {
+      "id": 5,
+      "key": "pr_reviewer",
+      "title": "Revisor",
+      "points": 20,
+      "description": "Revisar 5 PRs"
+    },
+    {
+      "id": 6,
+      "key": "challenge_winner",
+      "title": "Vencedor de desafio",
+      "points": 80,
+      "description": "Vencer um desafio entre participantes"
+    }
   ],
   "userAchievements": [
-    { "userId": 1, "achievementIds": [1] },
-    { "userId": 2, "achievementIds": [1, 4] },
-    { "userId": 3, "achievementIds": [1, 2, 4] },
-    { "userId": 4, "achievementIds": [] }
+    {
+      "userId": 1,
+      "achievementIds": [
+        1
+      ]
+    },
+    {
+      "userId": 2,
+      "achievementIds": [
+        1,
+        4
+      ]
+    },
+    {
+      "userId": 3,
+      "achievementIds": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "userId": 4,
+      "achievementIds": []
+    }
   ],
   "notifications": [
-    { "id": 1, "userId": 1, "type": "reminder", "title": "Lembrete: Meditar", "body": "Hora de meditar às 07:00", "read": false, "createdAt": "2025-10-23T06:50:00Z" },
-    { "id": 2, "userId": 2, "type": "task", "title": "Nova tarefa atribuída", "body": "Criar ADRs foi atribuída a você", "read": false, "createdAt": "2025-10-23T09:36:00Z" },
-    { "id": 3, "userId": 3, "type": "challenge", "title": "Desafio iniciado", "body": "Semana do Commit começa em 2025-10-27", "read": false, "createdAt": "2025-10-22T12:01:00Z" },
-    { "id": 4, "userId": 1, "type": "social", "title": "Novo amigo", "body": "Leonardo aceitou sua solicitação", "read": true, "createdAt": "2025-10-21T14:00:00Z" },
-    { "id": 5, "userId": 4, "type": "reminder", "title": "Revisar PRs", "body": "Lembrete semanal para revisar PRs", "read": false, "createdAt": "2025-10-23T09:00:00Z" }
+    {
+      "id": 1,
+      "userId": 1,
+      "type": "reminder",
+      "title": "Lembrete: Meditar",
+      "body": "Hora de meditar às 07:00",
+      "read": false,
+      "createdAt": "2025-10-23T06:50:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "type": "task",
+      "title": "Nova tarefa atribuída",
+      "body": "Criar ADRs foi atribuída a você",
+      "read": false,
+      "createdAt": "2025-10-23T09:36:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "type": "challenge",
+      "title": "Desafio iniciado",
+      "body": "Semana do Commit começa em 2025-10-27",
+      "read": false,
+      "createdAt": "2025-10-22T12:01:00Z"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "type": "social",
+      "title": "Novo amigo",
+      "body": "Leonardo aceitou sua solicitação",
+      "read": true,
+      "createdAt": "2025-10-21T14:00:00Z"
+    },
+    {
+      "id": 5,
+      "userId": 4,
+      "type": "reminder",
+      "title": "Revisar PRs",
+      "body": "Lembrete semanal para revisar PRs",
+      "read": false,
+      "createdAt": "2025-10-23T09:00:00Z"
+    }
   ],
-  "docs": [],                       
-  "docsMetaPath": "docs/metadata.json", 
+  "docs": [],
+  "docsMetaPath": "docs/metadata.json",
   "commands": [
     {
       "id": 1,
       "userId": 1,
       "type": "checkin",
-      "target": { "type": "habit", "id": 1 },
+      "target": {
+        "type": "habit",
+        "id": 1
+      },
       "timestamp": "2025-10-23T07:01:00Z",
       "pointsDelta": 10,
-      "metadata": { "source": "mobile", "note": "10min session" },
+      "metadata": {
+        "source": "mobile",
+        "note": "10min session"
+      },
       "undone": false
     }
   ],
@@ -278,7 +481,14 @@
       "action": "create",
       "userId": 1,
       "timestamp": "2025-10-23T07:01:01Z",
-      "data": { "type": "checkin", "target": { "type": "habit", "id": 1 }, "pointsDelta": 10 }
+      "data": {
+        "type": "checkin",
+        "target": {
+          "type": "habit",
+          "id": 1
+        },
+        "pointsDelta": 10
+      }
     }
   ],
   "patterns": [
