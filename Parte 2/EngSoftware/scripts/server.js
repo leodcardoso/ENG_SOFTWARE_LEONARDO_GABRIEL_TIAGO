@@ -1,9 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./db.js');
+const cors = require('cors');
+
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
+
+
 
 const ALLOWED_COLLECTIONS = ['users','habits','tasks','challenges','achievements','notifications','docs','commands','userAchievements','auditLog'];
 
@@ -65,6 +70,7 @@ app.get('/habits-visible', async (req, res) => {
 /* Execute command (checkin/joker_use/revert) */
 app.post('/commands', async (req, res) => {
   try {
+    console.log('Executing command:', req.body);
     const cmd = await db.executeCommand(req.body);
     res.status(201).json(cmd);
   } catch (err) {
