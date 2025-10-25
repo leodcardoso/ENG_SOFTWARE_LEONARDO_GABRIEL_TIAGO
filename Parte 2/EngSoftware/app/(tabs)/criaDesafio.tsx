@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import {  View,  Text,  TextInput,  TouchableOpacity,  FlatList,  Image,  StyleSheet,  Button} from "react-native";
+import React, { useState, useEffect } from "react";
+import {  View,  Text,  TextInput,  TouchableOpacity,  FlatList,  Image,  StyleSheet,  Button, ActivityIndicator} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 // import DateTimePicker from '@react-native-community/datetimepicker';
 // import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-
 function salvaDesafio(nome:string, meta:string, data:string, amigos:any) {
   // Lógica para salvar o desafio no banco de dados
   console.log("Desafio salvo:", { nome, meta, data, amigos });
@@ -11,7 +10,25 @@ function salvaDesafio(nome:string, meta:string, data:string, amigos:any) {
 }
 
 
+interface User {
+  id: number;
+  name: string;
+  profile?: {
+    avatar: string | null;
+    bio?: string;
+  };
+  stats?: {
+    points?: number;
+  };
+}
 
+interface Amigo {
+  id: number;
+  nome: string;
+  imagem: string;
+  pontuacao: number;
+  selecionado: boolean;
+}
 
 export default function CriarDesafioScreen() {
   const [nome, setNome] = useState("");
@@ -19,16 +36,73 @@ export default function CriarDesafioScreen() {
   const [data, setData] = useState("");
   const [showPicker, setShowPicker] = useState(false);
   // preciso pegar os amigos do back
-  const [amigos, setAmigos] = useState([
-    { idd: 1, nome: "João Silva", imagem: "https://randomuser.me/api/portraits/men/1.jpg", selecionado: false },
-    { idd: 2, nome: "Ana Costa", imagem: "https://randomuser.me/api/portraits/women/2.jpg", selecionado: false },
-    { idd: 3, nome: "Carlos Santos", imagem: "https://randomuser.me/api/portraits/men/3.jpg", selecionado: false },
-    { idd: 4, nome: "Beatriz Lima", imagem: "https://randomuser.me/api/portraits/women/4.jpg", selecionado: false },
-  ]);
 
   const toggleAmigo = (idd:number) => {    setAmigos((prev) =>
-     prev.map((a) => (a.idd === idd ? { ...a, selecionado: !a.selecionado } : a))
+     prev.map((a) => (a.id === idd ? { ...a, selecionado: !a.selecionado } : a))
     ); };
+
+const [amigos, setAmigos] = useState<Amigo[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const idLocal = 1; // <-- substitua pelo ID do usuário logado
+
+  useEffect(() => {
+    async function fetchAmigos() {
+      try {
+        // 1️⃣ Buscar usuário principal
+        const resUser = await fetch(`http://localhost:3000/users/${idLocal}`);
+        const user: User & { friends: number[] } = await resUser.json();
+
+        if (!user?.friends || user.friends.length === 0) {
+          console.log("Usuário não possui amigos.");
+          setAmigos([]);
+          return;
+        }
+
+        // 2️⃣ Buscar todos os amigos em paralelo
+        const friendsResponses = await Promise.all(
+          user.friends.map(id => fetch(`http://localhost:3000/users/${id}`))
+        );
+
+        const friendsData: User[] = await Promise.all(
+          friendsResponses.map(res => res.json())
+        );
+
+        // 3️⃣ Converter formato para o esperado na tela
+        const amigosFormatados = friendsData.map(friend => ({
+          id: friend.id,
+          nome: friend.name,
+          imagem: friend.profile?.avatar 
+            ? friend.profile.avatar 
+            : "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+          pontuacao: friend.stats?.points || 0,
+          selecionado: false,
+        }));
+
+        setAmigos(amigosFormatados);
+      } catch (error) {
+        console.error("Erro ao buscar amigos:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchAmigos();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color="#007AFF" />
+        <Text>Carregando amigos...</Text>
+      </View>
+    );
+  }
+
+
+
+
+
 
   return (
     <View style={styles.container}>
@@ -74,11 +148,11 @@ export default function CriarDesafioScreen() {
 
       <FlatList
         data={amigos}
-        keyExtractor={(item) => item.idd}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.amigoCard}
-            onPress={() => toggleAmigo(item.idd)}
+            onPress={() => toggleAmigo(item.id)}
           >
             <View style={styles.amigoInfo}>
               <Image source={{ uri: item.imagem }} style={styles.foto} />
@@ -188,4 +262,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#007AFF",
     borderColor: "#007AFF",
   },
+  centered: { flex: 1, justifyContent: "center", alignItems: "center" },
 });
