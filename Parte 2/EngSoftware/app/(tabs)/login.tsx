@@ -4,38 +4,28 @@ import { Ionicons } from "@expo/vector-icons";
 // import DateTimePicker from '@react-native-community/datetimepicker';
 // import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 
-function salvaConta(nome:string, login:string, senha:string) {
+function fazerLogin(email:string, senha:string) {
   // Lógica para salvar o desafio no banco de dados
     let idd = Math.floor(Math.random() * 1000000);// preciso gerar um id no back
-  console.log("Conta Salva:", { nome, login, senha, idd});
+  console.log("Conta Salva:", { email, senha, idd});
   // preciso percorrer os amigos e salvar só os que foram selecionados
 }
 
-
-
-
 export default function CriarDesafioScreen() {
-  const [nome, setNome] = useState("");
-  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Login</Text>
       <View style={styles.card}>
-        <Text style={styles.label}>Nome de usuario</Text>
+        <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.input}
-          value={nome}
-          onChangeText={setNome}
+          value={email}
+          onChangeText={setEmail}
         />
-        <Text style={styles.label}>login</Text>
-        <TextInput
-          style={styles.input}
-          value={login}
-          onChangeText={setLogin}
-        />
-        <Text style={styles.label}>senha</Text>
+        <Text style={styles.label}>Senha</Text>
         <TextInput
           style={styles.input}
           value={senha}
@@ -44,7 +34,7 @@ export default function CriarDesafioScreen() {
         
 
       </View>
-      <Button title="Criar conta" onPress={() => {salvaConta(nome, login, senha)}} />
+      <Button title="Fazer Login" onPress={() => {fazerLogin(email, senha)}} />
     </View>
   );
 }
