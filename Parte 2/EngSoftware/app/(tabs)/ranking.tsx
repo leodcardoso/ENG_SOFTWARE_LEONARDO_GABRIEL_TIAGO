@@ -2,12 +2,24 @@ import React, { useState, useEffect } from "react";
 import { 
   View, 
   Text, 
-  TouchableOpacity, 
   FlatList, 
   Image, 
+  TouchableOpacity, 
   StyleSheet, 
-  Button 
+  ActivityIndicator 
 } from "react-native";
+
+interface User {
+  id: number;
+  name: string;
+  profile?: {
+    avatar: string | null;
+    bio?: string;
+  };
+  stats?: {
+    points?: number;
+  };
+}
 
 interface Amigo {
   id: number;
@@ -16,30 +28,45 @@ interface Amigo {
   pontuacao: number;
 }
 
-export default function CriarDesafioScreen() {
+export default function AmigosScreen() {
   const [amigos, setAmigos] = useState<Amigo[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const idLocal = 1; // <-- substitua pelo ID do usuário logado
 
   useEffect(() => {
     async function fetchAmigos() {
       try {
-        // ⚠️ Substitua pelo IP da sua máquina
-        const response = await fetch("http://localhost:3000/users");
-        const data = await response.json();
+        // 1️⃣ Buscar usuário principal
+        const resUser = await fetch(`http://localhost:3000/users/${idLocal}`);
+        const user: User & { friends: number[] } = await resUser.json();
 
-        if (Array.isArray(data)) {
- const amigosFormatados = data.map((user) => ({
-          id: user.id,
-          nome: user.name,
-          imagem: user.profile?.avatar 
-            ? user.profile.avatar 
-            : "https://cdn-icons-png.flaticon.com/512/149/149071.png", // imagem padrão se avatar for null
-          pontuacao: user.stats?.points || 0
-        }));
-          setAmigos(amigosFormatados);
-        } else {
-          console.error("Dados inválidos:", data);
+        if (!user?.friends || user.friends.length === 0) {
+          console.log("Usuário não possui amigos.");
+          setAmigos([]);
+          return;
         }
+
+        // 2️⃣ Buscar todos os amigos em paralelo
+        const friendsResponses = await Promise.all(
+          user.friends.map(id => fetch(`http://localhost:3000/users/${id}`))
+        );
+
+        const friendsData: User[] = await Promise.all(
+          friendsResponses.map(res => res.json())
+        );
+
+        // 3️⃣ Converter formato para o esperado na tela
+        const amigosFormatados = friendsData.map(friend => ({
+          id: friend.id,
+          nome: friend.name,
+          imagem: friend.profile?.avatar 
+            ? friend.profile.avatar 
+            : "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+          pontuacao: friend.stats?.points || 0,
+        }));
+
+        setAmigos(amigosFormatados);
       } catch (error) {
         console.error("Erro ao buscar amigos:", error);
       } finally {
@@ -50,17 +77,10 @@ export default function CriarDesafioScreen() {
     fetchAmigos();
   }, []);
 
-  const perfilAmigo = (id: number) => {
-    console.log("Perfil do amigo:", id);
-  };
-
-  const adicionaAmigo = () => {
-    console.log("Adicionar novo amigo");
-  };
-
   if (loading) {
     return (
-      <View style={styles.container}>
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color="#007AFF" />
         <Text>Carregando amigos...</Text>
       </View>
     );
@@ -72,40 +92,33 @@ export default function CriarDesafioScreen() {
         data={amigos}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.amigoCard}
-            onPress={() => perfilAmigo(item.id)}
-          >
-            <View style={styles.amigoInfo}>
-              <Image source={{ uri: item.imagem }} style={styles.foto} />
-              <Text style={styles.nomeAmigo}>{item.nome}</Text>
-              <Text>{item.pontuacao}</Text>
+          <TouchableOpacity style={styles.amigoCard}>
+            <Image source={{ uri: item.imagem }} style={styles.foto} />
+            <View>
+              <Text style={styles.nome}>{item.nome}</Text>
+              <Text style={styles.pontos}>{item.pontuacao} pontos</Text>
             </View>
           </TouchableOpacity>
         )}
       />
-      <Button title="Novo Amigo" onPress={adicionaAmigo} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff", padding: 20 },
+  centered: { flex: 1, justifyContent: "center", alignItems: "center" },
   amigoCard: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#fafafa",
     borderRadius: 12,
-    padding: 10,
+    padding: 12,
     marginBottom: 10,
     borderWidth: 1,
     borderColor: "#eee",
   },
-  amigoInfo: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   foto: { width: 40, height: 40, borderRadius: 20, marginRight: 12 },
-  nomeAmigo: { fontSize: 15, fontWeight: "500" },
+  nome: { fontSize: 16, fontWeight: "500" },
+  pontos: { fontSize: 13, color: "#666" },
 });
