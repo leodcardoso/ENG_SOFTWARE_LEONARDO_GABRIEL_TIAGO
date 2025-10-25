@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const dbPath = path.resolve(__dirname, '..', 'db.json');
+const dbPath = path.resolve(__dirname, '..', 'data', 'db.json');
 
 async function readDB() {
   try {
