@@ -2,7 +2,6 @@ import { HabitoConcluido, HabitoProgresso } from '@/components/habito';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Button, ActivityIndicator, FlatList } from 'react-native';
-import { router } from 'expo-router';
 
 
 
@@ -86,19 +85,6 @@ async function fetchHabitosPorUsuario(idLocal: number): Promise<HabitsByStatus> 
     return { completos: [], incompletos: [] };
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export default function Perfil() {
 
