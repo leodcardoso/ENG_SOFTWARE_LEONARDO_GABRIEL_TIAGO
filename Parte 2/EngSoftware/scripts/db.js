@@ -6,6 +6,7 @@ const dbPath = path.resolve(__dirname, '..', 'data', 'db.json');
 async function readDB() {
   try {
     const raw = await fs.readFile(dbPath, 'utf8');
+    console.log(raw);
     return JSON.parse(raw);
   } catch (err) {
     if (err.code === 'ENOENT') {
