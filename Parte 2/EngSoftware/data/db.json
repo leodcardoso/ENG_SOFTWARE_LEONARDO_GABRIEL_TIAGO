@@ -3,7 +3,7 @@
     "users": 5,
     "habits": 7,
     "tasks": 7,
-    "challenges": 3,
+    "challenges": 6,
     "achievements": 7,
     "notifications": 6,
     "docs": 1,
@@ -12,30 +12,7 @@
   },
   "users": [
     {
-      "id": 1,
-      "name": "Natália",
-      "email": "nat@example.com",
-      "role": "maintainer",
-      "createdAt": "2025-10-23T09:00:00Z",
-      "profile": {
-        "avatar": null,
-        "bio": "Estudante - foco em UX e gestão",
-        "locale": "pt-BR",
-        "timezone": "America/Sao_Paulo"
-      },
-      "settings": {
-        "notifications": true,
-        "remindersDefault": "08:00",
-        "privateByDefault": false
-      },
-      "friends": [
-        2,
-        3
-      ],
-      "stats": {
-        "points": 420,
-        "level": 4
-      }
+      "id": 1
     },
     {
       "id": 2,
@@ -385,6 +362,97 @@
       ],
       "privacy": "public",
       "createdAt": "2025-10-26T02:46:13.115Z",
+      "progress": {}
+    },
+    {
+      "id": 5,
+      "creatorId": 6,
+      "title": "MEditar",
+      "startDate": "2025-10-26",
+      "endDate": "2025-12-10",
+      "goal": {
+        "habitId": 1,
+        "checksRequired": 7
+      },
+      "participantIds": [
+        2,
+        1,
+        6
+      ],
+      "privacy": "public",
+      "createdAt": "2025-10-26T03:24:00.924Z",
+      "progress": {}
+    },
+    {
+      "id": 6,
+      "creatorId": 6,
+      "title": "sdfasd",
+      "startDate": "2025-10-26",
+      "endDate": "2026-01-01",
+      "goal": {
+        "habitId": 1,
+        "checksRequired": 3
+      },
+      "participantIds": [
+        1,
+        6
+      ],
+      "privacy": "public",
+      "createdAt": "2025-10-26T03:37:23.627Z",
+      "progress": {}
+    },
+    {
+      "id": 3,
+      "creatorId": 6,
+      "title": "fsad",
+      "startDate": "2025-10-26",
+      "endDate": "2026-01-01",
+      "goal": {
+        "categoryTitle": "Leitura",
+        "checksRequired": 1
+      },
+      "participantIds": [
+        1,
+        6
+      ],
+      "privacy": "public",
+      "createdAt": "2025-10-26T05:35:48.981Z",
+      "progress": {}
+    },
+    {
+      "id": 4,
+      "creatorId": 6,
+      "title": "testes",
+      "startDate": "2025-10-26",
+      "endDate": "2026-01-01",
+      "goal": {
+        "categoryTitle": "Leitura",
+        "checksRequired": 1
+      },
+      "participantIds": [
+        1,
+        6
+      ],
+      "privacy": "public",
+      "createdAt": "2025-10-26T05:37:49.267Z",
+      "progress": {}
+    },
+    {
+      "id": 5,
+      "creatorId": 6,
+      "title": "pfv vai",
+      "startDate": "2025-10-26",
+      "endDate": "2026-01-01",
+      "goal": {
+        "categoryTitle": "Exercício",
+        "checksRequired": 1
+      },
+      "participantIds": [
+        1,
+        6
+      ],
+      "privacy": "public",
+      "createdAt": "2025-10-26T05:38:21.667Z",
       "progress": {}
     }
   ],

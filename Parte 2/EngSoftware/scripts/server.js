@@ -137,24 +137,45 @@ app.post('/challenges', authenticateToken, async (req, res) => {
     const challengeDataFromRequest = req.body;
     const userIdFromToken = req.user.userId; // ID do usuário logado (criador)
 
-    // 1. Validação básica (pode adicionar mais validações se necessário)
-    if (!challengeDataFromRequest.title || !challengeDataFromRequest.goal?.habitId || !challengeDataFromRequest.endDate) {
-      return res.status(400).json({ error: 'Dados incompletos para criar o desafio (título, meta, data fim obrigatórios).' });
+    // --- CORREÇÃO NA VALIDAÇÃO ---
+    // 1. Validação: Verifica título, goal com checksRequired, e data fim
+    // Removemos a checagem de goal.habitId e adicionamos goal.checksRequired
+    if (!challengeDataFromRequest.title ||
+        !challengeDataFromRequest.goal?.checksRequired || // Verifica se checksRequired existe
+        !challengeDataFromRequest.endDate) {
+      
+      return res.status(400).json({ error: 'Dados incompletos (título, meta de check-ins, data fim obrigatórios).' });
     }
+    // Adicionar validação extra se categoryTitle for obrigatório (exceto para "Outro"?)
+    if (!challengeDataFromRequest.goal?.categoryTitle) {
+        console.warn("categoryTitle não recebido no goal, usando 'Outro' como padrão.");
+        // O frontend já deve enviar 'Outro', mas garantimos aqui
+        if (challengeDataFromRequest.goal) {
+             challengeDataFromRequest.goal.categoryTitle = 'Outro';
+        } else {
+             // Caso goal não exista, o que não deveria acontecer pela validação anterior
+              return res.status(400).json({ error: 'Objeto goal ausente ou inválido.' });
+        }
+    }
+    // --- FIM CORREÇÃO VALIDAÇÃO ---
+
 
     // 2. Preparar os dados para salvar no DB
-    // Garantir que o creatorId é o do usuário logado e adicionar participantes se necessário
+    // A lógica aqui já funciona, pois usa o spread operator (...) que copia
+    // o objeto 'goal' como ele vier (agora com categoryTitle)
     const challengeToSave = {
       ...challengeDataFromRequest,
-      creatorId: userIdFromToken, // Garante que o criador é o usuário do token
-      participantIds: [...new Set([...(challengeDataFromRequest.participantIds || []), userIdFromToken])], // Garante que o criador está na lista e que IDs são únicos
-      createdAt: new Date().toISOString(), // Adiciona data de criação no backend
-      progress: {} // Inicializa o progresso como vazio
+      creatorId: userIdFromToken,
+      participantIds: [...new Set([...(challengeDataFromRequest.participantIds || []), userIdFromToken])],
+      createdAt: new Date().toISOString(),
+      progress: {} // Inicializa o progresso
+      // Garante que o objeto goal está correto (já deve estar pelo spread)
+      // goal: challengeDataFromRequest.goal
     };
 
-    // 3. Chamar a função do db.js para criar (usaremos a genérica por enquanto)
-    // Note que 'challenges' DEVE estar em ALLOWED_COLLECTIONS
-    const newChallenge = await db.create('challenges', challengeToSave); //
+    // 3. Chamar a função do db.js para criar
+    console.log("Salvando desafio com categoryTitle:", challengeToSave); // Log para confirmar
+    const newChallenge = await db.create('challenges', challengeToSave); // - db.create salva o objeto como ele está
 
     // 4. Retornar o desafio criado
     res.status(201).json(newChallenge);

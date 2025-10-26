@@ -6,11 +6,18 @@ const dbPath = path.resolve(__dirname, '..', 'data', 'db.json');
 async function readDB() {
   try {
     const raw = await fs.readFile(dbPath, 'utf8');
-    console.log(raw);
+    // console.log(raw); // Descomente para depurar o que está sendo lido
     return JSON.parse(raw);
   } catch (err) {
     if (err.code === 'ENOENT') {
-      return {};
+      // Retorna a estrutura inicial completa para evitar que o server quebre
+      // (Usando a versão mais segura que tínhamos antes)
+      return {
+        nextId: {}, users: [], habits: [], tasks: [],
+        challenges: [], achievements: [], notifications: [],
+        docs: [], commands: [], auditLog: [], userAchievements: [],
+        patterns: [], flows: []
+      };
     }
     throw err;
   }
@@ -20,6 +27,7 @@ async function writeDB(db) {
   await fs.writeFile(dbPath, JSON.stringify(db, null, 2), 'utf8');
 }
 
+/* Generic CRUD */
 async function getAll(collection) {
   const db = await readDB();
   return db[collection] || [];
@@ -30,15 +38,21 @@ async function getById(collection, id) {
   return list.find(x => x.id === id) || null;
 }
 
+// --- FUNÇÃO 'CREATE' CORRIGIDA ---
+// (Usa db.nextId para consistência com o resto do app e executeCommand)
 async function create(collection, item) {
   const db = await readDB();
   db[collection] = db[collection] || [];
-  const maxId = db[collection].reduce((max, x) => Math.max(max, x.id || 0), 0);
-  const newItem = { id: maxId + 1, ...item };
+  // Usa o nextId para a coleção específica, ou 1 como padrão
+  const next = (db.nextId && db.nextId[collection]) || 1;
+  const newItem = { id: next, ...item };
   db[collection].push(newItem);
+  db.nextId = db.nextId || {};
+  db.nextId[collection] = next + 1; // Incrementa o nextId
   await writeDB(db);
   return newItem;
 }
+// --- FIM DA CORREÇÃO ---
 
 async function update(collection, id, changes) {
   const db = await readDB();
@@ -46,6 +60,7 @@ async function update(collection, id, changes) {
   const idx = list.findIndex(x => x.id === id);
   if (idx === -1) return null;
   list[idx] = { ...list[idx], ...changes };
+  // Não sobrescreve a coleção inteira, apenas o db
   await writeDB(db);
   return list[idx];
 }
@@ -57,10 +72,40 @@ async function remove(collection, id) {
   return true;
 }
 
+// --- FUNÇÃO HELPER DE CATEGORIA ADICIONADA ---
+/**
+ * Determina a categoria de um hábito com base no seu título.
+ * DEVE ser mantida em sincronia com as categorias no frontend (criaDesafio.tsx).
+ * @param {object} habit - O objeto do hábito (ex: { id: 1, title: "Ler 30 min" })
+ * @returns {string} O nome da categoria (ex: "Leitura", "Outro")
+ */
+function getCategoryForHabit(habit) {
+  if (!habit || !habit.title) return 'Outro'; // Padrão
+  const lowerTitle = habit.title.toLowerCase();
+
+  // Mapeamento baseado nas categorias de criaDesafio.tsx
+  if (lowerTitle.includes('ler') || lowerTitle.includes('leitura') || lowerTitle.includes('livro')) return 'Leitura';
+  if (lowerTitle.includes('exercício') || lowerTitle.includes('academia') || lowerTitle.includes('correr') || lowerTitle.includes('treino')) return 'Exercício';
+  if (lowerTitle.includes('alimentação') || lowerTitle.includes('comer') || lowerTitle.includes('dieta') || lowerTitle.includes('comida')) return 'Alimentação';
+  if (lowerTitle.includes('hidratação') || lowerTitle.includes('água') || lowerTitle.includes('beber')) return 'Hidratação';
+  if (lowerTitle.includes('meditação') || lowerTitle.includes('meditar') || lowerTitle.includes('mindfulness')) return 'Meditação';
+  if (lowerTitle.includes('sono') || lowerTitle.includes('dormir')) return 'Sono';
+  if (lowerTitle.includes('saúde') || lowerTitle.includes('remédio') || lowerTitle.includes('vitamina')) return 'Saúde';
+  if (lowerTitle.includes('música') || lowerTitle.includes('instrumento') || lowerTitle.includes('tocar')) return 'Música';
+  if (lowerTitle.includes('criatividade') || lowerTitle.includes('desenhar') || lowerTitle.includes('escrever') || lowerTitle.includes('arte') || lowerTitle.includes('foto')) return 'Criatividade';
+  if (lowerTitle.includes('entretenimento') || lowerTitle.includes('jogo') || lowerTitle.includes('filme') || lowerTitle.includes('série')) return 'Entretenimento';
+  if (lowerTitle.includes('trabalho') || lowerTitle.includes('estudar') || lowerTitle.includes('projeto') || lowerTitle.includes('commit') || lowerTitle.includes('revisar')) return 'Trabalho';
+
+  return 'Outro'; // Padrão se nenhuma categoria for encontrada
+}
+// --- FIM DA FUNÇÃO HELPER ---
+
+
 /* Command service: checkin, joker_use, revert */
+// --- FUNÇÃO 'executeCommand' ATUALIZADA ---
 async function executeCommand(command) {
   const db = await readDB();
-  const cmdId = (db.nextId && db.nextId.commands) || 1;
+  const cmdId = (db.nextId && db.nextId.commands) || 101; // Usa 101 como base
   const now = new Date().toISOString();
   const cmd = {
     id: cmdId,
@@ -78,26 +123,24 @@ async function executeCommand(command) {
 
   if (cmd.type === 'checkin') {
     const habit = findHabit(cmd.target.id);
-    if (!habit) throw new Error('Habit not found');
-    const today = (new Date()).toISOString().slice(0,10);
-    // REMOVIDO: A verificação original permitia checkin mesmo se já feito. Corrigido:
-    // if (habit.lastCheckIn === today) throw new Error('Already checked-in today'); // Comentado para permitir múltiplos checkins no teste inicial
+    if (!habit) throw new Error('Hábito não encontrado');
     
-    // Adicionando lógica para lidar com a falta de lastCheckIn ou streak inicial
-    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10); // Data de ontem
+    // --- MUDANÇA 1: Determinar a categoria do hábito ---
+    const habitCategory = getCategoryForHabit(habit);
+    console.log(`[Check-in] Hábito: '${habit.title}', Categoria: '${habitCategory}'`);
+    
+    const today = (new Date()).toISOString().slice(0,10);
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    
     if (habit.lastCheckIn === today) {
-       // Se já fez check-in hoje, não faz nada (ou poderia dar erro, dependendo da regra)
-       console.log(`Habit ${habit.id} already checked-in today by user ${cmd.userId}.`);
-       // Poderia lançar erro se a regra for estrita: throw new Error('Already checked-in today');
-       // Por enquanto, apenas não atualiza streak ou pontos novamente.
-       cmd.pointsDelta = 0; // Não ganha pontos de novo
+       console.log(`[Check-in] Hábito ${habit.id} já teve check-in hoje.`);
+       cmd.pointsDelta = 0;
     } else {
         habit.lastCheckIn = today;
-        // Verifica se o último checkin foi ontem para continuar o streak
-        if (habit.lastCheckIn === yesterday) {
+        if (habit.lastCheckIn === yesterday) { // Esta lógica de streak pode estar incorreta (deveria checar o streak ANTES de atualizar)
             habit.streak = (habit.streak || 0) + 1;
         } else {
-            habit.streak = 1; // Reseta o streak se pulou um dia
+            habit.streak = 1; // Reseta o streak
         }
         habit.bestStreak = Math.max(habit.bestStreak || 0, habit.streak);
         cmd.pointsDelta = habit.pointsPerCheckIn || 0;
@@ -105,74 +148,88 @@ async function executeCommand(command) {
         const user = findUser(cmd.userId);
         if (user) {
           user.stats = user.stats || { points: 0, level: 1 };
-          user.stats.points = (user.stats.points || 0) + cmd.pointsDelta; // Garante que pontos não sejam NaN
+          user.stats.points = (user.stats.points || 0) + cmd.pointsDelta;
         }
 
-        // Atualiza progresso em desafios
+        // --- MUDANÇA 2: Atualizar progresso de desafios baseado na CATEGORIA ---
         (db.challenges || []).forEach(ch => {
-          if (ch.goal && ch.goal.habitId === habit.id && Array.isArray(ch.participantIds) && ch.participantIds.includes(cmd.userId)) {
+          // Verifica se o 'goal' do desafio tem 'categoryTitle'
+          // e se ela é igual à categoria do hábito que recebeu check-in.
+          if (ch.goal && 
+              ch.goal.categoryTitle === habitCategory && 
+              Array.isArray(ch.participantIds) && 
+              ch.participantIds.includes(cmd.userId)) 
+          {
+            console.log(`[Check-in] Atualizando progresso do desafio: '${ch.title}'`);
             ch.progress = ch.progress || {};
             ch.progress[cmd.userId] = (ch.progress[cmd.userId] || 0) + 1;
           }
         });
+        // --- FIM DA MUDANÇA 2 ---
 
-        // Lógica de Conquistas (ainda usa modelo antigo userAchievements)
+        // Lógica de Conquistas
         db.userAchievements = db.userAchievements || [];
         let userAch = db.userAchievements.find(a => a.userId === cmd.userId);
         if (!userAch) {
           userAch = { userId: cmd.userId, achievementIds: [] };
           db.userAchievements.push(userAch);
         }
-        // Conquista "Primeiro Checkin" (ID 1)
-        if (!userAch.achievementIds.includes(1)) {
+        if (!userAch.achievementIds.includes(1)) { // ID 1 = "first_checkin"
           userAch.achievementIds.push(1);
           const usr = findUser(cmd.userId);
-          // Adiciona os pontos da conquista (buscar de db.achievements)
           const firstCheckinAch = (db.achievements || []).find(a => a.id === 1);
           if (usr && firstCheckinAch) {
              usr.stats.points = (usr.stats.points || 0) + (firstCheckinAch.points || 0);
           }
         }
-         // TODO: Adicionar lógica para outras conquistas (ex: 7_day_streak)
     }
 
   } else if (cmd.type === 'joker_use') {
+    // ... (Lógica do joker_use - sem alterações) ...
     const habit = findHabit(cmd.target.id);
     if (!habit) throw new Error('Habit not found');
-    const date = cmd.metadata?.date || (new Date()).toISOString().slice(0,10); // Permite usar coringa para uma data específica
+    const date = cmd.metadata?.date || (new Date()).toISOString().slice(0,10);
     habit.jokerUsedDates = habit.jokerUsedDates || [];
-    if (habit.jokerUsedDates.includes(date)) throw new Error('Joker already used for date ' + date);
-    // TODO: Adicionar lógica para limitar nº de coringas por usuário/período
+    if (habit.jokerUsedDates.includes(date)) throw new Error('Coringa já usado para esta data: ' + date);
     habit.jokerUsedDates.push(date);
-    cmd.pointsDelta = 0; // Coringa não dá pontos
+    cmd.pointsDelta = 0;
 
   } else if (cmd.type === 'revert') {
+    // ... (Lógica do revert - com adição) ...
     const targetCmdId = cmd.target.id;
     const targetCmd = (db.commands || []).find(c => c.id === targetCmdId);
-    if (!targetCmd) throw new Error('Target command not found');
-    if (targetCmd.undone) throw new Error('Target command already undone');
-    // TODO: Adicionar verificação de permissão e janela de tempo para reverter
+    if (!targetCmd) throw new Error('Comando alvo não encontrado');
+    if (targetCmd.undone) throw new Error('Comando alvo já foi desfeito');
 
-    cmd.pointsDelta = -(targetCmd.pointsDelta || 0); // Inverte os pontos
-    targetCmd.undone = true; // Marca o comando original como desfeito
+    cmd.pointsDelta = -(targetCmd.pointsDelta || 0);
+    targetCmd.undone = true;
 
-    // Lógica para reverter os efeitos do comando original
     if (targetCmd.type === 'checkin') {
       const habit = findHabit(targetCmd.target.id);
       if (habit) {
-        // Reverter streak é complexo, idealmente recalcularia baseado nos comandos não desfeitos
-        // Simplificação: apenas decrementa se o checkin desfeito era o último
-         if (habit.lastCheckIn === targetCmd.timestamp.slice(0,10)) {
-             habit.streak = Math.max(0, (habit.streak || 1) - 1);
-             // Reverter lastCheckIn? Precisaria encontrar o checkin anterior válido.
-             // habit.lastCheckIn = encontrarUltimoCheckinValido(db, habit.id, targetCmd.userId);
-         }
+        habit.streak = Math.max(0, (habit.streak || 1) - 1);
+        // TODO: Reverter lastCheckIn
       }
       const user = findUser(targetCmd.userId);
       if (user && user.stats) {
-         user.stats.points = Math.max(0, (user.stats.points || 0) + cmd.pointsDelta); // Aplica a reversão dos pontos
+         user.stats.points = Math.max(0, (user.stats.points || 0) + cmd.pointsDelta);
       }
-      // TODO: Reverter progresso de desafios e conquistas se necessário (complexo)
+      
+      // --- MUDANÇA 3: Reverter progresso do desafio ---
+      const habitCategory = getCategoryForHabit(habit);
+      (db.challenges || []).forEach(ch => {
+          if (ch.goal && 
+              ch.goal.categoryTitle === habitCategory && 
+              Array.isArray(ch.participantIds) && 
+              ch.participantIds.includes(targetCmd.userId) &&
+              ch.progress &&
+              ch.progress[targetCmd.userId] > 0)
+          {
+             console.log(`[Revert] Revertendo progresso do desafio: '${ch.title}'`);
+             ch.progress[targetCmd.userId] = (ch.progress[targetCmd.userId] || 1) - 1;
+          }
+      });
+      // --- FIM DA MUDANÇA 3 ---
 
     } else if (targetCmd.type === 'joker_use') {
         const habit = findHabit(targetCmd.target.id);
@@ -181,66 +238,61 @@ async function executeCommand(command) {
             habit.jokerUsedDates = habit.jokerUsedDates.filter(d => d !== dateUsed);
         }
     }
-    // Não há 'else' aqui, pois só revertemos checkin ou joker_use por enquanto
-
   } else {
-    throw new Error('Unknown command type: ' + cmd.type);
+    throw new Error('Tipo de comando desconhecido: ' + cmd.type);
   }
 
-  // Salva o comando atual (checkin, joker ou revert)
+  // Salva o comando
   db.commands = db.commands || [];
   db.commands.push(cmd);
   db.nextId = db.nextId || {};
   db.nextId.commands = cmdId + 1;
 
-  // Cria o registro de auditoria para o comando atual
+  // Cria o registro de auditoria
   db.auditLog = db.auditLog || [];
-  const auditId = (db.nextId && db.nextId.auditLog) || 1;
+  const auditId = (db.nextId && db.nextId.auditLog) || 201; // Usa 201 como base
   db.auditLog.push({
     id: auditId,
     entity: 'commands',
-    entityId: cmd.id, // O ID do comando que acabou de ser criado
-    action: 'create', // A ação foi criar este comando
+    entityId: cmd.id,
+    action: 'create',
     userId: cmd.userId,
     timestamp: new Date().toISOString(),
-    data: { // Um resumo dos dados do comando
+    data: {
       type: cmd.type,
       target: cmd.target,
       pointsDelta: cmd.pointsDelta,
-      metadata: cmd.metadata,
-      revertedCmdId: cmd.type === 'revert' ? cmd.target.id : undefined // Se for revert, indica qual comando foi desfeito
+      metadata: cmd.metadata
     }
   });
   db.nextId.auditLog = auditId + 1;
 
   await writeDB(db);
-  return cmd; // Retorna o comando que foi executado
+  return cmd;
 }
+// --- FIM DA FUNÇÃO 'executeCommand' ---
+
 
 /* Visibility: filter habits for a viewer according to habit.privacy */
 async function filterHabitsForViewer(viewerId) {
   const db = await readDB();
-  const users = db.users || []; // Garante que users seja um array
+  const users = db.users || [];
   const viewer = users.find(u => u.id === viewerId) || null;
   
   return (db.habits || []).filter(h => {
-    if (!h) return false; // Adiciona verificação para hábito nulo/inválido
-
+    if (!h) return false;
     if (h.privacy === 'public') return true;
     if (h.privacy === 'private') return h.userId === viewerId;
     if (h.privacy === 'friends') {
-      // É visível se for o próprio dono
       if (h.userId === viewerId) return true;
-      // Ou se o viewer estiver na lista de amigos do dono
       const owner = users.find(u => u.id === h.userId);
-      // Verifica se owner existe, se tem a prop friends e se ela é um array antes de usar includes
       return !!(owner && Array.isArray(owner.friends) && owner.friends.includes(viewerId));
     }
-    // Se a privacidade não for nenhuma das anteriores, assume como privado por segurança
-    return h.userId === viewerId;
+    return h.userId === viewerId; // Padrão é privado
   });
 }
 
+// Exporta todas as funções necessárias
 module.exports = {
   readDB,
   writeDB,

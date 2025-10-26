@@ -30,16 +30,6 @@ export const getToken = async (): Promise<string | null> => {
   }
 };
 
-// Remove o token (Logout)
-export const removeToken = async (): Promise<void> => {
-  try {
-    await AsyncStorage.removeItem(TOKEN_KEY);
-    console.log('Token removido com sucesso (Logout)!');
-  } catch (e) {
-    console.error('Erro ao remover o token:', e);
-  }
-};
-
 // --- Funções de Chamada de API ---
 
 export const apiRequest = async (
@@ -185,7 +175,7 @@ interface CreateChallengeData {
   startDate: string; // Formato AAAA-MM-DD
   endDate: string;   // Formato AAAA-MM-DD
   goal: {
-    habitId: number;
+    categoryTitle: string;
     checksRequired: number;
   };
   participantIds: number[];
@@ -208,6 +198,23 @@ export const createChallenge = async (
         console.error('Erro em createChallenge:', error);
         return { success: false, error: errorMessage };
     }
+};
+
+// Remove o token (Função auxiliar)
+export const removeToken = async (): Promise<void> => {
+  try {
+    await AsyncStorage.removeItem(TOKEN_KEY); // <-- APAGA O TOKEN
+    console.log('Token removido com sucesso (Logout)!');
+  } catch (e) {
+    console.error('Erro ao remover o token:', e);
+  }
+};
+
+// Função de Logout principal (Exportada e usada pela UI)
+export const logout = async (): Promise<void> => {
+    await removeToken(); // Chama a função para apagar o token
+    // Adicional: Aqui você poderia limpar algum estado global (Context API, Redux, etc.) se necessário
+    console.log("Usuário deslogado.");
 };
 
 // ... (Restante das suas funções em api.ts: getVisibleHabits, logout, etc.)
