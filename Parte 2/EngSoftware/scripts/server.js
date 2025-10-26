@@ -129,6 +129,42 @@ app.post('/login', async (req, res) => {
   }
 });
 
+//Criar desafio
+
+/* Endpoint para Criar um Novo Desafio (PROTEGIDO) */
+app.post('/challenges', authenticateToken, async (req, res) => {
+  try {
+    const challengeDataFromRequest = req.body;
+    const userIdFromToken = req.user.userId; // ID do usuário logado (criador)
+
+    // 1. Validação básica (pode adicionar mais validações se necessário)
+    if (!challengeDataFromRequest.title || !challengeDataFromRequest.goal?.habitId || !challengeDataFromRequest.endDate) {
+      return res.status(400).json({ error: 'Dados incompletos para criar o desafio (título, meta, data fim obrigatórios).' });
+    }
+
+    // 2. Preparar os dados para salvar no DB
+    // Garantir que o creatorId é o do usuário logado e adicionar participantes se necessário
+    const challengeToSave = {
+      ...challengeDataFromRequest,
+      creatorId: userIdFromToken, // Garante que o criador é o usuário do token
+      participantIds: [...new Set([...(challengeDataFromRequest.participantIds || []), userIdFromToken])], // Garante que o criador está na lista e que IDs são únicos
+      createdAt: new Date().toISOString(), // Adiciona data de criação no backend
+      progress: {} // Inicializa o progresso como vazio
+    };
+
+    // 3. Chamar a função do db.js para criar (usaremos a genérica por enquanto)
+    // Note que 'challenges' DEVE estar em ALLOWED_COLLECTIONS
+    const newChallenge = await db.create('challenges', challengeToSave); //
+
+    // 4. Retornar o desafio criado
+    res.status(201).json(newChallenge);
+
+  } catch (err) {
+    console.error("Erro ao criar desafio:", err);
+    res.status(500).json({ error: err.message || 'Erro interno ao criar desafio.' });
+  }
+});
+
 // --- ROTAS PROTEGIDAS (PRECISAM DE TOKEN JWT VÁLIDO) ---
 
 /* Endpoint de Hábitos Visíveis (PROTEGIDO) */
@@ -155,6 +191,9 @@ app.post('/commands', authenticateToken, async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+
+
 
 /* Generic CRUD endpoints (Protegidos ou Não, conforme a necessidade) */
 

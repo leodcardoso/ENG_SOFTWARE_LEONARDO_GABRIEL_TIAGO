@@ -176,3 +176,38 @@ export const register = async (
         return { success: false, error: errorMessage };
     }
 };
+// --- Funções Específicas da API (Continuação) ---
+
+// Define um tipo para os dados do desafio enviados (ajuste conforme necessário)
+interface CreateChallengeData {
+  creatorId: number;
+  title: string;
+  startDate: string; // Formato AAAA-MM-DD
+  endDate: string;   // Formato AAAA-MM-DD
+  goal: {
+    habitId: number;
+    checksRequired: number;
+  };
+  participantIds: number[];
+  privacy: 'public' | 'participants_only' | 'private';
+}
+
+// Função para Criar um Novo Desafio
+// Retorna { success: true, challenge: any } ou { success: false, error: string }
+export const createChallenge = async (
+  challengeData: CreateChallengeData
+): Promise<{ success: boolean; challenge?: any; error?: string }> => {
+    try {
+        const newChallenge = await apiRequest('/challenges', 'POST', challengeData);
+        return { success: true, challenge: newChallenge };
+    } catch(error) {
+        // ... (tratamento de erro) ...
+        let errorMessage = 'Erro desconhecido ao criar desafio.';
+        if (error instanceof Error) { errorMessage = error.message; }
+        else if (typeof error === 'string') { errorMessage = error; }
+        console.error('Erro em createChallenge:', error);
+        return { success: false, error: errorMessage };
+    }
+};
+
+// ... (Restante das suas funções em api.ts: getVisibleHabits, logout, etc.)
