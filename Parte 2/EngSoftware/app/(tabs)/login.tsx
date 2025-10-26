@@ -35,7 +35,7 @@ export default function LoginScreen() { // <--- Definição simplificada
       console.log("Login bem-sucedido!");
       Alert.alert("Sucesso!", "Login realizado com sucesso.");
       // Usa replace para que o utilizador não possa voltar para a tela de Login
-      router.replace('/ranking'); // AQUI MUDAR PARA O CERTO
+      router.replace('/'); // AQUI MUDAR PARA O CERTO
     } else {
       console.error("Erro no login:", result.error);
       setError(result.error || "Erro desconhecido ao tentar fazer login."); 

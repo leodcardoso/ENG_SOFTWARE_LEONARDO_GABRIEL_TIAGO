@@ -146,3 +146,33 @@ export const login = async (
 };
 // Função de Registro
 // Retorna { success: true, user: any } ou { success: false, error: string }
+
+export const register = async (
+  name: string,
+  email: string,
+  password: string
+): Promise<{ success: boolean; user?: any; error?: string }> => {
+    try {
+        // Chama a função genérica apiRequest para fazer a chamada POST para /register
+        // Não precisamos nos preocupar com o token aqui; apiRequest não o enviará
+        // se ele não existir (o que é o caso durante o registro).
+        const registeredUser = await apiRequest('/register', 'POST', { name, email, password }); // Chama o endpoint POST /register
+
+        // Se apiRequest foi bem-sucedido (não lançou erro), retorna sucesso
+        // e os dados do usuário recém-criado (sem o hash da senha, como definido no backend)
+        return { success: true, user: registeredUser };
+
+    } catch(error) {
+        // Se apiRequest lançou um erro (capturado do fetch ou do backend),
+        // trata o erro para retornar a mensagem correta.
+        let errorMessage = 'Erro desconhecido ao tentar registrar a conta.'; // Mensagem padrão
+        if (error instanceof Error) {
+          errorMessage = error.message; // Usa a mensagem do erro capturado
+        } else if (typeof error === 'string') {
+          errorMessage = error; // Se o erro for apenas uma string
+        }
+        console.error('Erro capturado na função register:', error); // Loga o erro original
+        // Retorna falha com a mensagem de erro tratada
+        return { success: false, error: errorMessage };
+    }
+};

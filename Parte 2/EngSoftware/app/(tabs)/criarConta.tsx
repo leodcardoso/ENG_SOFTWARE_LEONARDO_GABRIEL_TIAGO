@@ -1,69 +1,163 @@
 import React, { useState } from "react";
-import {  View,  Text,  TextInput,  TouchableOpacity,  FlatList,  Image,  StyleSheet,  Button} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-// import DateTimePicker from '@react-native-community/datetimepicker';
-// import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  StyleSheet, 
+  Button,
+  Alert
+  // Removidos imports não utilizados: TouchableOpacity, FlatList, Image, Ionicons
+} from "react-native";
+// Importa a função de registro do seu arquivo de API
+// !! Ajuste o caminho se necessário !!
+import { register } from '../../services/api'; 
+// Importa o hook useRouter do Expo Router para navegação
+import { useRouter } from 'expo-router';
 
-function salvaConta(nome:string, login:string, senha:string) {
-  // Lógica para salvar o desafio no banco de dados
-    let idd = Math.floor(Math.random() * 1000000);// preciso gerar um id no back
-  console.log("Conta Salva:", { nome, login, senha, idd});
-  // preciso percorrer os amigos e salvar só os que foram selecionados
-}
-
-
-
-
-export default function CriarDesafioScreen() {
+// Renomeado para CriarContaScreen
+export default function CriarContaScreen() { 
   const [nome, setNome] = useState("");
-  const [login, setLogin] = useState("");
+  // Renomeado para 'email' para corresponder ao backend
+  const [email, setEmail] = useState(""); 
   const [senha, setSenha] = useState("");
+  // Estado para confirmação de senha
+  const [confirmarSenha, setConfirmarSenha] = useState(""); 
+  
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(""); 
+  const router = useRouter(); 
+
+  // Função que será chamada pelo botão "Criar Conta"
+  const handleRegister = async () => {
+    setError(""); // Limpa erros anteriores
+
+    // --- Validação Simples ---
+    if (!nome || !email || !senha || !confirmarSenha) {
+      setError("Todos os campos são obrigatórios.");
+      Alert.alert("Erro", "Por favor, preencha todos os campos.");
+      return;
+    }
+    if (senha !== confirmarSenha) {
+      setError("As senhas não coincidem.");
+      Alert.alert("Erro", "As senhas digitadas não coincidem.");
+      return;
+    }
+    // TODO: Adicionar validação de formato de email
+
+    setLoading(true); // Ativa o indicador de carregamento
+
+    // Chama a função 'register' do api.ts
+    const result = await register(nome, email, senha); 
+
+    setLoading(false); // Desativa o indicador de carregamento
+
+    if (result.success) {
+      console.log("Conta criada com sucesso:", result.user);
+      Alert.alert(
+        "Sucesso!", 
+        "Conta criada com sucesso. Faça o login para continuar.",
+        [{ text: "OK", onPress: () => router.push('/login') }] // Botão OK redireciona para login
+      );
+      // Limpa os campos após sucesso (opcional)
+      setNome('');
+      setEmail('');
+      setSenha('');
+      setConfirmarSenha('');
+      
+      router.push('/login'); // Navega para a tela de login
+    } else {
+      // Registro falhou
+      console.error("Erro ao criar conta:", result.error);
+      const errorMessage = result.error || "Erro desconhecido ao tentar criar a conta.";
+      setError(errorMessage); 
+      Alert.alert("Erro ao Criar Conta", errorMessage);
+    }
+  };
   
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Login</Text>
+      {/* Título corrigido */}
+      <Text style={styles.titulo}>Criar Nova Conta</Text> 
       <View style={styles.card}>
-        <Text style={styles.label}>Nome de usuario</Text>
+        <Text style={styles.label}>Nome de Usuário</Text>
         <TextInput
           style={styles.input}
           value={nome}
           onChangeText={setNome}
+          placeholder="Seu nome completo ou apelido"
+          placeholderTextColor="#999"
+          autoCapitalize="words" // Capitaliza nomes
         />
-        <Text style={styles.label}>login</Text>
+        {/* Campo ajustado para Email */}
+        <Text style={styles.label}>Email</Text> 
         <TextInput
           style={styles.input}
-          value={login}
-          onChangeText={setLogin}
+          value={email} // Usa o estado 'email'
+          onChangeText={setEmail} // Atualiza o estado 'email'
+          keyboardType="email-address" 
+          autoCapitalize="none" 
+          placeholder="seuemail@exemplo.com" 
+          placeholderTextColor="#999"
         />
-        <Text style={styles.label}>senha</Text>
+        <Text style={styles.label}>Senha</Text>
         <TextInput
           style={styles.input}
           value={senha}
           onChangeText={setSenha}
+          secureTextEntry // Esconde a senha
+          placeholder="Crie uma senha segura" 
+          placeholderTextColor="#999"
+        />
+        {/* Campo de Confirmação de Senha */}
+        <Text style={styles.label}>Confirmar Senha</Text> 
+        <TextInput
+          style={styles.input}
+          value={confirmarSenha} // Usa o estado 'confirmarSenha'
+          onChangeText={setConfirmarSenha} // Atualiza o estado 'confirmarSenha'
+          secureTextEntry // Esconde a senha
+          placeholder="Digite a senha novamente" 
+          placeholderTextColor="#999"
         />
         
-
+        {/* Mostra a mensagem de erro, se houver */}
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </View>
-      <Button title="Criar conta" onPress={() => {salvaConta(nome, login, senha)}} />
+      {/* Botão chama handleRegister */}
+      <Button 
+        title={loading ? "Criando..." : "Criar Conta"} 
+        onPress={handleRegister} 
+        disabled={loading} 
+      />
+       {/* Botão para voltar ao Login */}
+       <View style={{ marginTop: 15 }}> 
+         <Button 
+            title="Já tem conta? Faça Login" 
+            onPress={() => router.push('/login')} 
+            color="#007AFF" // Cor azul (opcional)
+         />
+       </View>
     </View>
   );
 }
 
+// Estilos adaptados da sua tela de login
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
     padding: 20,
+    justifyContent: 'center', 
   },
   titulo: {
-    fontSize: 18,
+    fontSize: 24, 
     fontWeight: "700",
-    marginBottom: 16,
+    marginBottom: 24, 
+    textAlign: 'center', 
   },
   card: {
     backgroundColor: "#fafafa",
     borderRadius: 12,
-    padding: 16,
+    padding: 20, 
     marginBottom: 24,
     borderWidth: 1,
     borderColor: "#eee",
@@ -71,72 +165,23 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: "600",
     fontSize: 14,
-    marginTop: 8,
+    marginTop: 12, 
+    marginBottom: 4, 
   },
   input: {
     backgroundColor: "#fff",
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "#ddd",
-    padding: 10,
-    marginTop: 4,
+    paddingHorizontal: 12, 
+    paddingVertical: 10, 
+    fontSize: 16, 
+    color: '#333', 
   },
-  textArea: {
-    height: 80,
-    textAlignVertical: "top",
-  },
-  dateInput: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    padding: 10,
-    marginTop: 4,
-  },
-  dateText: {
-    color: "#666",
-  },
-  subtitulo: {
-    fontWeight: "600",
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  amigoCard: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#fafafa",
-    borderRadius: 12,
-    padding: 10,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#eee",
-  },
-  amigoInfo: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  foto: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 12,
-  },
-  nomeAmigo: {
-    fontSize: 15,
-    fontWeight: "500",
-  },
-  radio: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#aaa",
-  },
-  radioSelecionado: {
-    backgroundColor: "#007AFF",
-    borderColor: "#007AFF",
+  errorText: { 
+    color: 'red',
+    marginTop: 15, // Aumenta espaço
+    textAlign: 'center',
+    fontSize: 14,
   },
 });

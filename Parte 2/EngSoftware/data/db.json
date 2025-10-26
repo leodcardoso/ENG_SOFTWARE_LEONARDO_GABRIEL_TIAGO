@@ -127,6 +127,21 @@
         "points": 15,
         "level": 1
       }
+    },
+    {
+      "id": 6,
+      "name": "Tiago Bettanin",
+      "email": "tiago@gmail.com",
+      "passwordHash": "$2b$10$7Jin/9R0UNCj0DFmiWkpceAWFFyjOuasBiOZ9Hbti/jox00nIQMYC",
+      "role": "developer",
+      "createdAt": "2025-10-26T00:07:26.247Z",
+      "profile": {},
+      "settings": {},
+      "friends": [],
+      "stats": {
+        "points": 0,
+        "level": 1
+      }
     }
   ],
   "habits": [
