@@ -4,7 +4,7 @@ import {
   Text,
   Image,
   ScrollView,
-  TouchableOpacity, // Agora será usado para o check-in
+  TouchableOpacity,
   StyleSheet,
   SafeAreaView,
   Button,
@@ -13,19 +13,17 @@ import {
   RefreshControl
 } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
-// Ajuste o caminho se necessário (ex: ../services/api)
+// Ajuste o caminho se necessário
 import { apiRequest, getToken, logout, checkInHabit } from '../../services/api'; 
-// REMOVIDO: HabitoConcluido, HabitoProgresso
+// REMOVIDO: HabitoConcluido e HabitoProgresso (Substituído por renderização inline)
 import { Ionicons } from '@expo/vector-icons';
-
-// Opcional: Se for decodificar token no frontend
 import { jwtDecode } from "jwt-decode"; 
 
 // --- Interfaces ---
 interface UserProfile { id: number; name: string; email: string; role: string; createdAt: string; profile: { avatar: string | null; bio: string; locale?: string; timezone?: string; }; settings: { notifications?: boolean; remindersDefault?: string; privateByDefault?: boolean; }; friends: number[]; stats: { points: number; level: number; }; }
 interface Habit { id: number; userId: number; title: string; description: string; frequency: string; schedule: string[]; reminders: string[]; streak: number; bestStreak: number; lastCheckIn: string | null; pointsPerCheckIn: number; active: boolean; privacy: string; createdAt: string; jokerUsedDates: string[]; }
 interface HabitsByStatus { ativos: Habit[]; inativos: Habit[]; }
-interface JwtPayload { userId: number; /* outros campos... */ } // Interface mínima para o decode
+interface JwtPayload { userId: number; /* outros campos... */ } 
 
 export default function IndexScreen() {
   const router = useRouter();
@@ -34,13 +32,11 @@ export default function IndexScreen() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // Estado para bloquear cliques durante check-in
-  const [checkInLoading, setCheckInLoading] = useState<number | null>(null); // Guarda o ID do hábito
+  const [checkInLoading, setCheckInLoading] = useState<number | null>(null);
 
   // --- Função para buscar todos os dados ---
   const fetchData = useCallback(async (isRefreshing = false) => {
-    // Só mostra loading inicial na primeira carga
-    if (!isRefreshing && !usuario) setLoading(true); 
+    if (!isRefreshing && !usuario) setLoading(true);
     setError(null);
     let currentUserId: number | null = null;
     let userProfileData: UserProfile | null = null;
@@ -54,19 +50,18 @@ export default function IndexScreen() {
           const decoded = jwtDecode<JwtPayload>(token); currentUserId = decoded.userId;
       } catch (decodeError) { console.error("Erro decode:", decodeError); setError("Sessão inválida."); await logout(); if (!isRefreshing) setLoading(false); router.replace('/login'); return; }
 
-      // Busca perfil completo SE ainda não tiver ou for um refresh manual
-      if (currentUserId && (!usuario || isRefreshing)) {
+      // Sempre busca o perfil se currentUserId for diferente de null
+      if (currentUserId) {
           console.log(`Buscando perfil para userId: ${currentUserId}`);
           userProfileData = await apiRequest(`/users/${currentUserId}`);
-          setUsuario(userProfileData);
+          setUsuario(userProfileData); // <-- ATUALIZA ESTADO DO USUÁRIO AQUI
       } else if (usuario) {
-          // Se já tem usuário e não é refresh, usa o ID do estado atual
           currentUserId = usuario.id;
       }
 
       if (!currentUserId) { throw new Error("Não foi possível obter o ID do usuário.");}
 
-    } catch (err) { // Tratamento de erro 'unknown'
+    } catch (err) {
       console.error('Erro user/token:', err);
       let errorMsg = 'Erro ao carregar dados do usuário.';
       if (err instanceof Error) {
@@ -86,12 +81,11 @@ export default function IndexScreen() {
     // 2. Buscar Hábitos do Usuário
     try {
       console.log(`Buscando hábitos visíveis para userId: ${currentUserId}`);
-      // Chama a API que já filtra pela privacidade (baseado no token)
-      const habitsResponse = await apiRequest('/habits-visible'); 
+      const habitsResponse = await apiRequest('/habits-visible');
       if (Array.isArray(habitsResponse)) {
-        // Separa os hábitos entre ativos e inativos
+        // FILTRAGEM CORRETA:
         const ativos = habitsResponse.filter((h: Habit) => h.active);
-        const inativos = habitsResponse.filter((h: Habit) => !h.active);
+        const inativos = habitsResponse.filter((h: Habit) => !h.active); // ID 3 ("Academia") deve vir para cá
         setHabitos({ ativos, inativos });
       } else { setHabitos({ ativos: [], inativos: [] }); }
     } catch (err) {
@@ -100,66 +94,58 @@ export default function IndexScreen() {
        setHabitos({ ativos: [], inativos: [] });
      }
     finally { if (!isRefreshing) setLoading(false); setRefreshing(false); }
-  // Dependência [router] para a função 'replace'
-  // [usuario] foi removido para evitar loops (lógica !usuario || isRefreshing já controla)
-  }, [router]); 
+  }, [usuario, router]);
 
   // --- useFocusEffect para Recarregar ao Voltar para a Tela ---
   useFocusEffect(
     useCallback(() => {
       console.log('Tela Index em foco, buscando dados...');
-      fetchData(); // Chama fetchData toda vez que a tela recebe foco
-    }, [fetchData]) // Depende da função fetchData
+      fetchData();
+    }, [fetchData])
   );
 
-  // --- onRefresh (Pull-to-Refresh) ---
   const onRefresh = useCallback(() => {
     console.log('Iniciando refresh...');
     setRefreshing(true);
-    fetchData(true); // Chama fetchData indicando que é refresh manual
-  }, [fetchData]); // Depende de fetchData
+    fetchData(true);
+  }, [fetchData]);
 
   // --- Função para fazer Check-in ---
   const handleCheckIn = async (habitId: number) => {
-      if (checkInLoading) return; // Impede clique duplo
-      setCheckInLoading(habitId); // Define o ID do hábito que está carregando
-      setError(null); // Limpa erros antigos
+      if (checkInLoading) return;
+      setCheckInLoading(habitId);
+      setError(null);
 
-      // Chama a função 'checkInHabit' da api.ts
-      const result = await checkInHabit(habitId); 
+      const result = await checkInHabit(habitId);
 
       if (result.success) {
           console.log('Check-in com sucesso:', result.command);
-          // Otimista: Atualiza a UI imediatamente para o usuário ver
           setHabitos(prev => ({
               ...prev,
               ativos: prev.ativos.map(h => 
                   h.id === habitId 
                   ? { ...h, 
-                      lastCheckIn: new Date().toISOString().slice(0, 10), // Marca como feito hoje
-                      streak: (h.streak || 0) + 1 // Incrementa streak (pode ser corrigido pelo fetchData)
+                      lastCheckIn: new Date().toISOString().slice(0, 10), 
+                      streak: (h.streak || 0) + 1 
                     }
                   : h
               )
           }));
-          // Atualiza dados completos (recarrega pontos e streaks corretos do backend)
-          fetchData(true); // Faz um refresh silencioso em background
+          fetchData(true); // Faz um refresh silencioso
       } else {
           console.error("Erro no check-in:", result.error);
           setError(result.error || "Falha ao fazer check-in.");
       }
-      setCheckInLoading(null); // Libera o botão
+      setCheckInLoading(null);
   };
 
 
   // --- Renderização ---
 
-  // Estado de Loading Inicial
   if (loading) {
     return <View style={styles.centered}><ActivityIndicator size="large" color="#007AFF" /><Text style={styles.loadingText}>Carregando perfil...</Text></View>;
   }
 
-  // Estado de Erro Fatal (não conseguiu carregar usuário)
   if (!usuario) {
        return (
          <View style={styles.centered}>
@@ -174,7 +160,6 @@ export default function IndexScreen() {
   }
 
   // Renderização principal do perfil
-  // Adicionado '!' para 'usuario' para corrigir erros de 'possibly null'
   return (
     <SafeAreaView style={styles.containerSafeArea}>
       <ScrollView
@@ -191,14 +176,14 @@ export default function IndexScreen() {
           <Text style={styles.name}>{usuario!.name}</Text>
           {usuario!.profile?.bio ? <Text style={styles.bio}>{usuario!.profile.bio}</Text> : null}
           <View style={styles.statsRow}>
-             {/* Calcula o maior streak ATIVO */}
+             {/* Estatísticas baseadas no usuário logado */}
              <Text style={styles.statItem}>🔥 { Math.max(0, ...(habitos.ativos.map(h => h.streak || 0))) } Dias</Text>
              <Text style={styles.statItem}>💧 {usuario!.stats.points} pts</Text>
              <Text style={styles.statItem}>⭐ Nível {usuario!.stats.level}</Text>
           </View>
         </View>
 
-        {/* Seção de erro não fatal (ex: falha ao carregar hábitos) */}
+        {/* Seção de erro não fatal */}
         {error && <Text style={styles.errorText}>{error}</Text>}
 
         {/* Hábitos Ativos */}
@@ -210,32 +195,26 @@ export default function IndexScreen() {
                 data={habitos.ativos}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => {
-                    // --- RENDERIZAÇÃO INLINE (Sem HabitoProgresso) ---
-                    // Verifica se o último check-in foi hoje
                     const isDoneToday = item.lastCheckIn === new Date().toISOString().slice(0, 10);
-                    // Verifica se este hábito específico está carregando o check-in
                     const isLoadingThis = checkInLoading === item.id;
-                    
                     return (
-                        // Card clicável (mas o clique agora é no botão de check-in)
+                        // Card de Hábito Ativo
                         <View style={styles.habitCard}>
                             <View style={styles.habitInfo}>
                                 <Text style={styles.habitTitle}>{item.title}</Text>
-                                {/* Exibe o dado REAL 'streak' do db.json */}
                                 <Text style={styles.habitStreak}>Sequência: {item.streak || 0} dias</Text>
                             </View>
-                            {/* Lógica do Botão de Check-in */}
                             <View style={styles.habitCheck}>
                                 {isLoadingThis ? (
-                                    <ActivityIndicator color="#007AFF" /> // Mostra loading
+                                    <ActivityIndicator color="#007AFF" /> 
                                 ) : isDoneToday ? (
-                                    // Hábito feito hoje (baseado na imagem 1401c8.png)
+                                    // Checkmark Verde
                                     <Ionicons name="checkmark-circle" size={32} color="#34C759" />
                                 ) : (
-                                    // Botão (TouchableOpacity) para fazer check-in
+                                    // Botão de Check-in (Círculo Vazio)
                                     <TouchableOpacity 
                                       onPress={() => handleCheckIn(item.id)} 
-                                      disabled={checkInLoading !== null} // Desabilita se QUALQUER check-in estiver ocorrendo
+                                      disabled={checkInLoading !== null} 
                                     >
                                         <Ionicons name="ellipse-outline" size={32} color="#ccc" />
                                     </TouchableOpacity>
@@ -243,9 +222,8 @@ export default function IndexScreen() {
                             </View>
                         </View>
                     );
-                    // --- FIM DA RENDERIZAÇÃO INLINE ---
                 }}
-                scrollEnabled={false} // Desabilita scroll da lista interna
+                scrollEnabled={false}
              />
         )}
 
@@ -258,25 +236,22 @@ export default function IndexScreen() {
                  data={habitos.inativos}
                  keyExtractor={(item) => item.id.toString()}
                  renderItem={({ item }) => (
-                    // --- RENDERIZAÇÃO INLINE (Sem HabitoConcluido) ---
+                    // Card de Hábito Arquivado
                     <View style={[styles.habitCard, styles.habitDoneCard]}>
                         <Ionicons name="archive-outline" size={24} color="#888" style={{marginRight: 10}} />
                         <View style={styles.habitInfo}>
                             <Text style={styles.habitDoneTitle}>{item.title}</Text>
-                            {/* Exibe o dado REAL 'bestStreak' do db.json */}
                             <Text style={styles.habitDoneStreak}>Melhor Sequência: {item.bestStreak || 0} dias</Text>
                         </View>
                     </View>
-                    // --- FIM DA RENDERIZAÇÃO INLINE ---
                  )}
-                 scrollEnabled={false} // Desabilita scroll da lista interna
+                 scrollEnabled={false}
              />
          )}
 
         {/* Botões de Ação */}
         <View style={styles.buttonContainer}>
-          {/* --- CORREÇÃO Navegação (Usando o caminho que você confirmou) --- */}
-          <Button title="Criar Desafio" onPress={() => router.push('/(tabs)/criarDesafio')} />
+          <Button title="Criar Desafio" onPress={() => router.push('//criarDesafio')} />
           <View style={{ marginTop: 15 }}>
             <Button title="Logout" onPress={async () => { await logout(); router.replace('/login'); }} color="#FF3B30" />
           </View>
@@ -310,9 +285,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 12,
-    paddingVertical: 14, // Um pouco mais de altura
+    paddingVertical: 14,
     paddingHorizontal: 16,
-    marginHorizontal: 15, // Alinha com o título da seção
+    marginHorizontal: 15,
     marginBottom: 10,
     elevation: 2,
     shadowColor: "#000",
@@ -361,7 +336,6 @@ const styles = StyleSheet.create({
   habitDoneStreak: {
     fontSize: 14,
     color: '#999',
-    marginLeft: 10,
     marginTop: 2,
   },
 });
