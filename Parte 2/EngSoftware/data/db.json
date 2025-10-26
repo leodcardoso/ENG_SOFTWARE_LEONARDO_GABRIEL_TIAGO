@@ -7,8 +7,8 @@
     "achievements": 7,
     "notifications": 6,
     "docs": 1,
-    "commands": 102,
-    "auditLog": 202
+    "commands": 103,
+    "auditLog": 203
   },
   "users": [
     {
@@ -116,7 +116,7 @@
       "settings": {},
       "friends": [],
       "stats": {
-        "points": 0,
+        "points": 10,
         "level": 1
       }
     }
@@ -201,9 +201,9 @@
       "reminders": [
         "22:30"
       ],
-      "streak": 3,
+      "streak": 1,
       "bestStreak": 10,
-      "lastCheckIn": "2025-10-22",
+      "lastCheckIn": "2025-10-26",
       "pointsPerCheckIn": 5,
       "active": true,
       "privacy": "public",
@@ -531,6 +531,12 @@
       "achievementIds": [
         1
       ]
+    },
+    {
+      "userId": 6,
+      "achievementIds": [
+        1
+      ]
     }
   ],
   "notifications": [
@@ -613,6 +619,21 @@
       },
       "pointsDelta": 10,
       "undone": false
+    },
+    {
+      "id": 102,
+      "timestamp": "2025-10-26T05:48:28.143Z",
+      "userId": 6,
+      "type": "checkin",
+      "target": {
+        "type": "habit",
+        "id": 4
+      },
+      "metadata": {
+        "source": "app"
+      },
+      "pointsDelta": 5,
+      "undone": false
     }
   ],
   "auditLog": [
@@ -648,6 +669,25 @@
         "pointsDelta": 10,
         "metadata": {
           "source": "postman_test"
+        }
+      }
+    },
+    {
+      "id": 202,
+      "entity": "commands",
+      "entityId": 102,
+      "action": "create",
+      "userId": 6,
+      "timestamp": "2025-10-26T05:48:28.145Z",
+      "data": {
+        "type": "checkin",
+        "target": {
+          "type": "habit",
+          "id": 4
+        },
+        "pointsDelta": 5,
+        "metadata": {
+          "source": "app"
         }
       }
     }

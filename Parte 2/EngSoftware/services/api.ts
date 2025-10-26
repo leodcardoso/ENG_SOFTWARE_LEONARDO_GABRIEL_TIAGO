@@ -217,4 +217,39 @@ export const logout = async (): Promise<void> => {
     console.log("Usuário deslogado.");
 };
 
+export const checkInHabit = async (habitId: number): Promise<{ success: boolean; command?: any; error?: string }> => {
+  
+  // 1. Monta o objeto 'command' que o backend (db.js) espera
+  const commandBody = {
+    type: 'checkin',
+    target: {
+      type: 'habit',
+      id: habitId
+    },
+    metadata: {
+      source: 'app' // Informa que a ação veio do aplicativo
+    }
+  };
+
+  try {
+    // 2. Chama o endpoint POST /commands com o objeto do comando
+    // apiRequest já lida com o método POST e o token JWT
+    const result = await apiRequest('/commands', 'POST', commandBody); //
+    
+    // 3. Retorna sucesso com o resultado do comando
+    return { success: true, command: result };
+
+  } catch (error) {
+    // 4. Trata qualquer erro (ex: 401, 500, ou erro de rede)
+    let errorMessage = 'Erro desconhecido ao tentar fazer check-in';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    } else if (typeof error === 'string') {
+      errorMessage = error;
+    }
+    console.error('Erro capturado em checkInHabit:', error);
+    return { success: false, error: errorMessage };
+  }
+};
+
 // ... (Restante das suas funções em api.ts: getVisibleHabits, logout, etc.)
