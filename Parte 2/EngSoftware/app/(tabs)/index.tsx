@@ -93,8 +93,11 @@ export default function IndexScreen() {
        setError('Não foi possível carregar os hábitos.');
        setHabitos({ ativos: [], inativos: [] });
      }
-    finally { if (!isRefreshing) setLoading(false); setRefreshing(false); }
-  }, [usuario, router]);
+    finally { 
+      if (!isRefreshing) setLoading(false); 
+      setRefreshing(false); 
+    }
+  }, [router]);
 
   // --- useFocusEffect para Recarregar ao Voltar para a Tela ---
   useFocusEffect(
