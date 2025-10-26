@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import {
-  View,
+  Alert,
+  Button,
+  ScrollView // Import ScrollView for longer forms
+  ,
+  StyleSheet,
   Text,
   TextInput,
-  StyleSheet,
-  Button,
-  Alert,
-  ScrollView // Import ScrollView for longer forms
+  View
 } from "react-native";
 // Importa a função de registro do seu arquivo de API
 // !! Ajuste o caminho se necessário !!
-import { register } from '../../services/api';
+import { register } from '../services/api';
 // Importa o hook useRouter do Expo Router para navegação
 import { useRouter } from 'expo-router';
 
