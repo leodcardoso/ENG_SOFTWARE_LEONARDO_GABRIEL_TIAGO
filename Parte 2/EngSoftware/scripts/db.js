@@ -46,21 +46,17 @@ async function getById(collection, id) {
   return list.find(x => x.id === id) || null;
 }
 
-// --- FUNÇÃO 'CREATE' CORRIGIDA ---
-// (Usa db.nextId para consistência com o resto do app e executeCommand)
 async function create(collection, item) {
   const db = await readDB();
   db[collection] = db[collection] || [];
-  // Usa o nextId para a coleção específica, ou 1 como padrão
-  const next = (db.nextId && db.nextId[collection]) || 1;
-  const newItem = { id: next, ...item };
-  db[collection].push(newItem);
   db.nextId = db.nextId || {};
-  db.nextId[collection] = next + 1; // Incrementa o nextId
+  const nextId = db.nextId[collection] || 1; 
+  const newItem = { id: nextId, ...item };
+  db[collection].push(newItem);
+  db.nextId[collection] = nextId + 1; 
   await writeDB(db);
   return newItem;
 }
-// --- FIM DA CORREÇÃO ---
 
 async function update(collection, id, changes) {
   const db = await readDB();

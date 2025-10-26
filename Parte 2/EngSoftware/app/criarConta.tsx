@@ -85,7 +85,7 @@ export default function CriarContaScreen() {
       setHorarioLembrete('09:00');
       // setPrivadoPadrao(false); // Removido
 
-      // router.push('/login'); // Já está no Alert onPress
+      router.push('/login'); // Já está no Alert onPress
     } else {
       console.error("Erro ao criar conta:", result.error);
       const errorMessage = result.error || "Erro desconhecido ao tentar criar a conta.";

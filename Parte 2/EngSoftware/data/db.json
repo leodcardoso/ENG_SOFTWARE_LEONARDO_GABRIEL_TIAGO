@@ -1,6 +1,6 @@
 {
   "nextId": {
-    "users": 5,
+    "users": 8,
     "habits": 7,
     "tasks": 7,
     "challenges": 4,
@@ -122,6 +122,21 @@
       ],
       "stats": {
         "points": 10,
+        "level": 1
+      }
+    },
+    {
+      "id": 7,
+      "name": "teste7",
+      "email": "teste7@gmail.com",
+      "passwordHash": "$2b$10$1AQ5G0trmHyUzDZoXBfupup.0R6zL37znKHtx.mDs3v6kyF6viNvK",
+      "role": "developer",
+      "createdAt": "2025-10-26T19:21:44.476Z",
+      "profile": {},
+      "settings": {},
+      "friends": [],
+      "stats": {
+        "points": 0,
         "level": 1
       }
     }
