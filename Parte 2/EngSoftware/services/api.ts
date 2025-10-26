@@ -168,35 +168,32 @@ export const register = async (
 };
 // --- Funções Específicas da API (Continuação) ---
 
-// Define um tipo para os dados do desafio enviados (ajuste conforme necessário)
 interface CreateChallengeData {
-  creatorId: number;
   title: string;
-  startDate: string; // Formato AAAA-MM-DD
-  endDate: string;   // Formato AAAA-MM-DD
+  startDate: string; 
+  endDate: string;   
   goal: {
     categoryTitle: string;
     checksRequired: number;
   };
-  participantIds: number[];
+  invitedFriendIds: number[]; // <-- MUDANÇA (antes era participantIds)
   privacy: 'public' | 'participants_only' | 'private';
 }
 
-// Função para Criar um Novo Desafio
-// Retorna { success: true, challenge: any } ou { success: false, error: string }
+// Função para Criar um Novo Desafio (ATUALIZADA)
 export const createChallenge = async (
-  challengeData: CreateChallengeData
+  challengeData: Omit<CreateChallengeData, 'creatorId'> // Omitimos creatorId, pois o backend define
 ): Promise<{ success: boolean; challenge?: any; error?: string }> => {
     try {
-        const newChallenge = await apiRequest('/challenges', 'POST', challengeData);
+        // A chamada continua a mesma, mas o objeto 'challengeData' agora tem 'invitedFriendIds'
+        const newChallenge = await apiRequest('/challenges', 'POST', challengeData); 
         return { success: true, challenge: newChallenge };
     } catch(error) {
-        // ... (tratamento de erro) ...
-        let errorMessage = 'Erro desconhecido ao criar desafio.';
-        if (error instanceof Error) { errorMessage = error.message; }
-        else if (typeof error === 'string') { errorMessage = error; }
-        console.error('Erro em createChallenge:', error);
-        return { success: false, error: errorMessage };
+        let msg = 'Erro desconhecido ao criar desafio.'; 
+        if (error instanceof Error) { msg = error.message; } 
+        else if (typeof error === 'string') { msg = error; }
+        console.error('Erro em createChallenge:', error); 
+        return { success: false, error: msg };
     }
 };
 

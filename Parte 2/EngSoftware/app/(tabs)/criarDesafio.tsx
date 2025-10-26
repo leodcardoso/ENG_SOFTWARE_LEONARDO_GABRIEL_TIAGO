@@ -159,7 +159,66 @@ export default function CriarDesafioScreen() {
   const isValidDateString = (dateString: string): boolean => { const regex = /^\d{4}-\d{2}-\d{2}$/; if (!regex.test(dateString)) return false; const date = new Date(dateString + "T00:00:00"); const timestamp = date.getTime(); if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) return false; return date.toISOString().startsWith(dateString); };
 
   // --- Função de Submissão ---
-  const handleCriarDesafio = async () => { /* ... (Lógica idêntica à anterior) ... */ setError(""); setSubmitLoading(true); const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0, 0, 0, 0); if (!titulo || !categoriaSelecionadaId || !checkInsNecessarios || !dataFim) { setError("Preencha Título, Categoria, Nº Check-ins e Data Fim (AAAA-MM-DD)."); console.error("Validação:", "Campos obrigatórios"); setSubmitLoading(false); return; } if (!isValidDateString(dataFim)) { setError("Formato da Data Fim inválido (AAAA-MM-DD)."); console.error("Validação:", "Formato data"); setSubmitLoading(false); return; } const numCheckIns = parseInt(checkInsNecessarios, 10); if (isNaN(numCheckIns) || numCheckIns <= 0) { setError("Nº de check-ins inválido."); console.error("Validação:", "Nº check-ins"); setSubmitLoading(false); return; } const dataFimObj = new Date(dataFim + "T00:00:00"); if (dataFimObj < tomorrow) { setError("Data de término deve ser a partir de amanhã."); console.error("Validação:", "Data passada"); setSubmitLoading(false); return; } const selectedCategory = HABIT_CATEGORIES.find(cat => cat.id === categoriaSelecionadaId); const participantesIds = amigos.filter(a => a.selecionado).map(a => a.id); if (!userIdLogado) { setError("ID do criador não encontrado."); console.error("Erro:", "ID Criador nulo"); setSubmitLoading(false); return; } participantesIds.push(userIdLogado); const challengeData = { creatorId: userIdLogado, title: titulo, startDate: new Date().toISOString().slice(0, 10), endDate: dataFim, goal: { categoryTitle: selectedCategory?.title || 'Outro', checksRequired: numCheckIns }, participantIds: [...new Set(participantesIds)], privacy: privacidade }; console.log("Enviando:", challengeData); try { console.log("Chamando createChallenge..."); const result = await createChallenge(challengeData); if (result.success) { console.log("Sucesso! Desafio criado:", result.challenge); setTitulo(""); setCategoriaSelecionadaId(null); setCheckInsNecessarios(""); setDataFim(""); setPrivacidade('public'); setAmigos(prev => prev.map(a => ({ ...a, selecionado: false }))); router.back(); } else { console.error("Erro API createChallenge:", result.error); setError(result.error || "Erro API."); } } catch (apiError) { console.error("Erro chamada API:", apiError); let errorMessage = "Erro conexão."; if (apiError instanceof Error) { errorMessage = apiError.message; } else if (typeof apiError === 'string') { errorMessage = apiError; } setError(errorMessage); } finally { setSubmitLoading(false); } };
+ // Em app/(tabs)/criaDesafio.tsx
+
+  // --- Função de Submissão (ATUALIZADA) ---
+  const handleCriarDesafio = async () => {
+     setError(""); setSubmitLoading(true);
+
+     // --- Validações ---
+     // ... (Validações idênticas às anteriores) ...
+     const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0, 0, 0, 0); if (!titulo || !categoriaSelecionadaId || !checkInsNecessarios || !dataFim) { setError("Preencha Título, Categoria, Nº Check-ins e Data Fim (AAAA-MM-DD)."); console.error("Validação:", "Campos obrigatórios"); setSubmitLoading(false); return; } if (!isValidDateString(dataFim)) { setError("Formato da Data Fim inválido (AAAA-MM-DD)."); console.error("Validação:", "Formato data"); setSubmitLoading(false); return; } const numCheckIns = parseInt(checkInsNecessarios, 10); if (isNaN(numCheckIns) || numCheckIns <= 0) { setError("Nº de check-ins inválido."); console.error("Validação:", "Nº check-ins"); setSubmitLoading(false); return; } const dataFimObj = new Date(dataFim + "T00:00:00"); if (dataFimObj < tomorrow) { setError("Data de término deve ser a partir de amanhã."); console.error("Validação:", "Data passada"); setSubmitLoading(false); return; }
+
+     // --- Preparar Dados (ATUALIZADO) ---
+     
+     // 1. Pega APENAS os IDs dos amigos selecionados
+     const invitedFriendIds = amigos.filter(a => a.selecionado).map(a => a.id);
+     
+     // 2. Não precisamos mais verificar o userIdLogado aqui, o backend fará isso pelo token
+
+     const selectedCategory = HABIT_CATEGORIES.find(cat => cat.id === categoriaSelecionadaId);
+
+     // Objeto de dados MODIFICADO
+     const challengeData = {
+       // creatorId NÃO é mais enviado
+       title: titulo,
+       startDate: new Date().toISOString().slice(0, 10),
+       endDate: dataFim,
+       goal: {
+            categoryTitle: selectedCategory?.title || 'Outro',
+            checksRequired: numCheckIns
+       },
+       invitedFriendIds: invitedFriendIds, // <-- MUDANÇA: Envia IDs dos amigos aqui
+       // participantIds foi removido
+       privacy: privacidade
+     };
+
+     console.log("Enviando dados do desafio (com convites):", challengeData);
+
+     // --- Chamar API REAL ---
+     try {
+       console.log("Chamando createChallenge...");
+       const result = await createChallenge(challengeData); // Envia o novo objeto
+
+       if (result.success) {
+         console.log("Sucesso! Desafio criado:", result.challenge);
+         // Limpeza dos Campos Após Sucesso
+         setTitulo(""); setCategoriaSelecionadaId(null); setCheckInsNecessarios("");
+         setDataFim(""); setPrivacidade('public');
+         setAmigos(prev => prev.map(a => ({ ...a, selecionado: false })));
+         router.back();
+       } else {
+         console.error("Erro API createChallenge:", result.error);
+         setError(result.error || "Erro API.");
+       }
+     } catch (apiError) {
+       console.error("Erro chamada API:", apiError);
+       let errorMessage = "Erro conexão."; if (apiError instanceof Error) { errorMessage = apiError.message; } else if (typeof apiError === 'string') { errorMessage = apiError; }
+       setError(errorMessage);
+     } finally {
+       setSubmitLoading(false);
+     }
+  }; // Fim de handleCriarDesafio
 
   // --- Renderização ---
   // (Renderização de Loading e Erro mantida)

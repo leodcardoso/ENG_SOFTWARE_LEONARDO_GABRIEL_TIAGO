@@ -131,53 +131,59 @@ app.post('/login', async (req, res) => {
 
 //Criar desafio
 
-/* Endpoint para Criar um Novo Desafio (PROTEGIDO) */
+/* Endpoint para Criar um Novo Desafio (PROTEGIDO E ATUALIZADO) */
 app.post('/challenges', authenticateToken, async (req, res) => {
   try {
-    const challengeDataFromRequest = req.body;
-    const userIdFromToken = req.user.userId; // ID do usuário logado (criador)
+    const { title, goal, endDate, startDate, privacy, invitedFriendIds } = req.body;
+    const creatorId = req.user.userId; // ID do usuário logado (criador)
 
-    // --- CORREÇÃO NA VALIDAÇÃO ---
-    // 1. Validação: Verifica título, goal com checksRequired, e data fim
-    // Removemos a checagem de goal.habitId e adicionamos goal.checksRequired
-    if (!challengeDataFromRequest.title ||
-        !challengeDataFromRequest.goal?.checksRequired || // Verifica se checksRequired existe
-        !challengeDataFromRequest.endDate) {
-      
+    // 1. Validação (similar a antes, mas checa 'goal.checksRequired')
+    if (!title || !goal?.checksRequired || !endDate) {
       return res.status(400).json({ error: 'Dados incompletos (título, meta de check-ins, data fim obrigatórios).' });
     }
-    // Adicionar validação extra se categoryTitle for obrigatório (exceto para "Outro"?)
-    if (!challengeDataFromRequest.goal?.categoryTitle) {
-        console.warn("categoryTitle não recebido no goal, usando 'Outro' como padrão.");
-        // O frontend já deve enviar 'Outro', mas garantimos aqui
-        if (challengeDataFromRequest.goal) {
-             challengeDataFromRequest.goal.categoryTitle = 'Outro';
-        } else {
-             // Caso goal não exista, o que não deveria acontecer pela validação anterior
-              return res.status(400).json({ error: 'Objeto goal ausente ou inválido.' });
-        }
-    }
-    // --- FIM CORREÇÃO VALIDAÇÃO ---
 
+    // --- LÓGICA DE CRIAÇÃO ATUALIZADA ---
 
-    // 2. Preparar os dados para salvar no DB
-    // A lógica aqui já funciona, pois usa o spread operator (...) que copia
-    // o objeto 'goal' como ele vier (agora com categoryTitle)
+    // 2. Preparar o desafio para salvar no DB
+    // O desafio AGORA SÓ CONTÉM O CRIADOR nos participantes!
     const challengeToSave = {
-      ...challengeDataFromRequest,
-      creatorId: userIdFromToken,
-      participantIds: [...new Set([...(challengeDataFromRequest.participantIds || []), userIdFromToken])],
+      title,
+      goal,
+      endDate,
+      startDate: startDate || new Date().toISOString().slice(0, 10),
+      privacy,
+      creatorId: creatorId,
+      participantIds: [creatorId], // <-- MUDANÇA CRÍTICA: Apenas o criador entra
       createdAt: new Date().toISOString(),
-      progress: {} // Inicializa o progresso
-      // Garante que o objeto goal está correto (já deve estar pelo spread)
-      // goal: challengeDataFromRequest.goal
+      progress: {
+        [creatorId]: 0 // Inicializa o progresso do criador
+      }
     };
+    
+    // 3. Salva o desafio principal
+    const newChallenge = await db.create('challenges', challengeToSave); //
 
-    // 3. Chamar a função do db.js para criar
-    console.log("Salvando desafio com categoryTitle:", challengeToSave); // Log para confirmar
-    const newChallenge = await db.create('challenges', challengeToSave); // - db.create salva o objeto como ele está
+    // 4. Criar os convites (challengeInvites)
+    if (Array.isArray(invitedFriendIds) && invitedFriendIds.length > 0) {
+      console.log(`Criando ${invitedFriendIds.length} convites para o desafio ${newChallenge.id}...`);
+      
+      const invitePromises = invitedFriendIds.map(friendId => {
+        const newInvite = {
+          challengeId: newChallenge.id, // ID do desafio que acabamos de criar
+          inviterUserId: creatorId,     // Quem convidou
+          invitedUserId: friendId,      // Quem foi convidado
+          status: 'pending',            // Status inicial
+          createdAt: new Date().toISOString()
+        };
+        return db.create('challengeInvites', newInvite); //
+      });
 
-    // 4. Retornar o desafio criado
+      // Espera todos os convites serem salvos
+      await Promise.all(invitePromises);
+    }
+    // --- FIM DA LÓGICA ATUALIZADA ---
+
+    // 5. Retornar o desafio criado
     res.status(201).json(newChallenge);
 
   } catch (err) {

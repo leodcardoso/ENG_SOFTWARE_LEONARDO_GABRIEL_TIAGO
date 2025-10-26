@@ -3,12 +3,13 @@
     "users": 5,
     "habits": 7,
     "tasks": 7,
-    "challenges": 6,
+    "challenges": 4,
     "achievements": 7,
     "notifications": 6,
     "docs": 1,
-    "commands": 103,
-    "auditLog": 203
+    "commands": 101,
+    "auditLog": 201,
+    "challengeInvites": 1
   },
   "users": [
     {
@@ -114,7 +115,11 @@
       "createdAt": "2025-10-26T00:06:04.424Z",
       "profile": {},
       "settings": {},
-      "friends": [2,3,4],
+      "friends": [
+        2,
+        3,
+        4
+      ],
       "stats": {
         "points": 10,
         "level": 1
@@ -453,6 +458,28 @@
       ],
       "privacy": "public",
       "createdAt": "2025-10-26T05:38:21.667Z",
+      "progress": {}
+    },
+    {
+      "id": 3,
+      "title": "tsee domingaço",
+      "startDate": "2025-10-26",
+      "endDate": "2026-01-01",
+      "goal": {
+        "categoryTitle": "Leitura",
+        "checksRequired": 1
+      },
+      "invitedFriendIds": [
+        2,
+        3,
+        4
+      ],
+      "privacy": "public",
+      "creatorId": 6,
+      "participantIds": [
+        6
+      ],
+      "createdAt": "2025-10-26T16:16:20.755Z",
       "progress": {}
     }
   ],

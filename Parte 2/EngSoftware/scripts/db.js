@@ -9,18 +9,26 @@ async function readDB() {
     // console.log(raw); // Descomente para depurar o que está sendo lido
     return JSON.parse(raw);
   } catch (err) {
-    if (err.code === 'ENOENT') {
-      // Retorna a estrutura inicial completa para evitar que o server quebre
-      // (Usando a versão mais segura que tínhamos antes)
-      return {
-        nextId: {}, users: [], habits: [], tasks: [],
-        challenges: [], achievements: [], notifications: [],
-        docs: [], commands: [], auditLog: [], userAchievements: [],
-        patterns: [], flows: []
-      };
+      if (err.code === 'ENOENT') {
+        return {
+          nextId: {},
+          users: [],
+          habits: [],
+          tasks: [],
+          challenges: [],
+          challengeInvites: [], 
+          achievements: [],
+          notifications: [],
+          docs: [],
+          commands: [],
+          auditLog: [],
+          userAchievements: [],
+          patterns: [],
+          flows: []
+        };
+      }
+      throw err;
     }
-    throw err;
-  }
 }
 
 async function writeDB(db) {
