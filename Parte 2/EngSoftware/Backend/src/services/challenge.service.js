@@ -83,7 +83,10 @@ class ChallengeService {
     const points = 1; // Pontos padrão por check-in
     await Challenge.incrementMemberPoints(challengeId, userId, points);
 
-    return { success: true, points };
+    // Atualiza pontos do usuário no perfil
+    const userStats = await Challenge.updateUserPoints(userId, points);
+
+    return { success: true, points, userStats };
   }
 
   static async getRanking(challengeId, userId) {

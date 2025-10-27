@@ -91,6 +91,19 @@ class Challenge {
     const result = await db.query(query, [challengeId, userId]);
     return result.rows.length > 0;
   }
+
+  static async updateUserPoints(userId, points) {
+    const query = `
+      UPDATE users
+      SET points = points + $1,
+          updated_at = NOW()
+      WHERE id = $2
+      RETURNING points, level
+    `;
+    
+    const result = await db.query(query, [points, userId]);
+    return result.rows[0];
+  }
 }
 
 module.exports = Challenge;
