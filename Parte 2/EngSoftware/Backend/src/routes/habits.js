@@ -1,10 +1,11 @@
 const express = require('express');
 const db = require('../config/db');
-const { authenticateToken } = require('../middleware/auth');
+// changed code
+const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/visible', authenticateToken, async (req, res) => {
+router.get('/visible', authMiddleware, async (req, res) => {
   const viewerId = req.user.userId;
   try {
     console.log("ViewId:", viewerId);
@@ -16,7 +17,7 @@ router.get('/visible', authenticateToken, async (req, res) => {
   }
 });
 
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId;
     const page = Math.max(1, Number(req.query.page) || 1);

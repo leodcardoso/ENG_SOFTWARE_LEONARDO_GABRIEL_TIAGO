@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('../config/db');
-const { authenticateToken } = require('../middleware/auth');
+const  authMiddleware  = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.get('/:collection/:id', async (req, res) => {
   }
 });
 
-router.post('/:collection', authenticateToken, async (req, res) => {
+router.post('/:collection', authMiddleware, async (req, res) => {
   const col = req.params.collection;
 
   if (col === 'users') {
@@ -54,7 +54,7 @@ router.post('/:collection', authenticateToken, async (req, res) => {
   }
 });
 
-router.put('/:collection/:id', authenticateToken, async (req, res) => {
+router.put('/:collection/:id', authMiddleware, async (req, res) => {
   const col = req.params.collection;
   const id = parseInt(req.params.id, 10);
   const userIdFromToken = req.user.userId;
@@ -95,7 +95,7 @@ router.put('/:collection/:id', authenticateToken, async (req, res) => {
   }
 });
 
-router.delete('/:collection/:id', authenticateToken, async (req, res) => {
+router.delete('/:collection/:id', authMiddleware, async (req, res) => {
    const col = req.params.collection;
    const id = parseInt(req.params.id, 10);
    const userIdFromToken = req.user.userId;

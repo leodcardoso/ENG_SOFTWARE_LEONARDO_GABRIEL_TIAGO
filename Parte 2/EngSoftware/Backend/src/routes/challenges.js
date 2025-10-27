@@ -1,10 +1,10 @@
 const express = require('express');
 const db = require('../config/db');
-const { authenticateToken } = require('../middleware/auth');
+const authMiddleware  = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   try {
     const { title, goal, endDate, startDate, privacy, invitedFriendIds } = req.body;
     const creatorId = req.user.userId;

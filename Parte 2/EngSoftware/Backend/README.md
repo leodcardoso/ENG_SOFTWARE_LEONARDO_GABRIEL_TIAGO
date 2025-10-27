@@ -6,7 +6,6 @@ Este projeto é uma aplicação Node.js que utiliza PostgreSQL como banco de dad
 
 - Node.js (v14 ou superior)
 - PostgreSQL (v12 ou superior)
-- Docker (opcional, para uso com Docker)
 
 ## Instalação
 

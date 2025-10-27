@@ -115,22 +115,29 @@ export const login = async (
   password: string // <-- CORREÇÃO 2: Adiciona tipo string
 ): Promise<{ success: boolean; error?: string }> => {
   try {
-    const data = await apiRequest('/login', 'POST', { email, password }); //
-    if (data && data.token) { // Verifica se data e data.token existem
-      await storeToken(data.token); // Salva o token recebido
+    const res = await apiRequest('/auth/login', 'POST', { email, password });
+
+    // Extrai token das diferentes estruturas possíveis de resposta
+    const token =
+      (res && (res.token || res.data?.token || res.data?.data?.token)) ||
+      null;
+
+    console.log('Token extraído no login:', token);
+
+    if (token) {
+      await storeToken(token);
       return { success: true };
     }
-    // Se não veio token, mesmo com status 200 (improvável, mas seguro)
+
     return { success: false, error: 'Token não recebido do servidor' };
   } catch (error) {
-    // --- CORREÇÃO 3 e 4: Tratar erro 'unknown' ---
-    let errorMessage = 'Erro desconhecido ao tentar fazer login'; // Mensagem padrão
+    let errorMessage = 'Erro desconhecido ao tentar fazer login';
     if (error instanceof Error) {
-      errorMessage = error.message; // Acessa .message apenas se for do tipo Error
+      errorMessage = error.message;
     } else if (typeof error === 'string') {
-      errorMessage = error; // Se o próprio erro for uma string
+      errorMessage = error;
     }
-    console.error('Erro capturado no login:', error); // Loga o erro original para depuração
+    console.error('Erro capturado no login:', error);
     return { success: false, error: errorMessage };
   }
 };
@@ -146,7 +153,7 @@ export const register = async (
         // Chama a função genérica apiRequest para fazer a chamada POST para /register
         // Não precisamos nos preocupar com o token aqui; apiRequest não o enviará
         // se ele não existir (o que é o caso durante o registro).
-        const registeredUser = await apiRequest('/register', 'POST', { name, email, password }); // Chama o endpoint POST /register
+        const registeredUser = await apiRequest('/auth/register', 'POST', { name, email, password }); // Chama o endpoint POST /register
 
         // Se apiRequest foi bem-sucedido (não lançou erro), retorna sucesso
         // e os dados do usuário recém-criado (sem o hash da senha, como definido no backend)
