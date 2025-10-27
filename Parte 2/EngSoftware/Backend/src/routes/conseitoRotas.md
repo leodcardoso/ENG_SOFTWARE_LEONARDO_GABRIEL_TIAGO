@@ -1,4 +1,3 @@
-// ...existing code...
 # Checklist de Rotas (NodeJS)
 
 - [x] /auth
@@ -62,7 +61,7 @@
 
 - [ ] /user
     - [ ] CRUD (GET, PUT, DELETE conforme necessário)
-        - [ ] GET /user[/:id] — buscar usuário
+        - [ ] GET /user/ — buscar usuário
         - [ ] PUT /user/:id — atualizar usuário
     - [ ] GET /user/friends
         - Envia:
@@ -80,13 +79,14 @@
                 - [ ] tipo
                 - [ ] data
                 - [ ] descrição
-    - [ ] POST /user/search
+    - [x] POST /user/search
         - Envia:
-            - [ ] nome (body)
+            - [x] nome (body)
         - Retorna:
-            - [ ] bool (se existe)
-            - [ ] userId
-            - [ ] bool (se já é amigo)
+            - [x] success bool (se existe)
+            - data
+                - [x] userId
+                - [x] bool (se já é amigo)
 
 - [ ] /generic
     - [ ] Rota reservada / não utilizada — usos futuros

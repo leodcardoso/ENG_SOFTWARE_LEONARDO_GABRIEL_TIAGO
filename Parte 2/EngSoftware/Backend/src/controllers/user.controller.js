@@ -1,19 +1,19 @@
-const User = require('../models/user.model');
+const userService = require('../services/user.service');
 
 class UserController {
   static async getProfile(req, res) {
     try {
-      const user = await User.findById(req.userId);
-      if (!user) return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
+      const user = await userService.getProfile(req.userId);
       return res.json({ success: true, data: user });
     } catch (err) {
-      return res.status(500).json({ success: false, message: err.message });
+      const status = err.message === 'Usuário não encontrado' ? 404 : 500;
+      return res.status(status).json({ success: false, message: err.message });
     }
   }
 
   static async updateProfile(req, res) {
     try {
-      const updated = await User.update(req.userId, req.body);
+      const updated = await userService.updateProfile(req.userId, req.body);
       return res.json({ success: true, data: updated });
     } catch (err) {
       return res.status(400).json({ success: false, message: err.message });
@@ -22,7 +22,7 @@ class UserController {
 
   static async friends(req, res) {
     try {
-      const friends = await User.getFriends(req.userId);
+      const friends = await userService.getFriends(req.userId);
       return res.json({ success: true, data: friends });
     } catch (err) {
       return res.status(500).json({ success: false, message: err.message });
@@ -31,7 +31,7 @@ class UserController {
 
   static async allHabits(req, res) {
     try {
-      const habits = await User.getAllHabits(req.userId);
+      const habits = await userService.getAllHabits(req.userId);
       return res.json({ success: true, data: habits });
     } catch (err) {
       return res.status(500).json({ success: false, message: err.message });
@@ -40,7 +40,7 @@ class UserController {
 
   static async allChallenges(req, res) {
     try {
-      const challenges = await User.getAllChallenges(req.userId);
+      const challenges = await userService.getAllChallenges(req.userId);
       return res.json({ success: true, data: challenges });
     } catch (err) {
       return res.status(500).json({ success: false, message: err.message });
@@ -49,7 +49,7 @@ class UserController {
 
   static async notifications(req, res) {
     try {
-      const notifications = await User.getNotifications(req.userId);
+      const notifications = await userService.getNotifications(req.userId);
       return res.json({ success: true, data: notifications });
     } catch (err) {
       return res.status(500).json({ success: false, message: err.message });
@@ -59,11 +59,11 @@ class UserController {
   static async search(req, res) {
     try {
       const { name } = req.body;
-      if (!name) return res.status(400).json({ success: false, message: 'Campo name é obrigatório' });
-      const results = await User.searchByName(name, req.userId);
-      return res.json({ success: true, data: results });
+      const results = await userService.searchUsers(name, req.userId);
+      return res.json(results);
     } catch (err) {
-      return res.status(500).json({ success: false, message: err.message });
+      const status = err.message.includes('obrigatório') ? 400 : 500;
+      return res.status(status).json({ success: false, message: err.message });
     }
   }
 }

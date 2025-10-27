@@ -102,7 +102,7 @@ class User {
   }
 
   // Buscar usuários por nome (retorna se já são amigos)
-  static async searchByName(name, requesterId) {
+  static async searchFriendByName(name, requesterId) {
     const q = `
       SELECT u.id, u.name, u.avatar_url,
         EXISTS(
@@ -118,6 +118,39 @@ class User {
     const result = await db.query(q, [`%${name}%`, requesterId]);
     return result.rows;
   }
+
+   static async searchUserByName(name, requesterId) {
+    // Garante trim e evita null/undefined
+    const search = (name || '').trim();
+
+    const q = `
+      SELECT u.id,
+             u.name,
+             u.avatar_url,
+             CASE WHEN f.user_id_a IS NOT NULL THEN TRUE ELSE FALSE END AS is_friend
+      FROM users u
+      LEFT JOIN friendships f ON (
+        (f.user_id_a = u.id AND f.user_id_b = $2)
+        OR
+        (f.user_id_a = $2 AND f.user_id_b = u.id)
+      )
+      WHERE u.name ILIKE ('%' || $1 || '%')
+        AND u.id <> $2
+      ORDER BY is_friend DESC, u.name
+      LIMIT 50
+    `;
+
+    const params = [search, requesterId];
+
+    const result = await db.query(q, params); // ajuste se a variável de conexão for diferente
+    return result.rows.map(r => ({
+      id: r.id,
+      name: r.name,
+      avatar_url: r.avatar_url,
+      is_friend: !!r.is_friend
+    }));
+  }
+
 }
 
 module.exports = User;
