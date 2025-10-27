@@ -1,57 +1,23 @@
 const express = require('express');
-const db = require('../config/db');
-const authMiddleware  = require('../middleware/auth');
-
 const router = express.Router();
+const authMiddleware = require('../middleware/auth');
+const ChallengeController = require('../controllers/challenge.controller');
 
-router.post('/', authMiddleware, async (req, res) => {
-  try {
-    const { title, goal, endDate, startDate, privacy, invitedFriendIds } = req.body;
-    const creatorId = req.user.userId;
+// Todas as rotas requerem autenticação
+router.use(authMiddleware);
 
-    if (!title || !goal?.checksRequired || !endDate) {
-      return res.status(400).json({ error: 'Dados incompletos (título, meta de check-ins, data fim obrigatórios).' });
-    }
+// CRUD
+router.post('/', ChallengeController.create);
+router.get('/', ChallengeController.getAll);
+router.get('/:id', ChallengeController.getById);
 
-    const challengeToSave = {
-      title,
-      goal,
-      endDate,
-      startDate: startDate || new Date().toISOString().slice(0, 10),
-      privacy,
-      creatorId: creatorId,
-      participantIds: [creatorId],
-      createdAt: new Date().toISOString(),
-      progress: {
-        [creatorId]: 0
-      }
-    };
-    
-    const newChallenge = await db.create('challenges', challengeToSave);
+// Convites
+router.post('/invit', ChallengeController.inviteUsers);
 
-    if (Array.isArray(invitedFriendIds) && invitedFriendIds.length > 0) {
-      console.log(`Criando ${invitedFriendIds.length} convites para o desafio ${newChallenge.id}...`);
-      
-      const invitePromises = invitedFriendIds.map(friendId => {
-        const newInvite = {
-          challengeId: newChallenge.id,
-          inviterUserId: creatorId,
-          invitedUserId: friendId,
-          status: 'pending',
-          createdAt: new Date().toISOString()
-        };
-        return db.create('challengeInvites', newInvite);
-      });
+// Check-in
+router.post('/:challengeId/checkin', ChallengeController.checkin);
 
-      await Promise.all(invitePromises);
-    }
-
-    res.status(201).json(newChallenge);
-
-  } catch (err) {
-    console.error("Erro ao criar desafio:", err);
-    res.status(500).json({ error: err.message || 'Erro interno ao criar desafio.' });
-  }
-});
+// Ranking
+router.get('/:challengeId/allUsers', ChallengeController.getRanking);
 
 module.exports = router;

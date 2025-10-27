@@ -35,34 +35,35 @@
         - [ ] DELETE /habits/:id — remover
     - [ ] POST /habits/:habitId/checkin — registrar check-in
 
-- [ ] /challenges
-    - [ ] CRUD (POST, GET, PUT, DELETE)
-        - [ ] POST /challenges — criar desafio
-        - [ ] GET /challenges[/:id] — buscar
-        - [ ] PUT /challenges/:id — atualizar
-        - [ ] DELETE /challenges/:id — remover
-    - [ ] POST /challenges/invit (apenas na criação)
-        - [ ] Body: JSON com lista de usuários a convidar
-    - [ ] POST /challenges/:challengeId/checkin
-        - [ ] Retorna: bool (se deu certo)
-    - [ ] GET /challenges/:challengeId/allUsers (ranking)
+- [x] /challenges
+    - [x] CRUD (POST, GET, PUT, DELETE)
+        - [x] POST /challenges — criar desafio
+        - [x] GET /challenges[/:id] — buscar
+        - [ ] ~~PUT /challenges/:id — atualizar~~ (não vai ser implementado)
+        - [ ] ~~DELETE /challenges/:id — remover~~ (não vai ser implementado)
+    - [x] POST /challenges/invit (apenas na criação)
+        - [x] Body: JSON com lista de usuários (userId) a convidar
+    - [x] POST /challenges/:challengeId/checkin
+        - [x] Recebe: id do challenge e usa a data no próprio back
+        - [x] Retorna: bool (se deu certo)
+    - [x] GET /challenges/:challengeId/allUsers 
         - Envia:
-            - [ ] token do usuário
-            - [ ] challengeId
+            - [x] token do usuário
+            - [x] challengeId
         - Retorna:
-            - [ ] userName
-            - [ ] points
-            - [ ] colocação
+            - [x] userName (participantes)
+            - [x] points (Individuais)
+            - [x] colocação (Feita no NodeJS, com base na consulta já em ordem de pontos)
 
 - [ ] /friend
     - [x] POST /friend/invit/:targetUser (targetUser = userId)
     - [x] POST /friend/status/:requestId
         - [x] Retorna: bool (se deu certo)
 
-- [] /user
+- [ ] /user
     - [x] CRUD (GET, PUT, DELETE conforme necessário)
         - [x] GET /user/ — buscar usuário
-        - [ ] PUT /user/:id — atualizar usuário (não vai ser implementado)
+        - [ ] ~~PUT /user/:id — atualizar usuário~~ (não vai ser implementado)
     - [x] GET /user/friends
         - Recebe:
             - [x] token do usuário
@@ -70,12 +71,12 @@
             - [x] userId do amigo
             - [x] nome do amigo
     - [x] GET /user/allHabits
-    - [ ] GET /user/allChallenges
-    - [ ] GET /user/notifications
+    - [ ] ~~GET /user/allChallenges~~ (substituído por `/challenges GET`)
+    - [x] GET /user/notifications
         - Envia:
-            - [ ] token do usuário
+            - [x] token do usuário
         - Retorna:
-            - [ ] notificações (lista)
+            - [x] notificações (lista)
                 - [ ] tipo
                 - [ ] data
                 - [ ] descrição
@@ -90,4 +91,3 @@
 
 - [ ] /generic
     - [ ] Rota reservada / não utilizada — usos futuros
-// ...existing code...
