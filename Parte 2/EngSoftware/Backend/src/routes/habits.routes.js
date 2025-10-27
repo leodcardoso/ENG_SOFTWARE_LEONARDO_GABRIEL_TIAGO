@@ -1,38 +1,21 @@
 const express = require('express');
-const db = require('../config/db');
-// changed code
+const router = express.Router();
+const HabitController = require('../controllers/habit.controller');
 const authMiddleware = require('../middleware/auth');
 
-const router = express.Router();
+// Todas as rotas requerem autenticação
+router.use(authMiddleware);
 
-router.get('/visible', authMiddleware, async (req, res) => {
-  const viewerId = req.user.userId;
-  try {
-    console.log("ViewId:", viewerId);
-    const list = await db.filterHabitsForViewer(viewerId);
-    console.table(list);
-    res.json(list);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// POST /habits - criar hábito
+router.post('/', HabitController.createHabit);
 
-router.get('/', authMiddleware, async (req, res) => {
-  try {
-    const userId = req.user.userId;
-    const page = Math.max(1, Number(req.query.page) || 1);
-    const perPage = Math.min(100, Number(req.query.perPage) || 20);
+// GET /habits - buscar todos os hábitos
+router.get('/', HabitController.getHabits);
 
-    const { items, total } = await db.findByUser('habits', userId, { page, perPage });
-    
-    return res.json({
-      items,
-      meta: { page, perPage, total, totalPages: Math.max(1, Math.ceil(total / perPage)) }
-    });
-  } catch (err) {
-    console.error(`Erro ao listar hábitos:`, err);
-    res.status(500).json({ error: "Erro interno" });
-  }
-});
+// GET /habits/:id - buscar hábito por ID
+router.get('/:id', HabitController.getHabits);
+
+// POST /habits/:habitId/checkin - registrar check-in
+router.post('/:habitId/checkin', HabitController.checkin);
 
 module.exports = router;
