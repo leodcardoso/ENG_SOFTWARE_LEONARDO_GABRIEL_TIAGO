@@ -1,29 +1,72 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useFocusEffect, useRouter } from 'expo-router';
+import React, { useCallback, useState } from 'react';
 import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  Button,
   ActivityIndicator,
+  Button,
   FlatList,
-  RefreshControl
+  Image,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { useRouter, useFocusEffect } from 'expo-router';
 // Ajuste o caminho se necessário
-import { apiRequest, getToken, logout, checkInHabit } from '../../services/api'; 
+import { apiRequest, checkInHabit, getToken, logout } from '../../services/api';
 // REMOVIDO: HabitoConcluido e HabitoProgresso (Substituído por renderização inline)
 import { Ionicons } from '@expo/vector-icons';
 import { jwtDecode } from "jwt-decode"; 
 
 // --- Interfaces ---
-interface UserProfile { id: number; name: string; email: string; role: string; createdAt: string; profile: { avatar: string | null; bio: string; locale?: string; timezone?: string; }; settings: { notifications?: boolean; remindersDefault?: string; privateByDefault?: boolean; }; friends: number[]; stats: { points: number; level: number; }; }
-interface Habit { id: number; userId: number; title: string; description: string; frequency: string; schedule: string[]; reminders: string[]; streak: number; bestStreak: number; lastCheckIn: string | null; pointsPerCheckIn: number; active: boolean; privacy: string; createdAt: string; jokerUsedDates: string[]; }
-interface HabitsByStatus { ativos: Habit[]; inativos: Habit[]; }
-interface JwtPayload { userId: number; /* outros campos... */ } 
+interface UserProfile {
+  id: number;
+  name: string;
+  email: string;
+  role?: string; // <- TORNAR OPCIONAL
+  createdAt?: string; // <- TORNAR OPCIONAL
+  profile: {
+    avatar: string | null;
+    bio: string;
+    locale?: string;
+    timezone?: string;
+  };
+  settings: {
+    notifications?: boolean;
+    remindersDefault?: string;
+    privateByDefault?: boolean;
+  };
+  friends: number[];
+  stats: { points: number; level: number };
+  points?: number;
+  level?: number;
+  user?: any;
+}
+interface Habit {
+  id: number;
+  userId: number;
+  title: string;
+  description: string;
+  frequency: string;
+  schedule: string[];
+  reminders: string[];
+  streak: number;
+  bestStreak: number;
+  lastCheckIn: string | null;
+  pointsPerCheckIn: number;
+  active: boolean;
+  privacy: string;
+  createdAt: string;
+  jokerUsedDates: string[];
+}
+interface HabitsByStatus {
+  ativos: Habit[];
+  inativos: Habit[];
+}
+interface JwtPayload {
+  userId: number /* outros campos... */;
+} 
 
 export default function IndexScreen() {
   const router = useRouter();
@@ -44,22 +87,76 @@ export default function IndexScreen() {
     // 1. Obter User ID e Perfil
     try {
       const token = await getToken();
-      if (!token) { setError("Sessão expirada."); if (!isRefreshing) setLoading(false); router.replace('/login'); return; }
+      if (!token) { 
+        setError("Sessão expirada."); 
+        if (!isRefreshing) setLoading(false); 
+        router.replace('/login'); 
+        return; 
+      }
 
       try {
           const decoded = jwtDecode<JwtPayload>(token); currentUserId = decoded.userId;
-      } catch (decodeError) { console.error("Erro decode:", decodeError); setError("Sessão inválida."); await logout(); if (!isRefreshing) setLoading(false); router.replace('/login'); return; }
+      } catch (decodeError) { 
+        console.error("Erro decode:", decodeError); 
+        setError("Sessão inválida."); 
+        await logout(); 
+        if (!isRefreshing) setLoading(false); 
+        router.replace('/login'); 
+        return; 
+      }
 
       // Sempre busca o perfil se currentUserId for diferente de null
       if (currentUserId) {
           console.log(`Buscando perfil para userId: ${currentUserId}`);
-          userProfileData = await apiRequest(`/users/${currentUserId}`);
-          setUsuario(userProfileData); // <-- ATUALIZA ESTADO DO USUÁRIO AQUI
-      } else if (usuario) {
-          currentUserId = usuario.id;
-      }
+        userProfileData = await apiRequest(`/user/`);
+        console.log('Dados brutos do perfil:', userProfileData);
+        const raw: any = userProfileData;
 
-      if (!currentUserId) { throw new Error("Não foi possível obter o ID do usuário.");}
+        // EXTRAI O CAMPO 'data' SE EXISTIR (formato: {success: true, data: {...}})
+        const userData = raw.data || raw;
+
+        let normalized: any = {};
+
+        // Normaliza quando backend retorna { token, user: { ... } } ou retorna user direto
+        if (userData?.user) {
+          normalized = {
+            id: userData.user.userId ?? userData.user.id ?? userData.id,
+            name: userData.user.name ?? userData.name ?? 'Usuário',
+            email: userData.user.email ?? userData.email ?? '',
+            createdAt: userData.user.created_at ?? userData.created_at,
+            profile: userData.user.profile ?? userData.profile ?? { avatar: null, bio: '' },
+            settings: userData.user.settings ?? userData.settings ?? {},
+            friends: userData.user.friends ?? userData.friends ?? [],
+            stats: {
+              points: userData.user.points ?? userData.points ?? 0,
+              level: userData.user.level ?? userData.level ?? 1,
+            },
+          };
+        } else {
+          // Caso o backend retorne o usuário plano (sem wrapper "user")
+          normalized = {
+            id: userData.id,
+            name: userData.name ?? 'Usuário',
+            email: userData.email ?? '',
+            createdAt: userData.created_at ?? userData.createdAt,
+            profile: { avatar: userData.avatar_url ?? null, bio: '' },
+            settings: {},
+            friends: [],
+            stats: { points: userData.points ?? 0, level: userData.level ?? 1 },
+          };
+        }
+
+        userProfileData = normalized as UserProfile;
+        console.log('Perfil normalizado:', userProfileData);
+          setUsuario(userProfileData); // <-- ATUALIZA ESTADO DO USUÁRIO AQUI
+      }
+      //  else if (usuario) {
+      //     currentUserId = usuario.id;
+      // }
+
+      if (!currentUserId) { 
+        throw new Error("Não foi possível obter o ID do usuário.");
+      }
 
     } catch (err) {
       console.error('Erro user/token:', err);
@@ -75,13 +172,16 @@ export default function IndexScreen() {
         errorMsg = err;
       }
       setError(errorMsg);
-      setLoading(false); setRefreshing(false); return;
+      setLoading(false); 
+      setRefreshing(false); 
+      return;
     }
 
     // 2. Buscar Hábitos do Usuário
     try {
       console.log(`Buscando hábitos visíveis para userId: ${currentUserId}`);
-      const habitsResponse = await apiRequest('/habits-visible');
+      const habitsResponse = await apiRequest('/user/allHabits');
+      console.log('Hábitos recebidos:', habitsResponse);
       if (Array.isArray(habitsResponse)) {
         // FILTRAGEM CORRETA:
         const ativos = habitsResponse.filter((h: Habit) => h.active);
@@ -173,10 +273,11 @@ export default function IndexScreen() {
         {/* Seção Perfil */}
         <View style={styles.profileSection}>
           <Image
-            source={{ uri: usuario!.profile?.avatar || 'https://placehold.co/100x100/007AFF/FFFFFF?text=' + usuario!.name.charAt(0).toUpperCase() }}
+            source={{ uri: usuario!.profile?.avatar || 'https://placehold.co/100x100/007AFF/FFFFFF?text=' + (usuario!.name?.charAt(0).toUpperCase() || 'U') }}
             style={styles.avatar}
           />
           <Text style={styles.name}>{usuario!.name}</Text>
+
           {usuario!.profile?.bio ? <Text style={styles.bio}>{usuario!.profile.bio}</Text> : null}
           <View style={styles.statsRow}>
              {/* Estatísticas baseadas no usuário logado */}
@@ -189,7 +290,7 @@ export default function IndexScreen() {
         {/* Seção de erro não fatal */}
         {error && <Text style={styles.errorText}>{error}</Text>}
 
-        {/* Hábitos Ativos */}
+        {/* Habitos Ativos */}
         <Text style={styles.sectionTitle}>Hábitos Ativos</Text>
         {refreshing && !loading ? <ActivityIndicator style={{marginTop: 10}}/> : habitos.ativos.length === 0 ? (
             <Text style={styles.infoText}>Nenhum hábito ativo.</Text>

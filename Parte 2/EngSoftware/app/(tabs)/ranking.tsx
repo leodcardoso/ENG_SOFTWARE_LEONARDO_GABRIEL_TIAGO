@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { 
-  View, 
-  Text, 
-  FlatList, 
-  Image, 
-  TouchableOpacity, 
-  StyleSheet, 
-  ActivityIndicator 
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
+
 
 interface User {
   id: number;
@@ -38,7 +39,7 @@ export default function AmigosScreen() {
     async function fetchAmigos() {
       try {
         // 1️⃣ Buscar usuário principal
-        const resUser = await fetch(`http://localhost:3000/users/${idLocal}`);
+        const resUser = await fetch(`http://localhost:3000/user/`);
         const user: User & { friends: number[] } = await resUser.json();
 
         if (!user?.friends || user.friends.length === 0) {
@@ -49,7 +50,7 @@ export default function AmigosScreen() {
 
         // 2️⃣ Buscar todos os amigos em paralelo
         const friendsResponses = await Promise.all(
-          user.friends.map(id => fetch(`http://localhost:3000/users/${id}`))
+          user.friends.map(id => fetch(`http://localhost:3000/user/`))
         );
 
         const friendsData: User[] = await Promise.all(
