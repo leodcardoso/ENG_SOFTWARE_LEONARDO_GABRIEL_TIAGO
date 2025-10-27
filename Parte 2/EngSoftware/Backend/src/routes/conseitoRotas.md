@@ -1,87 +1,93 @@
-/auth
-    /login
-        Recebe:
-        -Email
-        -senha
-        Retorna:
-        -Token
-        -Dados do usuario
-            -userId
-            -Nome
-            -Pontos
-            -Nivel
+// ...existing code...
+# Checklist de Rotas (NodeJS)
 
-    /register   
-        Recebe:
-        -Nome
-        -Email
-        -Senha
-        -Bio 
-        -Horario Notificação
-        Retorna:
-        -Token
-        -userId
-        -Nome
-        -Pontos
-        -Nivel
-    /logout (não tem)
+- [ ] /auth
+    - [ ] POST /auth/login
+        - Recebe:
+            - [ ] email
+            - [ ] senha
+        - Retorna:
+            - [ ] token
+            - [ ] dados do usuário
+                - [ ] userId
+                - [ ] nome
+                - [ ] pontos
+                - [ ] nível
+    - [ ] POST /auth/register
+        - Recebe:
+            - [ ] nome
+            - [ ] email
+            - [ ] senha
+            - [ ] bio
+            - [ ] horário de notificação
+        - Retorna:
+            - [ ] token
+            - [ ] userId
+            - [ ] nome
+            - [ ] pontos
+            - [ ] nível
+    - [ ] /auth/logout (não implementado / não usado)
 
+- [ ] /habits
+    - [ ] CRUD (POST, GET, PUT, DELETE)
+        - [ ] POST /habits — criar hábito
+        - [ ] GET /habits[/:id] — buscar (todos ou por id)
+        - [ ] PUT /habits/:id — atualizar
+        - [ ] DELETE /habits/:id — remover
+    - [ ] POST /habits/:habitId/checkin — registrar check-in
 
+- [ ] /challenges
+    - [ ] CRUD (POST, GET, PUT, DELETE)
+        - [ ] POST /challenges — criar desafio
+        - [ ] GET /challenges[/:id] — buscar
+        - [ ] PUT /challenges/:id — atualizar
+        - [ ] DELETE /challenges/:id — remover
+    - [ ] POST /challenges/invit (apenas na criação)
+        - [ ] Body: JSON com lista de usuários a convidar
+    - [ ] POST /challenges/:challengeId/checkin
+        - [ ] Retorna: bool (se deu certo)
+    - [ ] GET /challenges/:challengeId/allUsers (ranking)
+        - Envia:
+            - [ ] token do usuário
+            - [ ] challengeId
+        - Retorna:
+            - [ ] userName
+            - [ ] points
+            - [ ] colocação
 
-- Diferença entre habito e desafio é se é privado ou não
+- [ ] /friend
+    - [ ] POST /friend/invit/:targetUser (targetUser = userId)
+    - [ ] POST /friend/status/:requestId
+        - [ ] Retorna: bool (se deu certo)
 
-/habits
-    CRUD com post, get...
-        -Cria
-        -Buscar
-    /checkin:habitId
-/challenges
-    CRUD com post, get...
-        -Cria
-        -Buscar
-    /invit (Só na criação)
-        -json com todos os usuarios no body
-    /checkin:challengId
-        Retorna:
-        -bool se deu certo
-    /allUsers (Ranking)
-        Envia:
-        - Token usuario
-        - challengId
-        Retorna:
-        - userName
-            -points
-            -colocação
-/friend
-    /invit:targetUser (userId)
-    /status:resquestId
-        Retorna:
-        -bool, se deu certo ou não
+- [ ] /user
+    - [ ] CRUD (GET, PUT, DELETE conforme necessário)
+        - [ ] GET /user[/:id] — buscar usuário
+        - [ ] PUT /user/:id — atualizar usuário
+    - [ ] GET /user/friends
+        - Envia:
+            - [ ] token do usuário
+        - Retorna:
+            - [ ] userId do amigo
+            - [ ] nome do amigo
+    - [ ] GET /user/allHabits
+    - [ ] GET /user/allChallenges
+    - [ ] GET /user/notifications
+        - Envia:
+            - [ ] token do usuário
+        - Retorna:
+            - [ ] notificações (lista)
+                - [ ] tipo
+                - [ ] data
+                - [ ] descrição
+    - [ ] POST /user/search
+        - Envia:
+            - [ ] nome (body)
+        - Retorna:
+            - [ ] bool (se existe)
+            - [ ] userId
+            - [ ] bool (se já é amigo)
 
-/user
-    CRUD com post, get...
-        -Buscar
-        -Atualizar
-    /friends
-        Envia:
-        - Token User
-        Retorna:
-        - userId amigo
-        - nome amigo
-    /allHabits
-    /allChallenges
-    /notifications (Pega todas)
-        Envia:
-        - Token User
-        Retorna:
-        - Notificação
-            -Tipo
-            -Data
-            -Descrição
-    /search
-        Envia:
-        - Nome (body)
-        Retorna: 
-        - bool se existe, userId e se é amigo já 
-/ generic
-    (Não uso, usos futuros)
+- [ ] /generic
+    - [ ] Rota reservada / não utilizada — usos futuros
+// ...existing code...
