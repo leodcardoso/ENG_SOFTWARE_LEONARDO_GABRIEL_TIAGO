@@ -55,20 +55,20 @@
             - [ ] colocação
 
 - [ ] /friend
-    - [ ] POST /friend/invit/:targetUser (targetUser = userId)
-    - [ ] POST /friend/status/:requestId
-        - [ ] Retorna: bool (se deu certo)
+    - [x] POST /friend/invit/:targetUser (targetUser = userId)
+    - [x] POST /friend/status/:requestId
+        - [x] Retorna: bool (se deu certo)
 
-- [ ] /user
-    - [ ] CRUD (GET, PUT, DELETE conforme necessário)
-        - [ ] GET /user/ — buscar usuário
-        - [ ] PUT /user/:id — atualizar usuário
-    - [ ] GET /user/friends
-        - Envia:
-            - [ ] token do usuário
+- [] /user
+    - [x] CRUD (GET, PUT, DELETE conforme necessário)
+        - [x] GET /user/ — buscar usuário
+        - [ ] PUT /user/:id — atualizar usuário (não vai ser implementado)
+    - [x] GET /user/friends
+        - Recebe:
+            - [x] token do usuário
         - Retorna:
-            - [ ] userId do amigo
-            - [ ] nome do amigo
+            - [x] userId do amigo
+            - [x] nome do amigo
     - [x] GET /user/allHabits
     - [ ] GET /user/allChallenges
     - [ ] GET /user/notifications

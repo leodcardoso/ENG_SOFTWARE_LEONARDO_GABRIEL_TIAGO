@@ -40,17 +40,7 @@ class UserService {
     if (!name || name.trim().length === 0) {
       throw new Error("Nome de busca é obrigatório");
     }
-    const listOfUsers = await User.searchUserByName(name, requesterId);
-
-    if (
-      !listOfUsers ||
-      !Array.isArray(listOfUsers) ||
-      listOfUsers.length === 0
-    ) {
-      return { success: false, data: [] };
-    }
-
-    return { success: true, data: listOfUsers };
+    return await User.searchUserByName(name, requesterId);
   }
 }
 

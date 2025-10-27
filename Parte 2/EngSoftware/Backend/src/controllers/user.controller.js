@@ -60,7 +60,7 @@ class UserController {
     try {
       const { name } = req.body;
       const results = await userService.searchUsers(name, req.userId);
-      return res.json(results);
+      return res.json({ success: true, data: results });
     } catch (err) {
       const status = err.message.includes('obrigatório') ? 400 : 500;
       return res.status(status).json({ success: false, message: err.message });
