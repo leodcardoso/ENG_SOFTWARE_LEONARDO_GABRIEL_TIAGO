@@ -4,7 +4,7 @@ const User = require('../models/user.model');
 require('dotenv').config();
 
 class AuthService {
-  static async register({ name, email, password, remindersDefault }) {
+  static async register({ name, email, password, remindersDefault, bio }) {
     // Validações
     if (!name || !email || !password) {
       throw new Error('Nome, email e senha são obrigatórios');
@@ -20,7 +20,7 @@ class AuthService {
     const password_hash = await bcrypt.hash(password, 10);
 
     // Criar usuário
-    const user = await User.create({ name, email, password_hash });
+    const user = await User.create({ name, email, password_hash, bio });
 
     // Criar configurações padrão
     await User.createDefaultSettings(user.id, remindersDefault);

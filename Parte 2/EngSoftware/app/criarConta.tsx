@@ -63,7 +63,7 @@ export default function CriarContaScreen() {
     // Assumindo que a função register foi atualizada para aceitar um objeto
     // const result = await register(userData);
     // Por enquanto, mantendo a chamada original, mas você precisará ajustar api.ts e server.js
-    const result = await register(nome, email, senha); // <-- Mantenha isso se ainda não ajustou api.ts/server.js
+    const result = await register(nome, email, senha, bio); // <-- Mantenha isso se ainda não ajustou api.ts/server.js
                                                      // Ou ajuste para: const result = await register(userData);
 
 

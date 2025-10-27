@@ -15,13 +15,13 @@ class User {
     return result.rows[0];
   }
 
-  static async create({ name, email, password_hash }) {
+  static async create({ name, email, password_hash, bio }) {
     const query = `
-      INSERT INTO users (name, email, password_hash, points, level)
-      VALUES ($1, $2, $3, 0, 1)
+      INSERT INTO users (name, email, password_hash, bio,points, level)
+      VALUES ($1, $2, $3, $4, 0, 1)
       RETURNING id, name, email, points, level
     `;
-    const result = await db.query(query, [name, email, password_hash]);
+    const result = await db.query(query, [name, email, password_hash, bio]);
     return result.rows[0];
   }
 

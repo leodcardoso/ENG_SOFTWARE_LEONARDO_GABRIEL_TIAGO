@@ -147,13 +147,14 @@ export const login = async (
 export const register = async (
   name: string,
   email: string,
-  password: string
+  password: string,
+  bio: string
 ): Promise<{ success: boolean; user?: any; error?: string }> => {
     try {
         // Chama a função genérica apiRequest para fazer a chamada POST para /register
         // Não precisamos nos preocupar com o token aqui; apiRequest não o enviará
         // se ele não existir (o que é o caso durante o registro).
-        const registeredUser = await apiRequest('/auth/register', 'POST', { name, email, password }); // Chama o endpoint POST /register
+        const registeredUser = await apiRequest('/auth/register', 'POST', { name, email, password, bio }); // Chama o endpoint POST /register
 
         // Se apiRequest foi bem-sucedido (não lançou erro), retorna sucesso
         // e os dados do usuário recém-criado (sem o hash da senha, como definido no backend)
