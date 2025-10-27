@@ -1,31 +1,31 @@
 // ...existing code...
 # Checklist de Rotas (NodeJS)
 
-- [ ] /auth
-    - [ ] POST /auth/login
+- [x] /auth
+    - [x] POST /auth/login
         - Recebe:
-            - [ ] email
-            - [ ] senha
+            - [x] email
+            - [x] senha
         - Retorna:
-            - [ ] token
-            - [ ] dados do usuário
-                - [ ] userId
-                - [ ] nome
-                - [ ] pontos
-                - [ ] nível
+            - [x] token
+            - [x] dados do usuário
+                - [x] userId
+                - [x] nome
+                - [x] pontos
+                - [x] nível
     - [ ] POST /auth/register
         - Recebe:
-            - [ ] nome
-            - [ ] email
-            - [ ] senha
+            - [x] nome
+            - [x] email
+            - [x] senha
             - [ ] bio
-            - [ ] horário de notificação
+            - [x] horário de notificação
         - Retorna:
-            - [ ] token
-            - [ ] userId
-            - [ ] nome
-            - [ ] pontos
-            - [ ] nível
+            - [x] token
+            - [x] userId
+            - [x] nome
+            - [x] pontos
+            - [x] nível
     - [ ] /auth/logout (não implementado / não usado)
 
 - [ ] /habits
@@ -70,7 +70,7 @@
         - Retorna:
             - [ ] userId do amigo
             - [ ] nome do amigo
-    - [ ] GET /user/allHabits
+    - [x] GET /user/allHabits
     - [ ] GET /user/allChallenges
     - [ ] GET /user/notifications
         - Envia:
