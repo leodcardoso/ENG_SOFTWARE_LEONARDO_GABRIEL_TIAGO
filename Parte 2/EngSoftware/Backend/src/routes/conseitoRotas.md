@@ -18,7 +18,7 @@
             - [x] nome
             - [x] email
             - [x] senha
-            - [ ] bio
+            - [x] bio
             - [x] horário de notificação
         - Retorna:
             - [x] token
