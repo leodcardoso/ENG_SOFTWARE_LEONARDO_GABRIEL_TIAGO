@@ -27,13 +27,14 @@
             - [x] nível
     - [ ] /auth/logout (não implementado / não usado)
 
-- [ ] /habits
-    - [ ] CRUD (POST, GET, PUT, DELETE)
-        - [ ] POST /habits — criar hábito
-        - [ ] GET /habits[/:id] — buscar (todos ou por id)
-        - [ ] PUT /habits/:id — atualizar
-        - [ ] DELETE /habits/:id — remover
-    - [ ] POST /habits/:habitId/checkin — registrar check-in
+- [x] /habits
+    - [x] CRUD (POST, GET, PUT, DELETE)
+        - [x] POST /habits — criar hábito
+        - [x] GET /habits — buscar (todos)
+        - [x] GET /habits[/:id] — buscar (por id)
+        - [ ] ~~PUT /habits/:id — atualizar~~
+        - [ ] ~~DELETE /habits/:id — remover~~
+    - [x] POST /habits/:habitId/checkin — registrar check-in
 
 - [x] /challenges
     - [x] CRUD (POST, GET, PUT, DELETE)
@@ -70,7 +71,7 @@
         - Retorna:
             - [x] userId do amigo
             - [x] nome do amigo
-    - [x] GET /user/allHabits
+    - [ ] ~~GET /user/allHabits~~ (substituído por `/habits GET`)
     - [ ] ~~GET /user/allChallenges~~ (substituído por `/challenges GET`)
     - [x] GET /user/notifications
         - Envia:
