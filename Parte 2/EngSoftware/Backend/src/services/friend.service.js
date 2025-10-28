@@ -74,7 +74,7 @@ class FriendService {
     await Notification.create({
       recipientUserId: invite.sender_user_id,
       actorUserId: userId,
-      type: accept ? 'FRIEND_ACCEPT' : 'FRIEND_REJECT',
+      type: accept ? 'FRIEND_ACCEPTED' : 'FRIEND_REJECT',
       friendInviteId: invite.id,
       data: { 
         inviteId: invite.id,
@@ -82,7 +82,49 @@ class FriendService {
       }
     });
 
+    await Notification.markAsReadByFriendInvite(requestId, userId);
+
     return true;
+  }
+
+  async updateInviteStatus(requestId, receiverId, status) {
+    // Busca o convite
+    const invite = await FriendInvite.findById(requestId);
+    
+    if (!invite) {
+      throw new Error('Convite não encontrado');
+    }
+    
+    // Valida se o usuário é o destinatário
+    if (invite.receiver_user_id !== receiverId) {
+      throw new Error('Você não tem permissão para responder este convite');
+    }
+    
+    // Valida se o convite está pendente
+    if (invite.status !== 'PENDING') {
+      throw new Error('Este convite já foi respondido');
+    }
+    
+    // Atualiza o status do convite
+    const updated = await FriendInvite.updateStatus(requestId, status);
+    
+    // Se aceito, cria a amizade
+    if (status === 'ACCEPTED') {
+      await Friendship.create(invite.sender_user_id, invite.receiver_user_id);
+      
+      // Cria notificação para o remetente
+      await Notification.create({
+        recipientUserId: invite.sender_user_id,
+        actorUserId: receiverId,
+        type: 'FRIEND_ACCEPTED',
+        friendInviteId: requestId
+      });
+    }
+    
+    // Marca a notificação relacionada como lida
+    await Notification.markAsReadByFriendInvite(requestId, receiverId);
+    
+    return updated;
   }
 }
 

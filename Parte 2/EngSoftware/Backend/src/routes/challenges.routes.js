@@ -14,6 +14,9 @@ router.get('/:id', ChallengeController.getById);
 // Convites
 router.post('/invit', ChallengeController.inviteUsers);
 
+// PUT /challenges/invite/:inviteId/status -> aceitar/rejeitar convite
+router.put('/invite/:inviteId/status', ChallengeController.updateInviteStatus);
+
 // Check-in
 router.post('/:challengeId/checkin', ChallengeController.checkin);
 

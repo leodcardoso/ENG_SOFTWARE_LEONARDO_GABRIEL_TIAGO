@@ -1,14 +1,14 @@
+import { getToken } from "@/services/api";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  FlatList,
   ActivityIndicator,
+  FlatList,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 import { useNotificationViewModel } from "../../viewmodels/NotificationViewModel";
-import { useRouter } from "expo-router";
-import { getToken } from "@/services/api";
 
 export default function NotificationScreen() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function NotificationScreen() {
   const [loadingToken, setLoadingToken] = useState(true);
 
   // ✅ Hook SEMPRE é chamado (mesmo antes do token existir)
-  const { notifications, loading, acceptNotification, reload } =
+  const { notifications, loading, acceptNotification, rejectNotification, markAsRead, reload } =
     useNotificationViewModel(token ?? "");
 
   useEffect(() => {
@@ -68,6 +68,86 @@ export default function NotificationScreen() {
     );
   }
 
+  // Função para renderizar ícone baseado no tipo
+  const getNotificationIcon = (type: string) => {
+    switch (type) {
+      case "FRIEND_INVITE":
+      case "FRIEND_ACCEPTED":
+        return "👥";
+      case "CHALLENGE_INVITE":
+      case "CHALLENGE_JOINED":
+        return "🏆";
+      case "HABIT_REMINDER":
+        return "⏰";
+      case "ACHIEVEMENT":
+        return "🎖️";
+      case "LEVEL_UP":
+        return "⬆️";
+      default:
+        return "🔔";
+    }
+  };
+
+  // Função para renderizar botões de ação
+  const renderActionButtons = (item: any) => {
+    // ✅ Se já foi lida, não exibe botões
+    if (item.isRead) {
+      return null;
+    }
+
+    // ✅ Se não requer ação, apenas marcar como lida
+    if (!item.requiresAction) {
+      return (
+        <TouchableOpacity
+          onPress={() => markAsRead(item.id)}
+          style={{
+            marginTop: 8,
+            backgroundColor: "#2196F3",
+            padding: 8,
+            borderRadius: 6,
+          }}
+        >
+          <Text style={{ color: "#fff", textAlign: "center", fontWeight: "bold" }}>
+            ✓ Marcar como lida
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    // ✅ Se requer ação (FRIEND_INVITE ou CHALLENGE_INVITE)
+    return (
+      <View style={{ flexDirection: "row", gap: 8, marginTop: 8 }}>
+        <TouchableOpacity
+          onPress={() => acceptNotification(item)}
+          style={{
+            flex: 1,
+            backgroundColor: "#4CAF50",
+            padding: 8,
+            borderRadius: 6,
+          }}
+        >
+          <Text style={{ color: "#fff", textAlign: "center", fontWeight: "bold" }}>
+            ✓ Aceitar
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => rejectNotification(item)}
+          style={{
+            flex: 1,
+            backgroundColor: "#f44336",
+            padding: 8,
+            borderRadius: 6,
+          }}
+        >
+          <Text style={{ color: "#fff", textAlign: "center", fontWeight: "bold" }}>
+            ✗ Recusar
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={{ flex: 1, padding: 16, backgroundColor: "#fff" }}>
       <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 16 }}>
@@ -82,28 +162,40 @@ export default function NotificationScreen() {
             style={{
               padding: 12,
               marginBottom: 10,
-              backgroundColor: "#f8f8f8",
+              backgroundColor: item.isRead ? "#f8f8f8" : "#e3f2fd",
               borderRadius: 8,
+              borderLeftWidth: 4,
+              borderLeftColor: item.isRead ? "#ccc" : "#2196F3",
             }}
           >
-            <Text style={{ fontSize: 16 }}>{item.description}</Text>
-            <Text style={{ color: "gray", fontSize: 12 }}>📅 {item.date}</Text>
-
-            <TouchableOpacity
-              onPress={() => acceptNotification(item)}
-              style={{
-                marginTop: 8,
-                backgroundColor: "#4CAF50",
-                padding: 8,
-                borderRadius: 6,
-              }}
-            >
-              <Text style={{ color: "#fff", textAlign: "center" }}>
-                {item.type === "friend_request"
-                  ? "Aceitar Amizade"
-                  : "Aceitar Desafio"}
+            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 4 }}>
+              <Text style={{ fontSize: 24, marginRight: 8 }}>
+                {getNotificationIcon(item.type)}
               </Text>
-            </TouchableOpacity>
+              <Text style={{ fontSize: 16, fontWeight: "bold", flex: 1 }}>
+                {item.actorUserName}
+              </Text>
+              {!item.isRead && (
+                <View
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: 4,
+                    backgroundColor: "#2196F3",
+                  }}
+                />
+              )}
+            </View>
+            
+            <Text style={{ fontSize: 14, color: "#333", marginLeft: 32 }}>
+              {item.description}
+            </Text>
+            
+            <Text style={{ color: "gray", fontSize: 12, marginTop: 4, marginLeft: 32 }}>
+              📅 {item.date}
+            </Text>
+
+            {renderActionButtons(item)}
           </View>
         )}
         ListEmptyComponent={

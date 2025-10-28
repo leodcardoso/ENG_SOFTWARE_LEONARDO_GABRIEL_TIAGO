@@ -1,3 +1,4 @@
+const Notification = require('../models/notification.model.js');
 const User = require('../models/user.model.js');
 
 class UserService {
@@ -34,6 +35,18 @@ class UserService {
 
   async getNotifications(userId, limit) {
     return await User.getNotifications(userId, limit);
+  }
+
+  async markNotificationAsRead(notificationId, userId) {
+    return await Notification.markAsRead(notificationId, userId);
+  }
+
+  async getUserById(userId) {
+    const user = await User.findBasicInfoById(userId);
+    if (!user) {
+      throw new Error('Usuário não encontrado');
+    }
+    return user;
   }
 
   async searchUsers(name, requesterId) {
