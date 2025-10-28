@@ -10,6 +10,7 @@ import {
   FlatList,
   Pressable,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 
 import { useHabitListViewModel } from "../../viewmodels/useHabitListViewModel";
@@ -18,6 +19,11 @@ import { useChallengeViewModel } from "../../viewmodels/ChallengeViewModel";
 import { getToken } from "@/services/api";
 import Icon from 'react-native-vector-icons/FontAwesome';
 const styles = StyleSheet.create({
+    scrollContainer: {
+    flexGrow: 1, // permite rolar mesmo se o conteúdo for pequeno
+    padding: 20,
+    backgroundColor: "#f9f9f9",
+  },
   container: { flex: 1, backgroundColor: "#f9f9f9" },
   profileSection: { alignItems: "center", marginVertical: 20 },
   avatar: { width: 80, height: 80, borderRadius: 40 },
@@ -108,9 +114,8 @@ export default function MainScreen() {
   };
 
   const handlePressChallenge = (challengeId: string)=>{
-    router.push({ pathname: "/challengeDetail", params: { token, challengeId } });
+    router.push({ pathname: "/challengeDetail", params: { token, id: challengeId } });
   }
-
   const handleGoToNotifications = () => {
     router.push("/notification");
   };
@@ -122,6 +127,7 @@ const handleGoToAddFriends = () => {
   router.push("/friends");
 };
   return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
     <View style={styles.container}>
       {/* 🔝 Botões do topo */}
       <View style={[styles.topButtonsRow, { flexWrap: "wrap", gap: 10 }]}>
@@ -164,7 +170,7 @@ const handleGoToAddFriends = () => {
           </Pressable>
         
         )}
-        contentContainerStyle={{ minHeight: 1000 }}
+        contentContainerStyle={{ minHeight: 200 }}
         ListEmptyComponent={
 
             
@@ -186,6 +192,7 @@ const handleGoToAddFriends = () => {
             </View>
           </Pressable>
         )}
+        contentContainerStyle={{ minHeight: 200 }}
         ListEmptyComponent={
           <Text style={{ textAlign: "center", marginTop: 10, color: "gray" }}>
             Nenhum Hábito em Progresso.
@@ -212,5 +219,6 @@ const handleGoToAddFriends = () => {
         }
       /> */}
     </View>
+    </ScrollView>
   );
 }

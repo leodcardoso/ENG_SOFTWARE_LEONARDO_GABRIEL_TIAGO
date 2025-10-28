@@ -57,6 +57,9 @@ export function useAuthViewModel() {
         (response && (response.token || response.data?.token || response.data?.data?.token)) ??
         null;
 
+      if (token) {
+        storeToken(token);
+      }
       const extractedUser: User | null =
         (response && response.data && response.data.user) ??
         (response && response.user) ??

@@ -21,6 +21,8 @@ export function useChallengeViewModel(token?: string | null) {
         useEffect(() => {
             if (token) loadChallenges();
         }, [token]);
+    
 
+    
     return { challenges, loading2, reload: loadChallenges };
-    }
+}

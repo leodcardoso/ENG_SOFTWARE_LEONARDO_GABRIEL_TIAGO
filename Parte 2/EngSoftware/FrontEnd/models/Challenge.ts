@@ -1,4 +1,4 @@
-// src/models/Habit.ts
+// src/models/Challenge.ts
 export interface Challenge {
   id: string;
   owner_id: number;

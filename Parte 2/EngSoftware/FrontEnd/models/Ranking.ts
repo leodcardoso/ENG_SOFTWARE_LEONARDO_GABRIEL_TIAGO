@@ -15,8 +15,8 @@ export default class RankingModel {
   static fromApi(data: any[]): RankingModel {
     const users = data.map((item, index) => ({
       id: item.id,
-      name: item.name,
-      score: item.score,
+      name: item.userName,
+      score: item.points,
       position: index + 1,
     }));
     return new RankingModel(users);
