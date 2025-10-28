@@ -1,20 +1,35 @@
 // src/views/Login/LoginScreen.tsx
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Button, Text, TextInput, View } from 'react-native';
 import { useAuthViewModel } from '../../viewmodels/AuthViewModel';
 import { styles } from './styles';
-import { useRouter } from 'expo-router';
 
 export default function LoginScreen({ navigation }: any) {
   const router = useRouter();
-  const { login, loading, error, user } = useAuthViewModel();
+  const { login, loading, error } = useAuthViewModel();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [localError, setLocalError] = useState<string | null>(null);
 
   const handleLogin = async () => {
-    await login(email, password);
-    if (user) {
-      router.push('/main'); // navega para tela principal
+    try {
+      setLocalError(null);
+      const result = await login(email, password);
+      console.log("Resultado do login:", result);
+      
+      if (result.success && result.user) {
+        console.log("Login bem-sucedido, navegando para /main");
+        // Adiciona um pequeno delay para garantir que o estado foi atualizado
+        setTimeout(() => {
+          router.replace('/main');
+        }, 100);
+      } else {
+        setLocalError(result.error || 'Erro ao fazer login');
+      }
+    } catch (err) {
+      console.error("Erro no handleLogin:", err);
+      setLocalError('Erro inesperado ao fazer login');
     }
   };
 
@@ -37,7 +52,7 @@ export default function LoginScreen({ navigation }: any) {
         secureTextEntry
       />
 
-      {error && <Text style={styles.error}>{error}</Text>}
+      {(error || localError) && <Text style={styles.error}>{error || localError}</Text>}
 
       {loading ? (
         <ActivityIndicator />
