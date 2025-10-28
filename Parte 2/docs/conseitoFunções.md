@@ -6,9 +6,9 @@ Padrões
 Criar Habito
         Nome
         Categoria
-        -Numero de checkin (Diario)
+        ~~Numero de checkin (Diario)~~
         Data Fim
-        Tipo: Grupo, Privado -Publico
+        Tipo: Grupo, Privado ~~Publico~~
             Convidar
 
 Habito/Desafio
@@ -18,7 +18,7 @@ Habito/Desafio
     Notificar
         Horario Conta
     Ranking (em grupo)
-    -Porcentagem
+    ~~Porcentagem~~
         calendario com nº de dias do inicil ate o fim
     Ativo
         Se der a data limite desativa
