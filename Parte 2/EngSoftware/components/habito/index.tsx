@@ -5,7 +5,7 @@ import {router} from 'expo-router';
 
 
 type Props = ViewProps & {
-    idd:number;
+    idd:string;
     titulo: string;
     progresso: number;
 }
@@ -26,10 +26,11 @@ function horasTexto(tempoConcluido: number){
     }
 }
 
-function AbreHabito(idd: number){
+function AbreHabito(idd: string){
     // navegar para a pagina do habito
     // usar o idd para pegar os dados do habito
-    router.push(`/habito/${idd}`);
+    // router.push(`/habito/${idd}`);
+    console.log(idd);
 }
 
 

@@ -1,0 +1,192 @@
+import { HabitoConcluido, HabitoProgresso } from "../../../components/habito";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
+
+import { useHabitListViewModel } from "../../viewmodels/useHabitListViewModel";
+import { useUserViewModel } from "../../viewmodels/ProfileViewModel";
+import { useChallengeViewModel } from "../../viewmodels/ChallengeViewModel";
+import { getToken } from "@/services/api";
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#f9f9f9" },
+  profileSection: { alignItems: "center", marginVertical: 20 },
+  avatar: { width: 80, height: 80, borderRadius: 40 },
+  name: { fontSize: 18, fontWeight: "bold", marginTop: 10 },
+  statsRow: { flexDirection: "row", gap: 10, marginTop: 5 },
+  sectionTitle: { fontSize: 16, fontWeight: "bold", margin: 10 },
+  topButtonsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+    marginTop: 10,
+  },
+  button: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  buttonSecondary: {
+    backgroundColor: "#2196F3",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  buttonText: { color: "#fff", fontWeight: "bold" },
+});
+
+export default function MainScreen() {
+  const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
+  const [loadingToken, setLoadingToken] = useState(true);
+
+  // 🔑 Buscar token uma única vez
+  useEffect(() => {
+    (async () => {
+      try {
+        const t = await getToken();
+        if (!t) {
+          router.push("/login");
+          return;
+        }
+        setToken(t);
+      } catch (error) {
+        console.error("Erro ao carregar token:", error);
+      } finally {
+        setLoadingToken(false);
+      }
+    })();
+  }, []);
+
+  // Call token-dependent hooks unconditionally so hook order stays stable across renders.
+  // These hooks themselves guard side-effects based on the token value.
+  const { user } = useUserViewModel(token);
+  const { habits, loading } = useHabitListViewModel(token);
+  const { challenges, loading2 } = useChallengeViewModel(token);
+
+  // ⚠️ Enquanto o token ainda está sendo carregado
+  if (loadingToken) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Carregando suas informações...</Text>
+      </View>
+    );
+  }
+
+  // ⚠️ Se não houver token após o carregamento
+  if (!token) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Token inválido. Redirecionando para login...</Text>
+      </View>
+    );
+  }
+
+  // ✅ hooks are already called above; continue rendering
+
+  if (loading || loading2)
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+
+  const handlePressHabit = (habitId: string) => {
+    router.push({ pathname: "/habitDetail", params: { token, habitId } });
+  };
+
+  const handleGoToNotifications = () => {
+    router.push("/notification");
+  };
+
+  const handleGoToCreateChallenge = () => {
+    router.push("/createChallenge");
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* 🔝 Botões do topo */}
+      <View style={styles.topButtonsRow}>
+        <TouchableOpacity style={styles.button} onPress={handleGoToNotifications}>
+          <Text style={styles.buttonText}>🔔 Notificações</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonSecondary} onPress={handleGoToCreateChallenge}>
+          <Text style={styles.buttonText}>➕ Novo Desafio</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* 👤 Informações do usuário */}
+      <View style={styles.profileSection}>
+        <Image source={{ uri: user?.avatar_url }} style={styles.avatar} />
+        <Text style={styles.name}>{user?.name}</Text>
+        <View style={styles.statsRow}>
+          <Text>{user?.level} lvl</Text>
+          <Text>💧 {user?.points} pts</Text>
+        </View>
+      </View>
+
+      {/* 🏆 Desafios */}
+      <Text style={styles.sectionTitle}>Desafios em Grupo</Text>
+      <FlatList
+        data={challenges}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <Text>{item.title}</Text>}
+        ListEmptyComponent={
+          <Text style={{ textAlign: "center", marginTop: 10, color: "gray" }}>
+            Nenhum Desafio em Grupo.
+          </Text>
+        }
+      />
+
+      {/* 🔄 Hábitos em progresso */}
+      <Text style={styles.sectionTitle}>Hábitos em Progresso</Text>
+      <FlatList
+        data={habits}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => handlePressHabit(item.id)}>
+            <View style={{ marginVertical: 8 }}>
+              <HabitoProgresso idd={item.id} titulo={item.name} progresso={item.progress} />
+            </View>
+          </Pressable>
+        )}
+        ListEmptyComponent={
+          <Text style={{ textAlign: "center", marginTop: 10, color: "gray" }}>
+            Nenhum Hábito em Progresso.
+          </Text>
+        }
+      />
+
+      {/* ✅ Hábitos concluídos */}
+      <Text style={styles.sectionTitle}>Hábitos Concluídos</Text>
+      <FlatList
+        data={habits}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => handlePressHabit(item.id)}>
+            <View style={{ marginVertical: 8 }}>
+              <HabitoConcluido titulo={item.name} tempoConcluido={10} />
+            </View>
+          </Pressable>
+        )}
+        ListEmptyComponent={
+          <Text style={{ textAlign: "center", marginTop: 10, color: "gray" }}>
+            Nenhum Hábito Concluído.
+          </Text>
+        }
+      />
+    </View>
+  );
+}
