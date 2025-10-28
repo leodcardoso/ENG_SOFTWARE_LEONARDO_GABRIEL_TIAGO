@@ -1,184 +1,240 @@
-# 📘 Documentação do Banco de Dados (`db.json`)
+# Documentação do Banco de Dados (PostgreSQL)
 
 ## 1\. Visão Geral
 
-Este documento descreve a estrutura, entidades e regras de negócio do banco de dados do projeto. O banco de dados é um único arquivo (`db.json`) que funciona como um banco de dados NoSQL (baseado em documentos), mas que adere a princípios de design relacional.
+Este documento descreve a estrutura, entidades (tabelas) e regras de negócio do banco de dados do projeto. O banco de dados é um schema PostgreSQL, e sua estrutura é definida pelo script `constraints.sql`.
 
-Toda a lógica de acesso, escrita e validação de regras de negócio é controlada pela API (`server.js`) através das funções de repositório definidas em `db.js`.
+Este schema utiliza chaves primárias (`BIGSERIAL`), chaves estrangeiras (`REFERENCES`) com ações em cascata (`ON DELETE CASCADE`) para garantir a integridade relacional, `ENUM`s customizados para tipos de dados controlados, `CHECK` constraints para regras de negócio no nível do banco e Índices para otimização de performance.
 
 ## 2\. Diagrama da Estrutura (DER)
 
-O diagrama abaixo representa as entidades (coleções) e seus relacionamentos principais, conforme a estrutura definida.
+O diagrama abaixo representa as entidades (tabelas) e seus relacionamentos principais, conforme a estrutura definida.
 
-![FotoDiagrama](./diagramaDB.png)
-
------
-
-## 3\. Detalhamento das Entidades (Coleções)
-
-Esta seção descreve cada entidade (coleção) definida no `db.json`.
-
-### `Usuário` (usuarios)
-
-  * **Descrição:** Entidade central do sistema. Armazena todos os dados do usuário, seu perfil, configurações e progresso de gamificação.
-  * **Atributos:**
-      * `id` (PK): Identificador único (INT).
-      * `nome`: Nome de exibição (STRING).
-      * `email`: Email único de login (STRING).
-      * `funcao`: Papel no sistema (ex: `maintainer`, `developer`) (STRING).
-      * `criadoEm`: Data/hora de criação (DATETIME).
-      * `avatar`: URL para a imagem de perfil (STRING, opcional).
-      * `bio`: Descrição do perfil (STRING).
-      * `idioma`: Preferência de idioma (ex: `pt-BR`) (STRING).
-      * `fusoHorario`: Fuso horário do usuário (ex: `America/Sao_Paulo`) (STRING).
-      * `notificacoesAtivas`: Preferência de notificação (BOOLEAN).
-      * `horarioLembrete`: Horário padrão para lembretes (STRING).
-      * `privadoPorPadrao`: Preferência de privacidade para novos hábitos (BOOLEAN).
-      * `pontos`: Pontuação total de gamificação (INT).
-      * `nivel`: Nível atual de gamificação (INT).
-      * `amigos`: Lista de IDs de outros `Usuário` (Array de INT).
-
-### `Hábito` (habitos)
-
-  * **Descrição:** Armazena os hábitos que os usuários criam para rastrear.
-  * **Atributos:**
-      * `id` (PK): Identificador único (INT).
-      * `usuarioId` (FK): O `id` do `Usuário` que possui este hábito.
-      * `titulo`: Nome do hábito (ex: "Meditar") (STRING).
-      * `descricao`: Detalhes opcionais (STRING).
-      * `frequencia`: Frequência (ex: `daily`, `weekly`) (STRING).
-      * `horarios`: Dias/horários da agenda (Array de STRING).
-      * `lembretes`: Horários para lembretes (Array de STRING).
-      * `sequenciaAtual`: Nº de check-ins consecutivos (INT).
-      * `melhorSequencia`: Recorde de check-ins (INT).
-      * `ultimoCheckIn`: Data do último check-in (DATE, opcional).
-      * `pontosPorCheckIn`: Pontos ganhos por check-in (INT).
-      * `ativo`: Hábito ativo ou arquivado (BOOLEAN).
-      * `privacidade`: Visibilidade (`publico`, `amigos`, `privado`) (ENUM).
-      * `criadoEm`: Data/hora de criação (DATETIME).
-      * `coringasUsados`: Datas (ISO) em que o "coringa" foi usado (Array de DATE).
-
-### `Tarefa` (tarefas)
-
-  * **Descrição:** Tarefas internas de gestão do projeto (não visíveis aos usuários finais).
-  * **Atributos:**
-      * `id` (PK): Identificador único (INT).
-      * `donoId` (FK): O `id` do `Usuário` responsável pela tarefa.
-      * `titulo`: Descrição da tarefa (STRING).
-      * `categoria`: Categoria (ex: `documentação`, `gestão`) (STRING).
-      * `status`: Estado atual (ex: `todo`, `done`) (STRING).
-      * `saida`: Caminho para um artefato/documento (STRING, opcional).
-      * `criadoEm`: Data/hora de criação (DATETIME).
-
-### `Desafio` (desafios)
-
-  * **Descrição:** Desafios de gamificação entre múltiplos usuários, baseados em hábitos.
-  * **Atributos:**
-      * `id` (PK): Identificador único (INT).
-      * `criadorId` (FK): O `id` do `Usuário` que criou o desafio.
-      * `titulo`: Nome do desafio (STRING).
-      * `dataInicio` / `dataFim`: Período do desafio (DATE).
-      * `habitoId` (FK): O `id` do `Hábito` que é a meta do desafio.
-      * `checkInsNecessarios`: Nº de check-ins para completar (INT).
-      * `progresso`: Mapeamento de progresso (`{ usuarioId: contagem }`) (MAP).
-      * `participantes`: Lista de IDs de `Usuário` participando (Array de INT).
-      * `criadoEm`: Data/hora de criação (DATETIME).
-
-### `Conquista` (conquistas)
-
-  * **Descrição:** Tabela estática que define todas as conquistas possíveis no sistema.
-  * **Atributos:**
-      * `id` (PK): Identificador único (INT).
-      * `chave`: Chave de código (ex: `first_checkin`) (STRING).
-      * `titulo`: Nome da conquista (STRING).
-      * `pontos`: Pontos de bônus ao ser concedida (INT).
-      * `descricao`: Critério de obtenção (STRING).
-
-### `Usuário_Conquista` (usuario\_conquista)
-
-  * **Descrição:** Tabela de junção (Muitos-para-Muitos) que liga `Usuário` a `Conquista`. Registra quais conquistas um usuário já ganhou.
-  * **Atributos:**
-      * `id` (PK): Identificador único (INT).
-      * `usuarioId` (FK): O `id` do `Usuário` que ganhou.
-      * `conquistaId` (FK): O `id` da `Conquista` que foi ganha.
-      * `concedidoEm`: Data/hora em que foi concedida (DATETIME, opcional).
-
-### `Notificação` (notificacoes)
-
-  * **Descrição:** Armazena notificações (lembretes, sociais, etc.) a serem exibidas para o usuário.
-  * **Atributos:**
-      * `id` (PK): Identificador único (INT).
-      * `usuarioId` (FK): O `id` do `Usuário` que receberá a notificação.
-      * `tipo`: Tipo de notificação (ex: `reminder`, `social`, `task`) (STRING).
-      * `titulo`: Título (STRING).
-      * `corpo`: Texto da notificação (STRING).
-      * `lida`: Status de leitura (BOOLEAN).
-      * `criadoEm`: Data/hora de criação (DATETIME).
-
-### `Comando` (comandos)
-
-  * **Descrição:** Entidade central da lógica de negócios. Registra cada ação atômica que modifica o estado do sistema (Padrão Command).
-  * **Atributos:**
-      * `id` (PK): Identificador único (INT).
-      * `usuarioId` (FK): O `id` do `Usuário` que executou o comando.
-      * `tipo`: Tipo de comando (`checkin`, `uso_coringa`, `reverter`) (ENUM).
-      * `alvoTipo`: A entidade alvo (ex: `habit`, `command`) (STRING).
-      * `alvoId`: O `id` da entidade alvo (INT).
-      * `dataHora`: Data/hora exata da execução (DATETIME).
-      * `variacaoPontos`: A variação de pontos que esta ação causou (INT).
-      * `metadados`: Dados extras (ex: `{ source: 'mobile' }`) (JSON).
-      * `desfeito`: `true` se este comando foi revertido (BOOLEAN).
-
-### `Auditoria` (auditoria)
-
-  * **Descrição:** Tabela de log (1-para-1 com `Comando`) que armazena os detalhes de um comando para fins de auditoria e rastreabilidade.
-  * **Atributos:**
-      * `id` (PK): Identificador único (INT).
-      * `entidade`: A entidade logada (sempre `"comandos"`) (STRING).
-      * `entidadeId` (FK): O `id` do `Comando` associado.
-      * `acao`: Ação realizada (sempre `"create"`) (STRING).
-      * `usuarioId` (FK): O `id` do `Usuário` que executou.
-      * `dataHora`: Data/hora da auditoria (DATETIME).
-      * `dados`: Cópia dos dados principais do comando (JSON).
+![diagramaDB](diagramaDB.png)
 
 -----
 
-## 4\. Lógica de Negócio Chave (extraída de `db.js`)
+## 3\. Tipos Customizados (ENUMs)
+
+O schema define tipos de dados customizados para garantir a consistência de valores específicos.
+
+  * **`invite_status`**
+      * **Descrição:** Status possíveis para convites (amizade e desafios).
+      * **Valores:** `PENDING`, `ACCEPTED`, `REJECTED`, `CANCELLED`.
+  * **`notification_type`**
+      * **Descrição:** Tipos de notificações do sistema.
+      * **Valores:** `FRIEND_REQUEST`, `FRIEND_ACCEPTED`, `CHALLENGE_INVITE`, `CHALLENGE_JOINED`, `HABIT_REMINDER`, `ACHIEVEMENT`, `LEVEL_UP`.
+  * **`user_role`**
+      * **Descrição:** Papéis de usuários em desafios.
+      * **Valores:** `ADMIN`, `MEMBER`, `MODERATOR`.
+
+-----
+
+## 4\. Detalhamento das Entidades (Tabelas)
+
+Esta seção descreve cada entidade (tabela) definida no `constraints.sql`.
+
+### `Usuário` (users)
+
+  * **Descrição:** Tabela de usuários do sistema.
+  * **Atributos:**
+      * `id` (PK): Identificador único do usuário (BIGSERIAL).
+      * `name` (NOT NULL): Nome completo do usuário (VARCHAR(255)).
+      * `email` (UNIQUE, NOT NULL): Email único do usuário para login (VARCHAR(255)).
+      * `password_hash` (NOT NULL): Hash da senha do usuário (bcrypt) (VARCHAR(255)).
+      * `created_at` (NOT NULL): Data e hora de criação do registro (TIMESTAMPTZ).
+      * `updated_at` (NOT NULL): Data e hora da última atualização (TIMESTAMPTZ).
+      * `points` (NOT NULL): Pontuação total acumulada pelo usuário (INT).
+      * `level` (NOT NULL): Nível atual do usuário baseado em pontos (INT).
+      * `avatar_url`: URL da imagem de perfil do usuário (TEXT).
+
+### `Configurações` (settings)
+
+  * **Descrição:** Configurações personalizadas de cada usuário.
+  * **Atributos:**
+      * `id` (PK): Identificador único da configuração (BIGSERIAL).
+      * `user_id` (FK, UNIQUE, NOT NULL): Referência ao usuário dono das configurações (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `notifications` (NOT NULL): Indica se o usuário deseja receber notificações (BOOLEAN).
+      * `reminders_default`: Horário padrão para lembretes de hábitos (TIME).
+      * `private_by_default` (NOT NULL): Define se novos hábitos são privados por padrão (BOOLEAN).
+      * `language`: Idioma preferido do usuário (VARCHAR(10)).
+      * `timezone`: Fuso horário do usuário (VARCHAR(50)).
+      * `updated_at` (NOT NULL): Data e hora da última atualização (TIMESTAMPTZ).
+
+### `Hábito` (habits)
+
+  * **Descrição:** Tabela de hábitos criados pelos usuários.
+  * **Atributos:**
+      * `id` (PK): Identificador único do hábito (BIGSERIAL).
+      * `user_id` (FK, NOT NULL): Referência ao usuário dono do hábito (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `title` (NOT NULL): Título/nome do hábito (TEXT).
+      * `description`: Descrição detalhada do hábito (TEXT).
+      * `category`: Categoria do hábito (saúde, produtividade, etc) (TEXT).
+      * `points` (NOT NULL): Pontos ganhos ao completar o hábito (INT).
+      * `active` (NOT NULL): Indica se o hábito está ativo (BOOLEAN).
+      * `last_check_in`: Data do último check-in realizado (DATE).
+      * `expiration_date`: Data de expiração/término do hábito (DATE).
+      * `created_at` (NOT NULL): Data e hora de criação do hábito (TIMESTAMPTZ).
+      * `updated_at` (NOT NULL): Data e hora da última atualização (TIMESTAMPTZ).
+      * `is_private` (NOT NULL): Define se o hábito é privado ou público (BOOLEAN).
+
+### `Desafio` (challenges)
+
+  * **Descrição:** Tabela de desafios criados pelos usuários.
+  * **Atributos:**
+      * `id` (PK): Identificador único do desafio (BIGSERIAL).
+      * `owner_id` (FK, NOT NULL): Referência ao usuário criador do desafio (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `title` (NOT NULL): Título do desafio (TEXT).
+      * `description`: Descrição detalhada do desafio (TEXT).
+      * `category`: Categoria do desafio (TEXT).
+      * `expiration_date`: Data de término do desafio (DATE).
+      * `created_at` (NOT NULL): Data e hora de criação do desafio (TIMESTAMPTZ).
+      * `updated_at` (NOT NULL): Data e hora da última atualização (TIMESTAMPTZ).
+      * `is_active` (NOT NULL): Indica se o desafio está ativo (BOOLEAN).
+
+### `Membros de Desafios` (challenge\_members)
+
+  * **Descrição:** Tabela de relacionamento (N-N) entre desafios e seus membros.
+  * **Atributos:**
+      * `challenge_id` (PK, FK): Referência ao desafio (BIGINT, REFERENCES `challenges(id)` ON DELETE CASCADE).
+      * `user_id` (PK, FK): Referência ao usuário membro (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `role` (NOT NULL): Papel do usuário no desafio (`user_role`).
+      * `joined_at` (NOT NULL): Data e hora em que o usuário entrou no desafio (TIMESTAMPTZ).
+      * `user_points` (NOT NULL): Pontos acumulados pelo usuário neste desafio (INT).
+      * `is_active` (NOT NULL): Indica se o membro está ativo no desafio (BOOLEAN).
+
+### `Amizades` (friendships)
+
+  * **Descrição:** Tabela de relacionamento (N-N) de amizades entre usuários.
+  * **Atributos:**
+      * `user_id_a` (PK, FK): Referência ao primeiro usuário da amizade (menor ID) (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `user_id_b` (PK, FK): Referência ao segundo usuário da amizade (maior ID) (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `since_at` (NOT NULL): Data e hora em que a amizade foi estabelecida (TIMESTAMPTZ).
+  * **Constraints:**
+      * `CHECK (user_id_a < user_id_b)`: Garante que os pares sejam únicos e ordenados para evitar duplicidade (A-B e B-A).
+
+### `Convites de Amizade` (friend\_invites)
+
+  * **Descrição:** Tabela de convites de amizade entre usuários.
+  * **Atributos:**
+      * `id` (PK): Identificador único do convite (BIGSERIAL).
+      * `sender_user_id` (FK, NOT NULL): Referência ao usuário que enviou o convite (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `receiver_user_id` (FK, NOT NULL): Referência ao usuário que recebeu o convite (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `status` (NOT NULL): Status atual do convite (`invite_status`).
+      * `message`: Mensagem opcional enviada com o convite (TEXT).
+      * `created_at` (NOT NULL): Data e hora de criação do convite (TIMESTAMPTZ).
+      * `updated_at` (NOT NULL): Data e hora da última atualização do status (TIMESTAMPTZ).
+  * **Constraints:**
+      * `CHECK (sender_user_id <> receiver_user_id)`: Um usuário não pode enviar um convite para si mesmo.
+      * `UNIQUE (sender_user_id, receiver_user_id)`: Impede que um usuário envie múltiplos convites pendentes para o mesmo destinatário.
+
+### `Convites de Desafio` (challenge\_invites)
+
+  * **Descrição:** Tabela de convites para participação em desafios.
+  * **Atributos:**
+      * `id` (PK): Identificador único do convite (BIGSERIAL).
+      * `sender_user_id` (FK, NOT NULL): Referência ao usuário que enviou o convite (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `receiver_user_id` (FK, NOT NULL): Referência ao usuário que recebeu o convite (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `challenge_id` (FK, NOT NULL): Referência ao desafio para o qual foi convidado (BIGINT, REFERENCES `challenges(id)` ON DELETE CASCADE).
+      * `status` (NOT NULL): Status atual do convite (`invite_status`).
+      * `message`: Mensagem opcional enviada com o convite (TEXT).
+      * `created_at` (NOT NULL): Data e hora de criação do convite (TIMESTAMPTZ).
+      * `updated_at` (NOT NULL): Data e hora da última atualização do status (TIMESTAMPTZ).
+  * **Constraints:**
+      * `CHECK (sender_user_id <> receiver_user_id)`: Um usuário não pode convidar a si mesmo.
+      * `UNIQUE (challenge_id, receiver_user_id)`: Impede que um usuário seja convidado múltiplas vezes para o mesmo desafio.
+
+### `Notificações` (notifications)
+
+  * **Descrição:** Tabela de notificações do sistema para usuários.
+  * **Atributos:**
+      * `id` (PK): Identificador único da notificação (BIGSERIAL).
+      * `recipient_user_id` (FK, NOT NULL): Referência ao usuário que receberá a notificação (BIGINT, REFERENCES `users(id)` ON DELETE CASCADE).
+      * `actor_user_id` (FK): Referência ao usuário que gerou o evento (pode ser nulo) (BIGINT, REFERENCES `users(id)` ON DELETE SET NULL).
+      * `type` (NOT NULL): Tipo da notificação (`notification_type`).
+      * `habit_id` (FK): Referência opcional ao hábito relacionado (BIGINT, REFERENCES `habits(id)` ON DELETE CASCADE).
+      * `challenge_id` (FK): Referência opcional ao desafio relacionado (BIGINT, REFERENCES `challenges(id)` ON DELETE CASCADE).
+      * `friend_invite_id` (FK): Referência opcional ao convite de amizade relacionado (BIGINT, REFERENCES `friend_invites(id)` ON DELETE CASCADE).
+      * `challenge_invite_id` (FK): Referência opcional ao convite de desafio relacionado (BIGINT, REFERENCES `challenge_invites(id)` ON DELETE CASCADE).
+      * `data` (NOT NULL): Dados extras em formato JSON para informações adicionais (JSONB).
+      * `read_at`: Data e hora em que a notificação foi lida (nulo se não lida) (TIMESTAMPTZ).
+      * `created_at` (NOT NULL): Data e hora de criação da notificação (TIMESTAMPTZ).
+  * **Constraints:**
+      * `CHECK (...)`: Garante que a notificação aponte para apenas *um* alvo (hábito, desafio, convite de amizade ou convite de desafio).
+
+-----
+
+## 5\. Índices (Otimização)
+
+Índices são usados para acelerar consultas em colunas frequentemente buscadas ou ordenadas.
+
+  * **`users`**
+      * `idx_users_email`: Otimiza a busca rápida por email (ex: login).
+      * `idx_users_level`: Otimiza a busca por nível.
+      * `idx_users_points`: Otimiza a ordenação por pontuação (ex: rankings).
+  * **`habits`**
+      * `idx_habits_user_id`: Otimiza a busca de hábitos por usuário.
+      * `idx_habits_active`: Otimiza a filtragem por hábitos ativos.
+      * `idx_habits_category`: Otimiza a filtragem por categoria.
+      * `idx_habits_expiration`: Otimiza a busca por hábitos que expiram.
+  * **`challenges`**
+      * `idx_challenges_owner_id`: Otimiza a busca de desafios por criador.
+      * `idx_challenges_category`: Otimiza a filtragem por categoria.
+      * `idx_challenges_active`: Otimiza a filtragem por desafios ativos.
+      * `idx_challenges_expiration`: Otimiza a busca por desafios que expiram.
+  * **`challenge_members`**
+      * `idx_challenge_members_user_id`: Otimiza a busca de desafios dos quais um usuário participa.
+      * `idx_challenge_members_points`: Otimiza o ranking de pontuação *dentro* de um desafio.
+  * **`friendships`**
+      * `idx_friendships_user_a` / `idx_friendships_user_b`: Otimizam buscas de amigos de um usuário.
+  * **`friend_invites`**
+      * `idx_friend_invites_sender`: Otimiza busca de convites enviados.
+      * `idx_friend_invites_receiver`: Otimiza busca de convites recebidos.
+      * `idx_friend_invites_status`: Otimiza busca por convites pendentes.
+  * **`challenge_invites`**
+      * `idx_challenge_invites_sender`: Otimiza busca de convites enviados.
+      * `idx_challenge_invites_receiver`: Otimiza busca de convites recebidos.
+      * `idx_challenge_invites_challenge`: Otimiza busca de convites por desafio.
+      * `idx_challenge_invites_status`: Otimiza busca por convites pendentes.
+  * **`notifications`**
+      * `idx_notifications_recipient_unread`: Otimiza a busca de notificações não lidas de um usuário (consulta muito frequente).
+      * `idx_notifications_type`: Otimiza a filtragem por tipo de notificação.
+      * `idx_notifications_created_at`: Otimiza a ordenação por data de criação.
+
+-----
+
+## 6\. Lógica de Negócio Chave (Legado - `db.js`)
+
+> [\!WARNING]
+> **Atenção:** A seção a seguir descreve a lógica de negócios da implementação anterior (`db.json` / `db.js`). Ela precisa ser revisada e atualizada para refletir a nova arquitetura SQL (que provavelmente será implementada na camada de aplicação/API, Triggers ou Stored Procedures).
 
 A lógica de negócios é centralizada em duas funções principais:
 
-### 4.1. `executeCommand(command)`
+### 6.1. `executeCommand(command)`
 
 Esta é a função principal que modifica o estado do banco de dados.
 
   * **`checkin`:**
-
       * Verifica se o hábito existe e se já não houve check-in hoje. Se sim, retorna um erro.
       * Atualiza `lastCheckIn` para hoje e incrementa `streak` (sequência atual) e `bestStreak` (melhor sequência).
       * Soma os `pointsPerCheckIn` do hábito aos `stats.points` do usuário.
       * Atualiza o `progress` nos `Desafios` (`challenges`) dos quais o usuário participa e que monitoram este hábito.
       * Concede a conquista `first_checkin` (id: 1) se for a primeira vez.
           * **Nota de Implementação:** A lógica em `db.js` ainda usa o modelo antigo `userAchievements` (array de IDs). Para se alinhar a este diagrama, ela precisaria ser refatorada para criar uma nova entrada em `Usuário_Conquista`.
-
   * **`joker_use` (Uso de Coringa):**
-
       * Verifica se o coringa já foi usado para aquele hábito na data de hoje. Se sim, retorna um erro.
       * Adiciona a data de hoje ao array `jokerUsedDates` do hábito.
       * A variação de pontos (`pointsDelta`) é `0`.
-
   * **`revert` (Reverter Ação):**
-
       * Localiza o comando-alvo (`target.id`) que será desfeito.
       * Verifica se o alvo já não foi desfeito (`undone === true`). Se sim, retorna um erro.
       * Marca o comando-alvo como `undone = true`.
       * Define o `pointsDelta` do comando *revert* como o valor negativo do comando-alvo (ex: `-10`).
       * Se o alvo era um `checkin`, subtrai os pontos dos `stats.points` do usuário e decrementa a `streak` (sequência) do hábito.
-
   * **Auditoria:**
-
       * Toda execução de `executeCommand` (checkin, joker ou revert) **automaticamente** cria uma nova entrada na coleção `Auditoria` (`auditLog`) com os detalhes da ação.
 
-### 4.2. `filterHabitsForViewer(viewerId)`
+### 6.2. `filterHabitsForViewer(viewerId)`
 
 Esta função aplica as regras de privacidade ao buscar hábitos.
 
@@ -188,11 +244,14 @@ Esta função aplica as regras de privacidade ao buscar hábitos.
 
 -----
 
-## 5\. Endpoints da API (extraído de `server.js`)
+## 7\. Endpoints da API (Legado - `server.js`)
+
+> [\!WARNING]
+> **Atenção:** A seção a seguir descreve os endpoints da API da implementação anterior (`server.js`). Ela precisa ser revisada e atualizada para refletir a nova arquitetura.
 
 O `server.js` expõe o `db.js` através dos seguintes endpoints:
 
-### 5.1. Endpoints CRUD Genéricos
+### 7.1. Endpoints CRUD Genéricos
 
 O servidor oferece rotas CRUD genéricas para a maioria das coleções:
 
@@ -202,14 +261,11 @@ O servidor oferece rotas CRUD genéricas para a maioria das coleções:
   * `PUT /:collection/:id`: Atualiza um item (com corpo JSON).
   * `DELETE /:collection/:id`: Remove um item.
 
-### 5.2. Endpoints de Lógica Específica
+### 7.2. Endpoints de Lógica Específica
 
   * `POST /commands`
-
       * **Descrição:** Ponto de entrada principal para *qualquer* ação que modifica o estado (check-in, coringa, reverter).
       * **Função (`db.js`):** `executeCommand(req.body)`.
-
   * `GET /habits-visible`
-
       * **Descrição:** Retorna a lista de hábitos que o usuário (`viewerId`) tem permissão para ver.
       * **Função (`db.js`):** `filterHabitsForViewer(req.query.viewerId)`.

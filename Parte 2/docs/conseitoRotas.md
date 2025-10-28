@@ -25,7 +25,7 @@
             - [x] nome
             - [x] pontos
             - [x] nível
-    - [ ] /auth/logout (não implementado / não usado)
+    - [x] /auth/logout (não implementado / não usado)
 
 - [x] /habits
     - [x] CRUD (POST, GET, PUT, DELETE)
@@ -56,12 +56,12 @@
             - [x] points (Individuais)
             - [x] colocação (Feita no NodeJS, com base na consulta já em ordem de pontos)
 
-- [ ] /friend
+- [x] /friend
     - [x] POST /friend/invit/:targetUser (targetUser = userId)
     - [x] POST /friend/status/:requestId
         - [x] Retorna: bool (se deu certo)
 
-- [ ] /user
+- [x] /user
     - [x] CRUD (GET, PUT, DELETE conforme necessário)
         - [x] GET /user/ — buscar usuário
         - [ ] ~~PUT /user/:id — atualizar usuário~~ (não vai ser implementado)
@@ -78,9 +78,9 @@
             - [x] token do usuário
         - Retorna:
             - [x] notificações (lista)
-                - [ ] tipo
-                - [ ] data
-                - [ ] descrição
+                - [x] tipo
+                - [x] data
+                - [x] descrição
     - [x] POST /user/search
         - Envia:
             - [x] nome (body)
@@ -90,5 +90,5 @@
                 - [x] userId
                 - [x] bool (se já é amigo)
 
-- [ ] /generic
-    - [ ] Rota reservada / não utilizada — usos futuros
+- [ ] ~~/generic~~
+    - [ ] ~~Rota reservada / não utilizada — usos futuros~~
