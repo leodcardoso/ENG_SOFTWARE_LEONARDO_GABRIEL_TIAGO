@@ -75,8 +75,8 @@
 3) Demonstração (PDF no git) — 10%
 
 3.1 Vídeo (até 30s) — Owner: Tiago | Review: Leonardo
-- [ ] Gravar fluxo principal funcionando
-- [ ] Hospedar (link não listado) e inserir no PDF
+- [x] Gravar fluxo principal funcionando
+- [x] Hospedar (link não listado) e inserir no PDF
   - Arquivo: docs/demo/Demonstracao.pdf (contém o link)
 
 3.2 Slides (6) — Owner: Gabriel | Review: Todos

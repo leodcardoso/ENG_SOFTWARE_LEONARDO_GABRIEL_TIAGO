@@ -48,6 +48,7 @@ Os diagramas UML de cada padrão, mapeados para as classes e módulos reais do n
 │   │   ├── 📄 conceitoFuncoes.md
 │   │   ├── 📄 conceitoRotas.md
 │   │   ├── 📄 metadata.json
+│   │   ├── 📄 demonstração.pdf
 │   │   └── 📄 EngSoftwareSlides.pdf
 │   ├── 📁 EngSoftware/
 │   │   ├── 📁 expo/
