@@ -119,7 +119,7 @@ class User {
     return result.rows;
   }
 
-   static async searchUserByName(name, requesterId) {
+  static async searchUserByName(name, requesterId) {
     // Garante trim e evita null/undefined
     const search = (name || '').trim();
 
@@ -127,12 +127,18 @@ class User {
       SELECT u.id,
              u.name,
              u.avatar_url,
-             CASE WHEN f.user_id_a IS NOT NULL THEN TRUE ELSE FALSE END AS is_friend
+             CASE WHEN f.user_id_a IS NOT NULL THEN TRUE ELSE FALSE END AS is_friend,
+             CASE WHEN fi.id IS NOT NULL THEN TRUE ELSE FALSE END AS has_pending_invite
       FROM users u
       LEFT JOIN friendships f ON (
         (f.user_id_a = u.id AND f.user_id_b = $2)
         OR
         (f.user_id_a = $2 AND f.user_id_b = u.id)
+      )
+      LEFT JOIN friend_invites fi ON (
+        (fi.sender_user_id = $2 AND fi.receiver_user_id = u.id AND fi.status = 'PENDING')
+        OR
+        (fi.sender_user_id = u.id AND fi.receiver_user_id = $2 AND fi.status = 'PENDING')
       )
       WHERE u.name ILIKE ('%' || $1 || '%')
         AND u.id <> $2
@@ -147,7 +153,8 @@ class User {
       id: r.id,
       name: r.name,
       avatar_url: r.avatar_url,
-      is_friend: !!r.is_friend
+      is_friend: !!r.is_friend,
+      has_pending_invite: !!r.has_pending_invite
     }));
   }
 

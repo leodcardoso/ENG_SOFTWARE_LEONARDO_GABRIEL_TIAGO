@@ -1,11 +1,11 @@
 // FriendViewModel.ts
-import { useState, useEffect, useCallback } from "react";
-import { FriendService } from "../services/FriendService";
+import { useCallback, useEffect, useState } from "react";
 import { FriendModel } from "../models/FriendModel";
+import { FriendService } from "../services/FriendService";
 
 export function useFriendViewModel(token: string) {
   const [friends, setFriends] = useState<FriendModel[]>([]);
-  const [searchResult, setSearchResult] = useState<FriendModel | null>(null);
+  const [searchResult, setSearchResult] = useState<FriendModel[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [actionLoading, setActionLoading] = useState<boolean>(false); // para adicionar amigo
   const [error, setError] = useState<string | null>(null);
@@ -35,20 +35,11 @@ export function useFriendViewModel(token: string) {
       try {
         setLoading(true);
         setError(null);
-        const result = await FriendService.searchFriendByName(token, name);
-        console.log(result);
-        if (!result) {
-          setSearchResult(null);
-        } else {
-          setSearchResult({
-            id: result.userId,
-            name,
-            isFriend: result.isFriend,
-          });
-        }
+        const results = await FriendService.searchFriendByName(token, name);
+        setSearchResult(results);
       } catch (err: any) {
         setError(err.message || "Erro ao buscar usuário");
-        setSearchResult(null);
+        setSearchResult([]);
       } finally {
         setLoading(false);
       }
@@ -65,8 +56,14 @@ export function useFriendViewModel(token: string) {
         const res = await FriendService.addFriend(token, userId);
         if (!res.success) throw new Error(res.message || "Falha ao adicionar amigo");
 
-        // marca o resultado da busca como amigo
-        setSearchResult((prev) => (prev && prev.id === userId ? { ...prev, isFriend: true } : prev));
+        // atualiza o resultado da busca marcando como convite pendente
+        setSearchResult((prev) =>
+          prev ? prev.map((user) =>
+            user.id === userId
+              ? { ...user, has_pending_invite: true }
+              : user
+          ) : prev
+        );
 
         // recarrega a lista de amigos
         await loadFriends();
@@ -81,6 +78,11 @@ export function useFriendViewModel(token: string) {
     [token, loadFriends]
   );
 
+  const reload = useCallback(async () => {
+    setSearchResult(null);
+    await loadFriends();
+  }, [loadFriends]);
+
   useEffect(() => {
     // carrega inicialmente
     loadFriends();
@@ -92,7 +94,7 @@ export function useFriendViewModel(token: string) {
     loading,
     actionLoading,
     error,
-    reload: loadFriends,
+    reload,
     searchFriendByName,
     addFriend,
   };

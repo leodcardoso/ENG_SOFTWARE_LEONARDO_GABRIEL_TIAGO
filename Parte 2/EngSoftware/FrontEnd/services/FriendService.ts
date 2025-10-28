@@ -29,7 +29,7 @@ export const FriendService = {
     }));
   },
 
-  async searchFriendByName(token: string, name: string): Promise<{ userId: string; isFriend: boolean } | null> {
+  async searchFriendByName(token: string, name: string): Promise<FriendModel[]> {
     const res = await fetch(`${API_BASE_URL}/user/search`, {
       method: "POST",
       headers: {
@@ -45,15 +45,19 @@ export const FriendService = {
     }
 
     const result = await res.json();
-    if (!result || !result.success || !result.data) return null;
-    console.log(result);
-    if (result.success && Array.isArray(result.data) && result.data.length > 0) {
-      const firstUser = result.data[0];
-      return { 
-        userId: String(firstUser.id), 
-        isFriend: !!firstUser.is_friend 
-      };
+    console.log('Search result:', result);
+    
+    if (!result || !result.success || !Array.isArray(result.data)) {
+      return [];
     }
+
+    return result.data.map((user: any) => ({
+      id: String(user.id),
+      name: user.name,
+      email: user.email,
+      isFriend: !!user.is_friend,
+      has_pending_invite: !!user.has_pending_invite,
+    }));
   },
 
   /**

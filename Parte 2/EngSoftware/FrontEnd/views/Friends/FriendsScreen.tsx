@@ -1,29 +1,24 @@
+import { getToken } from "@/services/api";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  FlatList,
-  TextInput,
   ActivityIndicator,
-  StyleSheet,
-  TouchableOpacity,
   Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { FriendModel } from "../../models/FriendModel";
 import { useFriendViewModel } from "../../viewmodels/FriendViewModel";
-import { useRouter } from "expo-router";
-import { getToken } from "@/services/api";
 
-// Tipagem dos amigos e do resultado de busca
+// Tipagem dos amigos
 interface Friend {
   id: string;
   name: string;
   email?: string;
-}
-
-interface SearchResult {
-  id: string;
-  name: string;
-  isFriend: boolean;
 }
 
 interface FriendsScreenProps {
@@ -32,17 +27,17 @@ interface FriendsScreenProps {
 
 export default function FriendsScreen() {
   const router = useRouter();
-    const [token, setToken] = useState<string | null>(null);
-    const [loadingToken, setLoadingToken] = useState(true);
-    // 1️⃣ Buscar token uma única vez
-    useEffect(() => {
-      (async () => {
-        const t = await getToken();
-        if (!t) router.push("/login");
-        setToken(t);
-        setLoadingToken(false);
-      })();
-    }, []);
+  const [token, setToken] = useState<string | null>(null);
+  const [loadingToken, setLoadingToken] = useState(true);
+  // 1️⃣ Buscar token uma única vez
+  useEffect(() => {
+    (async () => {
+      const t = await getToken();
+      if (!t) router.push("/login");
+      setToken(t);
+      setLoadingToken(false);
+    })();
+  }, []);
   const {
     friends,
     searchResult,
@@ -70,9 +65,6 @@ export default function FriendsScreen() {
     }
   };
   return (
-
-
-
     <View style={styles.container}>
       <Text style={styles.title}>Meus Amigos</Text>
 
@@ -102,26 +94,51 @@ export default function FriendsScreen() {
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       {/* Resultado da busca */}
-      {searchResult ? (
+      {searchResult && searchResult.length > 0 ? (
+        <View>
+          <Text style={styles.sectionTitle}>Resultados da Busca</Text>
+          <FlatList<FriendModel>
+            data={searchResult}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.resultCard}>
+                <Text style={styles.friendName}>{item.name}</Text>
+                <Text style={styles.friendStatus}>
+                  {item.isFriend
+                    ? "Já é seu amigo"
+                    : item.has_pending_invite
+                    ? "Convite pendente"
+                    : "Não é seu amigo"}
+                </Text>
+
+                {!item.isFriend && !item.has_pending_invite && (
+                  <TouchableOpacity
+                    style={[styles.button, { marginTop: 12 }]}
+                    onPress={() => onAddFriend(item.id)}
+                    disabled={actionLoading}
+                  >
+                    <Text style={styles.buttonText}>
+                      {actionLoading ? "Enviando..." : "Adicionar amigo"}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            )}
+            style={{ width: "100%", marginBottom: 12 }}
+          />
+          <TouchableOpacity
+            style={[styles.link, { alignSelf: "center" }]}
+            onPress={() => {
+              setSearch("");
+              reload();
+            }}
+          >
+            <Text style={styles.linkText}>Voltar à lista de amigos</Text>
+          </TouchableOpacity>
+        </View>
+      ) : searchResult && searchResult.length === 0 ? (
         <View style={styles.resultCard}>
-          <Text style={styles.friendName}>{searchResult.name}</Text>
-          <Text>{searchResult.id}</Text>
-          <Text style={styles.friendStatus}>
-            {searchResult.isFriend ? "Já é seu amigo" : "Não é seu amigo"}
-          </Text>
-
-          {!searchResult.isFriend && (
-            <TouchableOpacity
-              style={[styles.button, { marginTop: 12 }]}
-              onPress={() => onAddFriend(searchResult.id)}
-              disabled={actionLoading}
-            >
-              <Text style={styles.buttonText}>
-                {actionLoading ? "Enviando..." : "Adicionar amigo"}
-              </Text>
-            </TouchableOpacity>
-          )}
-
+          <Text style={styles.emptyText}>Nenhum resultado encontrado.</Text>
           <TouchableOpacity
             style={[styles.link, { marginTop: 8 }]}
             onPress={() => {
@@ -159,6 +176,7 @@ export default function FriendsScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: "#fff" },
   title: { fontSize: 22, fontWeight: "700", marginBottom: 12 },
+  sectionTitle: { fontSize: 18, fontWeight: "600", marginBottom: 8 },
   searchContainer: { flexDirection: "row", alignItems: "center", marginBottom: 12 },
   input: {
     flex: 1,
@@ -188,8 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f9ff",
     padding: 16,
     borderRadius: 10,
-    alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 8,
   },
   friendStatus: { marginTop: 8, color: "#444" },
   link: { marginTop: 6 },
