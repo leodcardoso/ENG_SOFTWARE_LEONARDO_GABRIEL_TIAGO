@@ -34,7 +34,7 @@ class FriendService {
     await Notification.create({
       recipientUserId: targetUserId,
       actorUserId: senderUserId,
-      type: 'FRIEND_REQUEST',
+      type: 'FRIEND_INVITE',
       friendInviteId: invite.id,
       data: { inviteId: invite.id }
     });
@@ -74,7 +74,7 @@ class FriendService {
     await Notification.create({
       recipientUserId: invite.sender_user_id,
       actorUserId: userId,
-      type: 'FRIEND_ACCEPTED',
+      type: accept ? 'FRIEND_ACCEPT' : 'FRIEND_REJECT',
       friendInviteId: invite.id,
       data: { 
         inviteId: invite.id,
