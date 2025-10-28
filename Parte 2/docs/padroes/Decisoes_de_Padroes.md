@@ -136,7 +136,22 @@ Necessidade de abstrair acesso ao PostgreSQL e facilitar testes.
    - Interface consistente
    - Queries organizadas por entidade
 
-### Diagramas
-- Container/Presentational: [Container_Presentational.svg](./Container_Presentational.svg)
-- Observer: [Observer.svg](./Observer.svg)
-- Repository: [Repository.svg](./Repository.svg)
+### Diagramas dos Padrões de Projeto
+
+#### 1. Container/Presentational Pattern
+![Container/Presentational](./diagramaProjetosA.png.svg)
+
+**Explicação do Diagrama:**
+O diagrama ilustra a hierarquia de componentes React, onde o HabitContainer (componente smart) gerencia o estado e a lógica, enquanto HabitList e HabitItem (componentes dumb) focam apenas na renderização. As setas verdes mostram o fluxo de props descendente e as azuis o fluxo de callbacks ascendente.
+
+#### 2. Observer Pattern
+![Observer](./diagramaProjetosB.png.svg)
+
+**Explicação do Diagrama:**
+O diagrama demonstra a implementação do Observer para notificações, onde NotificationSubject mantém uma lista de observers (UserObserver e HabitObserver) e os notifica de mudanças. O NotificationService utiliza esta estrutura para gerenciar as notificações de forma desacoplada.
+
+#### 3. Repository Pattern
+![Repository](./diagramaProjetosC.png.svg)
+
+**Explicação do Diagrama:**
+O diagrama mostra como o padrão Repository abstrai o acesso ao banco de dados através de uma interface genérica IRepository<T>. Os repositories concretos (User, Habit, Progress) implementam esta interface, enquanto os services dependem apenas da abstração, não das implementações específicas.

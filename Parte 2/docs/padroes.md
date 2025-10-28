@@ -221,6 +221,8 @@ package "Visão em Camadas (Backend)" {
 }
 @enduml
 ```
+**Explicação do Diagrama:**
+Este diagrama mostra a visão geral da arquitetura, combinando tanto a perspectiva Cliente-Servidor quanto a arquitetura em camadas do Backend. Na parte superior, vemos a comunicação entre Cliente, API e Banco de Dados através de protocolos bem definidos. Na parte inferior, visualizamos as três camadas do Backend e como os erros são propagados de baixo para cima.
 
 ### Diagrama 1A: Arquitetura Cliente-Servidor
 ```plantuml
@@ -253,6 +255,8 @@ note right of DB : "Persistência\nde dados"
 
 @enduml
 ```
+**Explicação do Diagrama:**
+Este diagrama detalha os componentes internos de cada parte da arquitetura Cliente-Servidor. O Frontend contém componentes UI, gerenciamento de estado e cliente API. O Backend possui controllers REST, lógica de negócios e acesso a dados. As setas mostram o fluxo de dados unidirecional, com o Frontend fazendo requisições REST e o Backend consultando o banco via pool de conexões.
 
 ### Diagrama 1B: Arquitetura em Camadas
 ```plantuml
@@ -291,6 +295,8 @@ package "Backend Architecture" {
 
 @enduml
 ```
+**Explicação do Diagrama:**
+Este diagrama detalha a arquitetura em camadas do Backend, mostrando como cada camada tem responsabilidades específicas. As setas sólidas mostram o fluxo normal de dados (top-down), enquanto as setas tracejadas mostram a propagação de erros (bottom-up). Cada camada é isolada e só se comunica com as camadas adjacentes, seguindo o princípio de responsabilidade única.
 
 ### Diagrama 2: Container/Presentational Pattern
 ```plantuml
@@ -318,6 +324,8 @@ HabitContainer -[#green,bold]-> HabitList : "Props (dados, estado)"
 HabitItem .[#blue,dashed].> HabitContainer : "Callback (evento): onCheckin()"
 @enduml
 ```
+**Explicação do Diagrama:**
+Este diagrama ilustra o padrão Container/Presentational no React. O HabitContainer (componente inteligente) gerencia estado e lógica, passando dados via props para o HabitList e HabitItem (componentes de apresentação). As setas verdes mostram o fluxo de dados descendente (props) e as setas azuis tracejadas mostram o fluxo de eventos ascendente (callbacks).
 
 ### Diagrama 3: Observer Pattern
 ```plantuml
@@ -349,6 +357,8 @@ HabitObserver ..|> IObserver
 NotificationService <>-- NotificationSubject : usa
 @enduml
 ```
+**Explicação do Diagrama:**
+Este diagrama mostra o padrão Observer implementado no sistema de notificações. O NotificationSubject mantém uma lista de observers e os notifica quando eventos ocorrem. UserObserver e HabitObserver implementam a interface IObserver, permitindo diferentes tipos de notificações. O NotificationService usa o Subject para gerenciar as notificações de forma desacoplada.
 
 ### Diagrama 4: Repository Pattern
 ```plantuml
@@ -377,3 +387,5 @@ UserService ..> IRepository : "depende de"
 HabitService ..> IRepository : "depende de"
 @enduml
 ```
+**Explicação do Diagrama:**
+Este diagrama ilustra o padrão Repository, mostrando como abstraímos o acesso ao banco de dados. A interface genérica IRepository<T> define operações CRUD padrão, implementadas por repositories específicos (User, Habit, Progress). Os Services dependem apenas da interface, não das implementações concretas, seguindo o princípio de inversão de dependência.

@@ -2,6 +2,10 @@
 
 Este documento detalha as duas principais arquiteturas que formam a base do nosso sistema, justificando suas escolhas e definindo suas implementações.
 
+./[Diagrama Geral](./diagarmaPrincipal.png)
+
+Este diagrama mostra a visão geral da arquitetura, combinando tanto a perspectiva Cliente-Servidor quanto a arquitetura em camadas do Backend. Na parte superior, vemos a comunicação entre Cliente, API e Banco de Dados através de protocolos bem definidos. Na parte inferior, visualizamos as três camadas do Backend e como os erros são propagados de baixo para cima.
+
 ## 1. Arquitetura Cliente-Servidor
 
 ### Contexto
@@ -26,6 +30,12 @@ A arquitetura é composta por três componentes principais:
 1.  **Separação de Responsabilidades:** O Frontend (UI) está totalmente desacoplado do Backend (lógica), permitindo que as equipes trabalhem de forma independente.
 2.  **Escalabilidade:** O Backend pode ser escalado para múltiplos servidores sem afetar o Cliente.
 3.  **Interface Padrão (REST):** O uso de uma API RESTful `stateless` fornece um contrato claro e padronizado para a comunicação.
+
+### Diagrama da Arquitetura Cliente-Servidor
+![Diagrama Cliente-Servidor](./diagramaA.png)
+
+**Explicação do Diagrama:**
+O diagrama ilustra a separação clara entre os três componentes principais do sistema. O Cliente (React/Expo) comunica-se com a API (Node.js) através de requisições HTTP/HTTPS REST, enquanto a API se comunica com o PostgreSQL através de um pool de conexões SQL. As setas indicam o fluxo de dados e as responsabilidades estão claramente delimitadas por componente.
 
 ---
 
@@ -54,3 +64,9 @@ O servidor API é organizado em três camadas lógicas distintas:
 1.  **Organização e Manutenibilidade:** O código é organizado por responsabilidade, tornando-o mais fácil de manter e entender.
 2.  **Testabilidade:** Cada camada pode ser testada de forma isolada (ex: testar os `Serviços` da camada de negócios "mocando" os `Repositories` da camada de dados).
 3.  **Flexibilidade:** Mudanças em uma camada (ex: otimizar uma query SQL na Camada de Dados) não afetam as outras camadas (como a Camada de Negócios).
+
+### Diagrama da Arquitetura em Camadas
+![Diagrama em Camadas](./diagramaB.png)
+
+**Explicação do Diagrama:**
+O diagrama mostra a estrutura em camadas do Backend, com as três camadas principais (Apresentação, Negócios e Dados) e suas responsabilidades. As setas sólidas indicam o fluxo normal de dados de cima para baixo, enquanto as setas tracejadas mostram como os erros são propagados de baixo para cima através das camadas. Cada camada só se comunica com as camadas adjacentes, mantendo um baixo acoplamento.
