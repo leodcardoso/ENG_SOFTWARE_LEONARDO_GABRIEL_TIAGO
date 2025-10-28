@@ -83,8 +83,8 @@ Observação: Atualizar o Trello com estas tarefas e responsáveis. Vincular iss
   - Arquivo: docs/demo/Demonstracao.pdf (contém o link)
 
 3.2 Slides (6) — Owner: Gabriel | Review: Todos
-- [ ] i) Título, autores
-- [ ] ii) Objetivo
+- [x] i) Título, autores
+- [x] ii) Objetivo
 - [ ] iii) Arquitetura
 - [ ] iv, v, vi) Diagrama do padrão + classes do código de cada integrante
   - Arquivo(s): docs/demo/slides/Parte2_Slides.pdf (ou fonte .pptx e export .pdf)
