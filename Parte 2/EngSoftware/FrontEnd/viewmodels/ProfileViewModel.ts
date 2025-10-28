@@ -13,6 +13,7 @@ export function useUserViewModel(token?: string | null) {
         setLoading(true);
         setError(null);
         const data = await authService.getUser(token);
+        console.log("data3", data)
         setUser(data);
       } catch (err: any) {
         setError('Email ou senha incorretos.');

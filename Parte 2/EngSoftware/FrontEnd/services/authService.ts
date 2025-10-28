@@ -44,20 +44,21 @@ export const authService = {
 
 
     async getUser(token: string): Promise<User> {
-        console.log(token);
-        const response = await fetch(`${API_URL}/register`, {
-            method: 'POST',
+        console.log("TOKEN", token);
+        const response = await fetch(`${API_URL}/user`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({token}),
         });
-
+        console.log(response);
         if (!response.ok) {
             throw new Error('Falha ao criar conta');
         }
 
         const data = await response.json();
-        return data as User;
+        console.log("d4", data);
+        return data.data as User;
     },
 };

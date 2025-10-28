@@ -12,6 +12,7 @@ export function useHabitDetailViewModel(token?: string | null, habitId?: string)
     setLoading(true);
     try {
       const data = await HabitService.getHabitById(token, habitId);
+      console.log("d9", data);
       setHabit(data);
     } finally {
       setLoading(false);

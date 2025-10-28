@@ -15,7 +15,7 @@ export default function CriarDesafioView() {
   const [dataFim, setDataFim] = useState("");
   const [privacidade, setPrivacidade] = useState<"public" | "participants_only" | "private">("public");
   const [refresh, setRefresh] = useState(false);
-
+  const [descricao, setDescricao] = useState<string | null>(null);
   useEffect(() => {
     (async () => {
       const t = await getToken();

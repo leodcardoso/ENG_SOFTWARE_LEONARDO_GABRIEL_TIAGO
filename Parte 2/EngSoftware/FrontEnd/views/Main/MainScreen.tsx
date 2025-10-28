@@ -16,7 +16,7 @@ import { useHabitListViewModel } from "../../viewmodels/useHabitListViewModel";
 import { useUserViewModel } from "../../viewmodels/ProfileViewModel";
 import { useChallengeViewModel } from "../../viewmodels/ChallengeViewModel";
 import { getToken } from "@/services/api";
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f9f9f9" },
   profileSection: { alignItems: "center", marginVertical: 20 },
@@ -71,6 +71,7 @@ export default function MainScreen() {
   // Call token-dependent hooks unconditionally so hook order stays stable across renders.
   // These hooks themselves guard side-effects based on the token value.
   const { user } = useUserViewModel(token);
+  console.log("t", token);
   const { habits, loading } = useHabitListViewModel(token);
   const { challenges, loading2 } = useChallengeViewModel(token);
 
@@ -106,6 +107,10 @@ export default function MainScreen() {
     router.push({ pathname: "/habitDetail", params: { token, habitId } });
   };
 
+  const handlePressChallenge = (challengeId: string)=>{
+    router.push({ pathname: "/challengeDetail", params: { token, challengeId } });
+  }
+
   const handleGoToNotifications = () => {
     router.push("/notification");
   };
@@ -113,23 +118,32 @@ export default function MainScreen() {
   const handleGoToCreateChallenge = () => {
     router.push("/createChallenge");
   };
-
+const handleGoToAddFriends = () => {
+  router.push("/friends");
+};
   return (
     <View style={styles.container}>
       {/* 🔝 Botões do topo */}
-      <View style={styles.topButtonsRow}>
+      <View style={[styles.topButtonsRow, { flexWrap: "wrap", gap: 10 }]}>
         <TouchableOpacity style={styles.button} onPress={handleGoToNotifications}>
-          <Text style={styles.buttonText}>🔔 Notificações</Text>
+            <Text style={styles.buttonText}>🔔 Notificações</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.buttonSecondary} onPress={handleGoToCreateChallenge}>
-          <Text style={styles.buttonText}>➕ Novo Desafio</Text>
+            <Text style={styles.buttonText}>➕ Novo Desafio</Text>
         </TouchableOpacity>
-      </View>
 
+        <TouchableOpacity
+            style={[styles.button, { backgroundColor: "#FF9800" }]}
+            onPress={handleGoToAddFriends}
+        >
+            <Text style={styles.buttonText}>👥 Adicionar Amigos</Text>
+        </TouchableOpacity>
+        </View>
       {/* 👤 Informações do usuário */}
       <View style={styles.profileSection}>
-        <Image source={{ uri: user?.avatar_url }} style={styles.avatar} />
+        
+        <Icon name="user" size={30} color="#900" />
         <Text style={styles.name}>{user?.name}</Text>
         <View style={styles.statsRow}>
           <Text>{user?.level} lvl</Text>
@@ -142,8 +156,18 @@ export default function MainScreen() {
       <FlatList
         data={challenges}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
+        renderItem={({ item }) => (
+            <Pressable onPress={() => handlePressChallenge(item.id)}>
+            <View style={{ marginVertical: 8 }}>
+              <HabitoProgresso idd={item.id} titulo={item.title} progresso={0} />
+            </View>
+          </Pressable>
+        
+        )}
+        contentContainerStyle={{ minHeight: 1000 }}
         ListEmptyComponent={
+
+            
           <Text style={{ textAlign: "center", marginTop: 10, color: "gray" }}>
             Nenhum Desafio em Grupo.
           </Text>
@@ -170,7 +194,7 @@ export default function MainScreen() {
       />
 
       {/* ✅ Hábitos concluídos */}
-      <Text style={styles.sectionTitle}>Hábitos Concluídos</Text>
+      {/* <Text style={styles.sectionTitle}>Hábitos Concluídos</Text>
       <FlatList
         data={habits}
         keyExtractor={(item) => item.id.toString()}
@@ -186,7 +210,7 @@ export default function MainScreen() {
             Nenhum Hábito Concluído.
           </Text>
         }
-      />
+      /> */}
     </View>
   );
 }

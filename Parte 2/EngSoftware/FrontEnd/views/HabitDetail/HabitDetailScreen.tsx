@@ -9,7 +9,7 @@ export default function HabitDetailScreen() {
   const router = useRouter();
 
   const { habit, loading_one, checkIn, reload } = useHabitDetailViewModel(token, habitId);
-
+  console.log(habit);
   if (loading_one) {
     return (
       <View style={styles.centered}>
@@ -31,10 +31,9 @@ export default function HabitDetailScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{habit.name}</Text>
-      <Text style={styles.category}>Categoria: "Sem categoria"</Text>
       <Text style={styles.description}>{habit.description || "Sem descrição."}</Text>
       <Text style={styles.progress}>
-        Progresso: {habit.progress ? `${habit.progress}%` : "Não iniciado"}
+        Ultimo Check-in {habit.streak ? `${habit.streak}%` : "Não iniciado"}
       </Text>
       <Button title="Check-in" onPress={()=>checkIn()}/>
       <Button title="Voltar" onPress={() => router.back()} />

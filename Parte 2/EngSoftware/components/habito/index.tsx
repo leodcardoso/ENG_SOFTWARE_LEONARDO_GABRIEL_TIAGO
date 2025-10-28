@@ -44,7 +44,7 @@ export function HabitoProgresso({idd, titulo, progresso, ... rest}: Props) {
             <View style={styles.habitCard}>
                 <Button title="Visualizar Habito" onPress={() => {AbreHabito(idd)}}/>
                 <Text>{titulo}</Text>
-                <Circle progress={progresso} showsText size={70} formatText={progress => `a${Math.round(progresso * 100)}%`} />
+                <Circle progress={progresso} showsText size={70} formatText={progress => `${Math.round(progresso)}%`} />
                 <Button title="Concluir Habito" onPress={() => {}} />
                 
             </View>
@@ -54,7 +54,7 @@ export function HabitoProgresso({idd, titulo, progresso, ... rest}: Props) {
             <View style={styles.habitCard}>
                 <Button title="Visualizar Habito" onPress={() => {AbreHabito(idd)}}/>
                 <Text>{titulo}</Text>
-                <Circle progress={progresso} showsText size={70} formatText={progress => `a${Math.round(progresso * 100)}%`} />
+                <Circle progress={progresso} showsText size={70} formatText={progress => `${Math.round(progresso)}%`} />
             
             </View>
         );

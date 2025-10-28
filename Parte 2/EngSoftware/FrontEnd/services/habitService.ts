@@ -18,11 +18,18 @@ export const HabitService = {
       throw new Error(errorText || 'Erro ao buscar hábitos.');
     }
 
-    const data: IHabit[] = await response.json();
-    console.log("habitos", data); // Log the parsed data instead
-  
-    return Array.isArray(data.data) ? data.data.map((h) => new HabitModel(h)) : [];
+    const rawData = (await response.json()).data;
 
+    // 🔄 Converter o retorno em IHabit[]
+    const data: IHabit[] = rawData.map((item: any) => ({
+      id: item.id,
+      name: item.title ?? "Sem título",
+      description: item.description ?? "",
+      frequency: item.category ?? "Diário", // ou ajuste conforme sua regra
+      streak: item.points ?? 0, // se points for usado como sequência
+      progress: item.active ? 50 : 100, // exemplo: 50% se ativo, 100% se concluído
+    }));
+    return data;
   },
 
   // Buscar um hábito específico
@@ -40,14 +47,15 @@ export const HabitService = {
       throw new Error(errorText || 'Erro ao buscar hábito específico.');
     }
 
-    const data: IHabit = await response.json();
-    return new HabitModel(data);
+    const data = (await response.json()).data;
+    console.log("d10", data);
+    return new HabitModel({id:data.id, name:data.title, description:data.description, streak:data.updated_at});
   },
 
 
   async setCheckIn(token:string, habitId:string): Promise<HabitModel> {
     const response = await fetch(`${API_URL}/habits/${habitId}/checkin`, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,

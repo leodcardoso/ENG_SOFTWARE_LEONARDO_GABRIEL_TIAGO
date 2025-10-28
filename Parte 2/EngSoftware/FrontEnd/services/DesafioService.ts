@@ -17,7 +17,7 @@ export class DesafioService {
     console.log(response);
     console.log(amigosData)
     
-    return Array.isArray(amigosData) ? amigosData.map((a: any) => ({
+    return Array.isArray(amigosData.data) ? amigosData.data.map((a: any) => ({
       id: a.id,
       nome: a.name || "Amigo",
       imagem: a.profile?.avatar || "https://placehold.co/40x40/ccc/fff?text=?",
@@ -43,6 +43,7 @@ export class DesafioService {
         endDate: desafio.endDate,
         startDate: desafio.startDate,
         privacy: "participants_only",
+        category: desafio.goal.categoryTitle,
         invitedFriendIds: desafio.invitedFriendIds,
       }),
     });
@@ -89,7 +90,7 @@ export class DesafioService {
         expirationDate: desafio.endDate,
         startDate: desafio.startDate,
         privacy: "participants_only",
-        category: "AAAAAAAA",
+        category: desafio.goal.categoryTitle,
         invitedFriendIds: desafio.invitedFriendIds,
       }),
     });
