@@ -32,28 +32,40 @@ A **comunicação web** ocorre quando o Frontend (rodando no `localhost:8081`) f
 (Requer PostgreSQL rodando localmente)
 
 # 1. Navegue até a pasta do backend
+```
 cd "Parte 2\EngSoftware\Backend"
+```
 
 # 2. Instale as dependências
+```
 npm i
+```
 
 # 3. Execute o servidor (em modo de desenvolvimento)
+```
 npm run dev
+```
 
 ### 2. Executando na Web (Frontend)
 
 # 1. Navegue até a pasta raiz do frontend
+```
 cd "Parte 2\EngSoftware"
+```
 
 # 2. Instale as dependências
+```
 npm i
+```
 
 # 3. Inicie o cliente web
+```
 npx expo start --web
+```
 
 ---
 
-## 🚀 Arquitetura e Documentação
+## Arquitetura e Documentação
 
 Esta seção centraliza todas as decisões de design, arquitetura e qualidade do projeto.
 
@@ -97,7 +109,7 @@ Os diagramas UML de cada padrão, mapeados para as classes e módulos reais do n
 --------------------------------------------------------------------------------------------------------
 
 
-# Bem-vindo ao seu aplicativo Expo 👋
+# Bem-vindo ao seu aplicativo Expo
 
 Este é um projeto [Expo](https://expo.dev) criado com [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
