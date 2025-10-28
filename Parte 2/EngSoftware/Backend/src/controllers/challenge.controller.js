@@ -125,20 +125,31 @@ class ChallengeController {
   static async getRanking(req, res) {
     try {
       const { challengeId } = req.params;
-      const userId = req.userId;
-
-      const ranking = await ChallengeService.getRanking(challengeId, userId);
-
-      res.status(200).json({
-        success: true,
-        data: ranking
-      });
+      const ranking = await ChallengeService.getRanking(challengeId, req.userId);
+      return res.json({ success: true, data: ranking });
     } catch (error) {
-      console.error('Erro ao buscar ranking:', error);
-      res.status(400).json({
-        success: false,
-        message: error.message
-      });
+      const status = error.message.includes('não encontrado') || error.message.includes('não é membro') ? 404 : 500;
+      return res.status(status).json({ success: false, message: error.message });
+    }
+  }
+
+  static async updateInviteStatus(req, res) {
+    try {
+      const { inviteId } = req.params;
+      const { status } = req.body;
+
+      if (!status || !['ACCEPTED', 'REJECTED'].includes(status)) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Status inválido. Use ACCEPTED ou REJECTED' 
+        });
+      }
+
+      const result = await ChallengeService.updateInviteStatus(inviteId, req.userId, status);
+      return res.json({ success: true, data: result });
+    } catch (error) {
+      const status = error.message.includes('não encontrado') || error.message.includes('não tem permissão') ? 404 : 400;
+      return res.status(status).json({ success: false, message: error.message });
     }
   }
 }

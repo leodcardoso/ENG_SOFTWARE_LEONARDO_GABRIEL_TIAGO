@@ -12,16 +12,16 @@ router.put('/', auth, UserController.updateProfile);
 // GET /user/friends
 router.get('/friends', auth, UserController.friends);
 
-// GET /user/allHabits
-router.get('/allHabits', auth, UserController.allHabits);
-
-// GET /user/allChallenges
-router.get('/allChallenges', auth, UserController.allChallenges);
-
 // GET /user/notifications
 router.get('/notifications', auth, UserController.notifications);
 
+// PUT /user/notifications/:notificationId/read -> marcar notificação como lida
+router.put('/notifications/:notificationId/read', auth, UserController.markNotificationAsRead);
+
 // POST /user/search
 router.post('/search', auth, UserController.search);
+
+// GET /user/:userId -> informações básicas de um usuário específico
+router.get('/:userId', auth, UserController.getUserById);
 
 module.exports = router;

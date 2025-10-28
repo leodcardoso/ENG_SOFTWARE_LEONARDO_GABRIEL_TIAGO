@@ -53,6 +53,34 @@ class Notification {
     const result = await db.query(query, [notificationId, userId]);
     return result.rows[0];
   }
+
+  static async markAsReadByFriendInvite(friendInviteId, userId) {
+    const query = `
+      UPDATE notifications
+      SET read_at = NOW()
+      WHERE friend_invite_id = $1 
+        AND recipient_user_id = $2 
+        AND read_at IS NULL
+      RETURNING *
+    `;
+    
+    const result = await db.query(query, [friendInviteId, userId]);
+    return result.rows[0];
+  }
+
+  static async markAsReadByChallengeInvite(challengeInviteId, userId) {
+    const query = `
+      UPDATE notifications
+      SET read_at = NOW()
+      WHERE challenge_invite_id = $1 
+        AND recipient_user_id = $2 
+        AND read_at IS NULL
+      RETURNING *
+    `;
+    
+    const result = await db.query(query, [challengeInviteId, userId]);
+    return result.rows[0];
+  }
 }
 
 module.exports = Notification;

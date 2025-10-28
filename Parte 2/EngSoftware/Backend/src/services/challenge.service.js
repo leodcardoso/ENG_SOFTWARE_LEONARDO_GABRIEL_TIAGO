@@ -42,7 +42,7 @@ class ChallengeService {
           type: 'CHALLENGE_INVITE',
           challengeInviteId: invite.id,
           // challengeId: challengeId, // REMOVIDO
-          data: {}
+          data: {inviteId: challengeId}
         });
 
         invites.push(invite);
@@ -108,6 +108,47 @@ class ChallengeService {
     }));
 
     return ranking;
+  }
+
+  static async updateInviteStatus(inviteId, receiverId, status) {
+    // Busca o convite
+    const invite = await ChallengeInvite.findById(inviteId);
+    
+    if (!invite) {
+      throw new Error('Convite não encontrado');
+    }
+    
+    // Valida se o usuário é o destinatário
+    if (invite.receiver_user_id !== receiverId) {
+      throw new Error('Você não tem permissão para responder este convite');
+    }
+    
+    // Valida se o convite está pendente
+    if (invite.status !== 'PENDING') {
+      throw new Error('Este convite já foi respondido');
+    }
+    
+    // Atualiza o status do convite
+    const updated = await ChallengeInvite.updateStatus(inviteId, status);
+    
+    // Se aceito, adiciona como membro do desafio
+    if (status === 'ACCEPTED') {
+      await Challenge.addMember(invite.challenge_id, receiverId, 'MEMBER');
+      
+      // Cria notificação para o remetente - TEMPORÁRIO: usando FRIEND_ACCEPTED até corrigir o ENUM
+      await Notification.create({
+        recipientUserId: invite.sender_user_id,
+        actorUserId: receiverId,
+        type: 'FRIEND_ACCEPTED', // TEMPORÁRIO: mudar para 'CHALLENGE_JOINED' após ALTER TYPE
+        challengeInviteId: inviteId,
+        data: { message: 'Aceitou seu convite para o desafio' }
+      });
+    }
+    
+    // Marca a notificação relacionada como lida
+    await Notification.markAsReadByChallengeInvite(inviteId, receiverId);
+    
+    return updated;
   }
 }
 

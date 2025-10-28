@@ -47,6 +47,17 @@ class User {
     return result.rows[0];
   }
 
+  static async findBasicInfoById(id) {
+    const query = `
+      SELECT id, name, avatar_url, points, level, created_at
+      FROM users
+      WHERE id = $1
+      LIMIT 1
+    `;
+    const result = await db.query(query, [id]);
+    return result.rows[0];
+  }
+
   // Lista amigos do usuário
   static async getFriends(userId) {
     const query = `

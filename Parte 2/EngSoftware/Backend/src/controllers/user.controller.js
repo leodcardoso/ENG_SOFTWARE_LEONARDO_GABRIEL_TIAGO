@@ -56,6 +56,28 @@ class UserController {
     }
   }
 
+  static async markNotificationAsRead(req, res) {
+    try {
+      const { notificationId } = req.params;
+      const notification = await userService.markNotificationAsRead(notificationId, req.userId);
+      return res.json({ success: true, data: notification });
+    } catch (err) {
+      const status = err.message === 'Notificação não encontrada' ? 404 : 500;
+      return res.status(status).json({ success: false, message: err.message });
+    }
+  }
+
+  static async getUserById(req, res) {
+    try {
+      const { userId } = req.params;
+      const user = await userService.getUserById(userId);
+      return res.json({ success: true, data: user });
+    } catch (err) {
+      const status = err.message === 'Usuário não encontrado' ? 404 : 500;
+      return res.status(status).json({ success: false, message: err.message });
+    }
+  }
+
   static async search(req, res) {
     try {
       const { name } = req.body;

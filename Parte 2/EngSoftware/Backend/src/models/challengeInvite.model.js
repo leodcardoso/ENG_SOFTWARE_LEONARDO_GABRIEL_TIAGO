@@ -19,6 +19,24 @@ class ChallengeInvite {
     const result = await db.query(query, [inviteId]);
     return result.rows[0];
   }
+
+  static async updateStatus(inviteId, status) {
+    // Validação do status
+    const validStatuses = ['PENDING', 'ACCEPTED', 'REJECTED', 'CANCELLED'];
+    
+    if (!status || !validStatuses.includes(status)) {
+      status = 'ACCEPTED';
+    }
+
+    const query = `
+      UPDATE challenge_invites
+      SET status = $2, updated_at = NOW()
+      WHERE id = $1
+      RETURNING *
+    `;
+    const result = await db.query(query, [inviteId, status]);
+    return result.rows[0];
+  }
 }
 
 module.exports = ChallengeInvite;
