@@ -128,13 +128,13 @@ A funcionalidade a ser testada é o **Sistema de Notificações**.
 
 Este documento descreve os cenários de teste referentes ao **Backend** do projeto, com foco na funcionalidade de **Utilização dos Coringas**.
 
----
+
 
 ## C.1 Funcionalidades
 
 A funcionalidade a ser validada é o **uso dos Coringas**, que permite ao usuário manter sua sequência de dias (streak) mesmo quando não realiza uma atividade.
 
----
+
 
 ### C.1.1 Necessidade 2: Uso de Coringas
 
@@ -142,11 +142,10 @@ A funcionalidade a ser validada é o **uso dos Coringas**, que permite ao usuár
 **Eu quero** utilizar meus coringas,  
 **De modo que** eu possa manter minha sequência diária de hábitos (streak).
 
----
 
 ## C.2 Cenários Funcionais
 
----
+
 
 ### C.2.1 Cenário 1: Uso de Coringa com Sucesso (Caminho Feliz)
 
@@ -157,7 +156,7 @@ Verifica se o sistema permite o uso de um coringa quando o usuário possui quant
 **Quando:** o sistema recebe uma requisição `POST` para o endpoint `/habits/:habitId/checkin`, contendo o token de autenticação do usuário e o hábito em que o coringa será utilizado.  
 **Então:** o sistema deve responder com **status 200 (OK)** e **reduzir a quantidade de coringas** do usuário.
 
----
+
 
 ### C.2.2 Cenário 2: Quantidade Insuficiente de Coringas
 
@@ -168,7 +167,7 @@ Verifica a resposta do sistema quando o usuário tenta usar um coringa sem possu
 **Quando:** o sistema recebe uma requisição `POST` para o endpoint `/habits/:habitId/checkin`, contendo o token de autenticação do usuário e o hábito em que o coringa seria utilizado.  
 **Então:** o sistema deve responder com **status 401 (Não Autorizado)** e retornar uma **mensagem de erro informando que o usuário não possui coringas**.
 
----
+
 
 ### C.2.3 Cenário 3: Aumento do Número de Coringas
 
