@@ -17,7 +17,8 @@ A Tabela B.1 descreve os papéis e responsabilidades dos membros da equipe no pr
 | Papel (Título) | Responsabilidade |
 | :--- | :--- |
 | Desenvolvedor Frontend & Backend (Notificações) | Implementar o módulo de Notificações (criação, listagem e marcação como lida). Desenvolver a interface de usuário para exibição de notificações. Definir e executar cenários de teste para o sistema de notificações. |
-| Desenvolvedor | Desenvolver... |
+| Desenvolvedor Frontend (Habitos e Coringas) | Implementar as telas de habitos e desafios contendo lugares para exibição de informações de coringas e usos através da API do banco de dados. Criar e testar
+a visualização e alterações no número de coringas.|
 | Desenvolvedor Backend (Auth & QA) | Implementar o módulo de Autenticação (Login/Cadastro) seguindo TDD. Definir, codificar e executar os cenários de teste automatizados para a API. Validar os relatórios de teste. |
 
 ## B.2 Equipe e Infra-estrutura
@@ -43,7 +44,7 @@ A Tabela B.2 expõe as informações da equipe de **3 pessoas** alocada para o t
 | Papel (Título) | Nome (Recurso Alocado) |
 | :--- | :--- |
 | Desenvolvedor Frontend & Backend (Notificações) | Gabriel |
-| Desenvolvedor | Leonardo |
+| Desenvolvedor Frontend (Habitos e Coringas) | Leonardo |
 | Desenvolvedor Backend (Auth & QA) | Tiago |
 
 # Apêndice C
