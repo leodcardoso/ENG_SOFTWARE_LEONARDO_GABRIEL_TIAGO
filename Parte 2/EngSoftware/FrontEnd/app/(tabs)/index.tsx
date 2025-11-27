@@ -1,19 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-import LoginScreen from '../../FrontEnd/views/Login/LoginScreen'; // <-- import direto
-import RegisterScreen from '../../FrontEnd/views/Register/RegisterScreen'; // <-- import direto
-import RankingScreen from '../../FrontEnd/views/Ranking/RankingScreen'; // <-- import direto
-import CriarDesafioScreen from '../../FrontEnd/views/CreateChallenge/CreateChallengeScreen'; // <-- import direto
-
-import { apiRequest, getToken, createChallenge } from '../../services/api'; // Ajustado para ../
-// Opcional - se for decodificar o token
-import { jwtDecode } from "jwt-decode"; 
-// import { useRouter, useFocusEffect } from 'expo-router';
-// const router = useRouter();
-// import AppNavigator from '../navigation/AppNavigator';
-
-
-
 import { Text, Button } from "react-native";
 import { useRouter } from "expo-router";
 

@@ -1,36 +1,9 @@
-// import React from "react";
-// import { NavigationContainer } from "@react-navigation/native";
-// import { createStackNavigator } from "@react-navigation/stack";
-
-// // importa a tela de login que está fora da pasta `app`
-// import LoginScreen from "../FrontEnd/views/Login/LoginScreen";  
-
-// export type RootStackParamList = {
-//   Login: undefined;
-// };
-
-// const Stack = createStackNavigator<RootStackParamList>();
-
-// export default function AppNavigator() {
-//   return (
-//     <NavigationContainer>
-//       <Stack.Navigator initialRouteName="Login">
-//         <Stack.Screen
-//           name="Login"
-//           component={LoginScreen}
-//           options={{ title: "Tela de Login" }}
-//         />
-//       </Stack.Navigator>
-//     </NavigationContainer>
-//   );
-// }
-
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from '../FrontEnd/views/Login/LoginScreen';
-import RegisterScreen from '../FrontEnd/views/Register/RegisterScreen';
-import RankingScreen from '../FrontEnd/views/Ranking/RankingScreen';
-import CriarDesafioScreen from '../FrontEnd/views/CreateChallenge/CreateChallengeScreen';
+import LoginScreen from '../views/Login/LoginScreen';
+import RegisterScreen from '../views/Register/RegisterScreen';
+import RankingScreen from '../views/Ranking/RankingScreen';
+import CriarDesafioScreen from '../views/CreateChallenge/CreateChallengeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 
 export type RootStackParamList = {

@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Define a URL base da sua API local
-const API_URL = 'http://localhost:3000'; // <- Usando localhost
+const API_URL = 'http://localhost:3000'; // 
 
 // Chave para salvar o token no AsyncStorage
 const TOKEN_KEY = '@MyApp:token'; // Use um nome específico para seu App
