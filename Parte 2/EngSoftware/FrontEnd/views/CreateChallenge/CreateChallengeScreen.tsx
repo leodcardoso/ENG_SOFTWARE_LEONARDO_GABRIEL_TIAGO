@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, ActivityIndicator, FlatList, TouchableOp
 import { Ionicons } from "@expo/vector-icons";
 import { HABIT_CATEGORIES } from "../../models/HabitoCategoria";
 import { CriarDesafioViewModel } from "../../viewmodels/CriaDesafioViewModel";
-import { getToken } from "../../../services/api"; // seu util que pega o token
+import { getToken } from "../../services/api.ts"; // seu util que pega o token
 import { router } from "expo-router";
 
 export default function CriarDesafioView() {

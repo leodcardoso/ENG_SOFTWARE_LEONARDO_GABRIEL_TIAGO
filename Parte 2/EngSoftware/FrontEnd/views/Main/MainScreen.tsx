@@ -1,4 +1,4 @@
-import { HabitoConcluido, HabitoProgresso } from "../../../components/habito";
+import { HabitoConcluido, HabitoProgresso } from "../../components/habito";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -16,7 +16,7 @@ import {
 import { useHabitListViewModel } from "../../viewmodels/useHabitListViewModel";
 import { useUserViewModel } from "../../viewmodels/ProfileViewModel";
 import { useChallengeViewModel } from "../../viewmodels/ChallengeViewModel";
-import { getToken } from "@/services/api";
+import { getToken } from "../../services/api.ts";
 import Icon from 'react-native-vector-icons/FontAwesome';
 const styles = StyleSheet.create({
     scrollContainer: {
