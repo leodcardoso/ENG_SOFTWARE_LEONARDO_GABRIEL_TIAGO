@@ -18,7 +18,7 @@ A Tabela B.1 descreve os papéis e responsabilidades dos membros da equipe no pr
 | :--- | :--- |
 | Desenvolvedor Frontend & Backend (Notificações) | Implementar o módulo de Notificações (criação, listagem e marcação como lida). Desenvolver a interface de usuário para exibição de notificações. Definir e executar cenários de teste para o sistema de notificações. |
 | Desenvolvedor Frontend (Habitos e Coringas) | Implementar as telas de habitos e desafios contendo lugares para exibição de informações de coringas e usos através da API do banco de dados. Criar e testar a visualização e alterações no número de coringas.|
-| Desenvolvedor Backend (Auth & QA) | Implementar o módulo de Autenticação (Login/Cadastro) seguindo TDD. Definir, codificar e executar os cenários de teste automatizados para a API. Validar os relatórios de teste. |
+| Desenvolvedor Backend (Auth & Core) | Responsável pelo TDD e implementação do Backend para duas áreas críticas: Autenticação (Login/Segurança) e Regras de negócio da Criação de Hábitos (Validações e Persistência). |
 
 ## B.2 Equipe e Infra-estrutura
 
@@ -40,11 +40,17 @@ A Tabela B.2 expõe as informações da equipe de **3 pessoas** alocada para o t
 
 **Tabela B.2: Alocação de Pessoal**
 
-| Papel (Título) | Nome (Recurso Alocado) |
-| :--- | :--- |
-| Desenvolvedor Frontend & Backend (Notificações) | Gabriel |
-| Desenvolvedor Frontend (Habitos e Coringas) | Leonardo |
-| Desenvolvedor Backend (Auth & QA) | Tiago |
+| Papel (Título) | Nome (Recurso Alocado) | Módulo de teste(TDD)|
+| :--- | :--- | :--- |
+| Desenvolvedor Frontend & Backend (Notificações) | Gabriel | Sistema de Notificações |
+| Desenvolvedor Frontend (Habitos e Coringas) | Leonardo | Visualização de Pontos/Coringas |
+| Desenvolvedor Backend (Auth & Core) | Tiago | Autenticação e Criação de Hábitos |
+
+---
+
+# É melhor separar os C e D de cada um pq esse arquivo vai ficar muito grande
+
+---
 
 # Apêndice C
 
