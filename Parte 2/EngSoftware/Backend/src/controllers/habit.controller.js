@@ -47,21 +47,34 @@ class HabitController {
   }
 
   static async checkin(req, res) {
-    try {
-      const userId = req.userId;
-      const { habitId } = req.params;
+  try {
+    const userId = req.userId;
+    const habitIdParam = req.params.habitId;
 
-      const result = await HabitService.checkin(habitId, userId);
-
-      return res.status(200).json({
-        success: true,
-        message: 'Check-in realizado com sucesso',
-        data: result
-      });
-    } catch (error) {
+    const habitId = parseInt(habitIdParam, 10);
+    if (isNaN(habitId) || habitId <= 0) {
       return res.status(400).json({
         success: false,
-        message: error.message
+        message: 'ID do hábito inválido. Deve ser um número positivo.'
+      });
+    }
+
+    const result = await HabitService.checkin(habitId, userId);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Check-in realizado com sucesso',
+      data: result
+    });
+    } catch (error) {
+      const statusCode = error.message.includes('não encontrado') ? 404 :
+                        error.message.includes('já realizado') || 
+                        error.message.includes('expirado') || 
+                        error.message.includes('não está ativo') ? 400 : 500;
+
+      return res.status(statusCode).json({
+      success: false,
+      message: error.message
       });
     }
   }
