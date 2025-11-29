@@ -22,5 +22,5 @@ Tabela consolidada das funcionalidades verificadas e seus respectivos módulos n
 
 | Funcionalidade | Arquivos Analisados | Demandas Cobertas |
 | :--- | :--- | :--- |
-| **Autenticação** | `src/controllers/authController.js`<br>`src/middleware/authMiddleware.js` | • Registro de usuários (Hash bcrypt)<br>• Login e Geração de JWT<br>• Middleware de proteção de rotas<br>• Tratamento de erros (401/403) |
+| **Autenticação** | `src/controllers/authController.js`<br>`src/middleware/authMiddleware.js` | • Registro de usuários (Hash bcrypt)<br>• Login e Geração de JWT<br>• Middleware de proteção de rotas<br>• Tratamento de erros |
 | **Gestão de Hábitos** | `src/controllers/habitController.js`<br>`src/models/habitModel.js` | • CRUD Completo (Criar, Ler, Atualizar, Deletar)<br>• Validação de Ownership (Usuário só edita o que é dele)<br>• Persistência de dados com Timestamps |
