@@ -1,9 +1,15 @@
 const AuthService = require('../services/auth.service');
+const { validateStrongPassword } = require('../utils/tiago/passwordValidator');
 
 class AuthController {
   static async register(req, res) {
   try {
     const { name, email, password, remindersDefault, bio } = req.body;
+
+    const passwordCheck = validateStrongPassword(password);
+    if(!passwordCheck.isValid) {
+      throw new Error(passwordCheck.errors[0])
+    }
 
     const result = await AuthService.register({
       name,
@@ -23,11 +29,11 @@ class AuthController {
     
     if (error.message.includes('já cadastrado') || error.message.includes('já existe')) {
       statusCode = 409;
-    } else if (error.message.includes('obrigatório') || error.message.includes('inválido')) {
-      statusCode = 400;
-    } else {
+    } else if (error.message.includes('erro de conexao') || error.message.includes('connect')){
       statusCode = 500;
     }
+
+    console.error(`[AuthRegister Error]: ${error.message}`);
 
     return res.status(statusCode).json({
       success: false,
