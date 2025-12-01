@@ -197,3 +197,32 @@ A validação de IDs nos Controllers (`parseInt`) segue o conceito de **Defensiv
 ### 5.3. TDD: Consistência de API e UX
 
 A refatoração do `habitValidator` foi crucial para reduzir a **Carga Cognitiva** no consumo da API. Ao padronizar todos os validadores para retornarem a estrutura `{ isValid, errors }`, garantimos que o Frontend possa implementar um único componente de tratamento de erros, melhorando a manutenibilidade do sistema como um todo.
+
+
+## 6\. Estrutura de Arquivos (Organização do meu Trabalho)
+
+Abaixo, a organização dos arquivos de código e evidências criados para esta entrega, separando a implementação técnica (Parte 2) dos entregáveis documentais (Parte 3).
+
+```text
+Parte 2/Backend/src/
+├── controllers/
+│   ├── auth.controller.js      (Refatorado: Tratamento de Erros)
+│   └── habit.controller.js     (Refatorado: Validação de ID)
+├── testes/
+│   └── Tiago/
+│       ├── habitValidator.test.js      (TDD: Teste de Hábito)
+│       └── passwordValidator.test.js   (TDD: Teste de Senha)
+└── utils/
+    ├── habitValidator.js       (Lógica: Validação de Hábito)
+    └── passwordValidator.js    (Lógica: Validação de Senha)
+
+Parte 3/
+├── docs/
+│   ├── testesTiago.md          (Este Relatório Técnico)
+│   └── testes.md               (Documentação Geral do Grupo)
+└── testes/
+    ├── testesTiago.md          (Relatório TDD - Versão para entrega)
+    └── arquivos/Tiago/         (Evidências e Prints)
+        ├── authCerto.png
+        ├── TDD_senha_RED.png
+        └── ... (demais prints)
