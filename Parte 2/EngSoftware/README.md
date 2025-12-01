@@ -27,7 +27,7 @@ O Frontend é a interface do usuário construída em React/Expo que consome a AP
 
 | Etapa | Comando Shell | Descrição |
 | :--- | :--- | :--- |
-| **Navegação** | `cd "Parte 2\EngSoftware"` | Acessa o diretório raiz do projeto Frontend/Monorepo. |
+| **Navegação** | `cd "Parte 2\EngSoftware\FrontEnd"` | Acessa o diretório raiz do projeto Frontend/Monorepo. |
 | **Setup** | `npm install` (ou `npm i`) | Instala todas as dependências do cliente web. |
 | **Execução** | `npx expo start --web` | Inicia o *bundler* e o servidor de desenvolvimento do Expo, acessível via navegador (ex: `http://localhost:8081`). |
 
