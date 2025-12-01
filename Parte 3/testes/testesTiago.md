@@ -24,7 +24,7 @@ Nesta etapa, o código legado foi analisado em busca de "Code Smells". As interv
 }
 ```
 
-> **[PRINT DO CÓDIGO NO VS CODE]**
+![foto codico](arquivos/Tiago/authController.png)
 
 -----
 
@@ -47,7 +47,7 @@ if (isNaN(parsedId) || parsedId <= 0) {
 const result = await HabitService.checkin(parsedId, userId);
 ```
 
-> **[PRINT DA VALIDAÇÃO]**
+![PRINT Código](arquivos/Tiago/habitController.png)
 
 -----
 
@@ -56,15 +56,13 @@ const result = await HabitService.checkin(parsedId, userId);
 **Objetivo:** Impedir cadastro com senhas fracas.
 **Arquivo:** `src/utils/tiago/passwordValidator.js`
 
-[Image of TDD cycle red green refactor]
-
 ### 🔴 Fase 1: RED (O Teste que Falha)
 
 Teste criado esperando a função `validateStrongPassword`, que ainda não existia.
 
   * **Erro:** `Cannot find module`.
 
-> **[PRINT DO TERMINAL VERMELHO]**
+![PRINT DO TERMINAL VERMELHO](arquivos/Tiago/TDD_senha_RED.png)
 
 ### 🟢 Fase 2: GREEN (Funciona, mas Simples)
 
@@ -82,7 +80,7 @@ function validateStrongPassword(password) {
 }
 ```
 
-> **[PRINT DO TERMINAL VERDE]**
+![PRINT DO TERMINAL VERDE](arquivos/Tiago/TDD_senha_GREEN.png)
 
 ### 🔵 Fase 3: REFACTOR (Melhoria Arquitetural)
 
@@ -107,7 +105,7 @@ function validateStrongPassword(password) {
 }
 ```
 
-> **[PRINT DO CÓDIGO REFATORADO]**
+![PRINT DO CÓDIGO REFATORADO](arquivos/Tiago/passwordValidator.png)
 
 -----
 
@@ -120,7 +118,7 @@ function validateStrongPassword(password) {
 
 Teste criado exigindo validação de título (min 5 chars) e categoria.
 
-> **[PRINT DO TERMINAL VERMELHO]**
+![PRINT DO TERMINAL VERMELHO](arquivos/Tiago/TDD_habitoId_RED.png)
 
 ### 🟢 Fase 2: GREEN
 
@@ -138,7 +136,7 @@ function validarCamposHabito(titulo, categoria) {
 }
 ```
 
-> **[PRINT DO TERMINAL VERDE]**
+![PRINT DO TERMINAL VERDE](arquivos/Tiago/TDD_habitoId_GREEN.png)
 
 ### 🔵 Fase 3: REFACTOR (Padronização de Interface)
 **Melhoria:** O código foi refatorado para retornar `{ isValid, errors: [] }`, padronizando a comunicação com o Frontend e alinhando com a estrutura do Validador de Senha.
@@ -160,75 +158,42 @@ function validarCamposHabito(titulo, categoria) {
 
 ```
 
-> **[PRINT DO CÓDIGO REFATORADO E TESTE VERDE]**
+> **[]**
+![PRINT DO CÓDIGO REFATORADO E TESTE VERDE](arquivos/Tiago/habitController.png)
+![PRINT TESTE VERDE](arquivos/Tiago/TDD_habitoId_GREEN.png)
 
 -----
 
-## 4\. Justificativas Técnicas
+## 4\. Prova de Integração (Postman)
 
-### 4.1. Por que Refatorar o Validador de Senha?
+Demonstração do validador de senha funcionando integrado ao fluxo de registro (`auth.controller.js`).
 
-A versão inicial (Green) utilizava programação imperativa com múltiplos `if`s. A versão refatorada (Refactor) utiliza uma estrutura de dados (`rules`) e métodos de array (`filter`, `map`). Isso torna o código mais **Declarativo** e segue o princípio **Open/Closed** (aberto para extensão, fechado para modificação), pois novas regras de senha podem ser adicionadas apenas incluindo um objeto no array, sem tocar na função validadora.
+### ❌ Cenário de Erro (Senha Fraca)
 
-### 4.2. Padrão "Fail Fast"
+O sistema retorna **400 Bad Request** com a mensagem de validação.
 
-A validação de IDs nos Controllers evita que dados sujos cheguem à camada de serviço ou banco de dados, economizando recursos e prevenindo exceções não tratadas.
+![Cenário de Erro](arquivos/Tiago/authErrado.png)
 
-## **Checklist Tiago**.
+### ✅ Cenário de Sucesso (Senha Forte)
 
-### 📂 1. Entregáveis de Testes (60% da Nota)
-* [x] **Readme (Cenários - Apêndice C):** `[CONCLUÍDO]` ✅ (Documentado no arquivo final).
-* [x] **Readme (Relatório - Apêndice D):** `[CONCLUÍDO]` ✅ (Tabela de cobertura salva).
-* [x] **Readme (Plano de Testes - Apêndice B):** `[CONCLUÍDO]` ✅ (Texto com divisão de tarefas salvo).
-* [x] **Code + TDD (Nova Funcionalidade):** `[CONCLUÍDO]` ✅
-    * *Entregue:* Validador de Senha (Tiago) e Validador de Hábito (Extra).
-    * *Evidência:* Ciclos Red/Green/Refactor completos e commitados.
+O sistema retorna **201 Created** quando os critérios são atendidos.
 
-### 🛠️ 2. Entregáveis de Manutenção (40% da Nota)
-* [x] **Code (Refatoração - Auth):** `[CONCLUÍDO]` ✅ (Tratamento de erros 400/409/500).
-* [x] **Code (Refatoração - Hábitos):** `[CONCLUÍDO]` ✅ (Validação de ID `parseInt`).
-* [x] **Code (Integração):** `[CONCLUÍDO]` ✅ (Validador de senha ligado ao Registro).
+![Cenário de Sucesso](arquivos/Tiago/authCerto.png)
 
----
+-----
 
-### 📽️ 3. Demonstração (10% da Nota) - **🔴 O QUE FALTA**
-Estes são os únicos itens pendentes para você fechar o notebook:
+## 5\. Justificativas Técnicas
 
-* [ ] **Slides (PDF):** `[PENDENTE]`
-    * *O que fazer:* Montar o PDF com 6 slides contendo os prints que você tirou (Red/Green/Refactor) e o texto do Plano de Testes.
-    
-    #### 📉 Slide 3: Plano de Testes
+### 5.1. Refatoração: Strategy Pattern na Validação
 
-    * **Estratégia de QA:**
-        * Testes Unitários (Jest) para validação de regras de negócio críticas.
-        * Testes de Integração (Supertest) para segurança da API.
-    * **Divisão de Responsabilidades (TDD):**
-        * **Gabriel:** .
-        * **Leonardo:** .
-        * **Tiago:** Segurança (Auth), Validações de Entrada e Core Backend.
-    * **Ferramentas:** `Jest`, `Supertest`, `Postman`, `GitHub Actions`.
+Na validação de senha, migramos de uma abordagem **imperativa** (vários `if`s encadeados) para uma **declarativa** utilizando lista de regras (`rules`).
 
-    ---
+  * **Motivo:** Isso adere ao princípio **Open/Closed (SOLID)**. Novas regras de segurança (ex: exigir caractere especial) podem ser injetadas na lista sem risco de quebrar a lógica de iteração existente, reduzindo a complexidade ciclomática.
 
-    ####  Slide 4: TDD (Gabriel)
-    ####  Slide 5: TDD (Leonardo)
+### 5.2. Manutenção: Padrão "Fail Fast"
 
-    ---
+A validação de IDs nos Controllers (`parseInt`) segue o conceito de **Defensive Programming**. Ao barrar dados inválidos na porta de entrada (Controller) e retornar erro imediatamente, protegemos a integridade da camada de persistência (Banco de Dados) e economizamos ciclos de CPU, evitando exceções não tratadas em camadas profundas.
 
-    ####  Slide 6: TDD (Tiago)
+### 5.3. TDD: Consistência de API e UX
 
-    * **Título:** `TDD & Refatoração Backend (Tiago)`
-
-    ##### **Coluna 1: TDD de Segurança (Senha)**
-    * **Contexto:** "Validador de Força de Senha (Strategy Pattern)".
-    * **Evidências (Seus Prints):**
-        1.  🔴 **RED:** Print do terminal com erro `Cannot find module` ou falha de asserção.
-        2.  🟢 **GREEN:** Print do terminal com `PASS` e os testes ticados.
-        3.  🔵 **CODE:** Print do código final refatorado (aquele com a lista `rules = [...]`).
-
-    ##### **Coluna 2: Manutenção e Fail Fast (Hábitos)**
-    * **Contexto:** "Proteção da API contra Injeção/Erros".
-    * **Evidências:**
-        1.  🔴 **ANTES:** Print do código antigo (vulnerável).
-        2.  🟢 **DEPOIS:** Print do código novo com `parseInt` e validação.
-        3.  **Resultado:** Pequeno print do Postman mostrando o erro `400` personalizado.
+A refatoração do `habitValidator` foi crucial para reduzir a **Carga Cognitiva** no consumo da API. Ao padronizar todos os validadores para retornarem a estrutura `{ isValid, errors }`, garantimos que o Frontend possa implementar um único componente de tratamento de erros, melhorando a manutenibilidade do sistema como um todo.
