@@ -1,4 +1,4 @@
-const { validarCamposHabito } = require('./habitValidator');
+const { validarCamposHabito } = require('../../utils/habitValidator');
 
 describe('Validação de Campos do Hábito', () => {
 

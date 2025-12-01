@@ -1,5 +1,5 @@
 const AuthService = require('../services/auth.service');
-const { validateStrongPassword } = require('../utils/tiago/passwordValidator');
+const { validateStrongPassword } = require('../utils/passwordValidator');
 
 class AuthController {
   static async register(req, res) {

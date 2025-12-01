@@ -1,4 +1,4 @@
-const { validateStrongPassword } = require('./passwordValidator');
+const { validateStrongPassword } = require('../../utils/passwordValidator');
 
 describe('Validação de Senha Forte', () => {
   
