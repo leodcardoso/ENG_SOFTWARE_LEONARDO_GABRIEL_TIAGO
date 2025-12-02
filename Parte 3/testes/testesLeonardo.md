@@ -208,48 +208,77 @@ function resposta(status, mensagem) {
 
 -----
 
+# 5. Justificativas Técnicas
 
-## 5\. Justificativas Técnicas
+## 5.1. Refatoração da MainScreen: Remoção de lógica redundante e adequação ao fluxo de navegação
 
-### 5.1. Refatoração: Strategy Pattern na Validação
+A remoção do botão *"Visualizar Hábito"* foi resultado de uma
+simplificação arquitetural intencional.\
+O card já possuía um *onPress* responsável por navegar para a tela de
+detalhes --- portanto, manter um botão adicional criava duplicidade de
+função, impacto visual desnecessário e aumento da complexidade de UI sem
+benefício real.
 
-Na validação de senha, migramos de uma abordagem **imperativa** (vários `if`s encadeados) para uma **declarativa** utilizando lista de regras (`rules`).
+Essa refatoração segue princípios de:
 
-  * **Motivo:** Isso adere ao princípio **Open/Closed (SOLID)**. Novas regras de segurança (ex: exigir caractere especial) podem ser injetadas na lista sem risco de quebrar a lógica de iteração existente, reduzindo a complexidade ciclomática.
+-   **Clean UI**
+-   **Responsabilidade Única (SRP)**
+-   **Minimalismo (Nielsen)**
 
-### 5.2. Manutenção: Padrão "Fail Fast"
+A adição dos ícones exigiu ajustes no Model, Controller e View.
 
-A validação de IDs nos Controllers (`parseInt`) segue o conceito de **Defensive Programming**. Ao barrar dados inválidos na porta de entrada (Controller) e retornar erro imediatamente, protegemos a integridade da camada de persistência (Banco de Dados) e economizamos ciclos de CPU, evitando exceções não tratadas em camadas profundas.
+------------------------------------------------------------------------
 
-### 5.3. TDD: Consistência de API e UX
+## 5.2. Refatoração de Regras de Amizade: Fail Fast + Defensive Programming
 
-A refatoração do `habitValidator` foi crucial para reduzir a **Carga Cognitiva** no consumo da API. Ao padronizar todos os validadores para retornarem a estrutura `{ isValid, errors }`, garantimos que o Frontend possa implementar um único componente de tratamento de erros, melhorando a manutenibilidade do sistema como um todo.
+A função de validação da solicitação de amizade foi ampliada para
+aplicar rigorosamente o padrão **Fail Fast**, validando:
 
+-   ID vazio
+-   regras faltando
+-   tipos incorretos
+-   campos obrigatórios ausentes
 
-## 6\. Estrutura de Arquivos (Organização do meu Trabalho)
+Isso protege a API contra estados inválidos e melhora robustez.
 
-Abaixo, a organização dos arquivos de código e evidências criados para esta entrega, separando a implementação técnica (Parte 2) dos entregáveis documentais (Parte 3).
+------------------------------------------------------------------------
 
-```text
-Parte 2/Backend/src/
-├── controllers/
-│   ├── auth.controller.js      (Refatorado: Tratamento de Erros)
-│   └── habit.controller.js     (Refatorado: Validação de ID)
-├── testes/
-│   └── Tiago/
-│       ├── habitValidator.test.js      (TDD: Teste de Hábito)
-│       └── passwordValidator.test.js   (TDD: Teste de Senha)
-└── utils/
-    ├── habitValidator.js       (Lógica: Validação de Hábito)
-    └── passwordValidator.js    (Lógica: Validação de Senha)
+## 5.3. TDD e Consistência de API: Padronização de Estruturas
 
-Parte 3/
-├── docs/
-│   ├── testesTiago.md          (Este Relatório Técnico)
-│   └── testes.md               (Documentação Geral do Grupo)
-└── testes/
-    ├── testesTiago.md          (Relatório TDD - Versão para entrega)
-    └── arquivos/Tiago/         (Evidências e Prints)
-        ├── authCerto.png
-        ├── TDD_senha_RED.png
-        └── ... (demais prints)
+Tanto no hábito expirado quanto na solicitação de amizade, o TDD
+garantiu consistência estrutural:
+
+``` js
+{ status, mensagem }
+```
+
+Essa padronização reduz complexidade no Frontend e melhora experiência
+do desenvolvedor.
+
+------------------------------------------------------------------------
+
+## 5.4. Evolução Arquitetural no TDD 1: Filtragem de Hábitos Expirados
+
+Após o *GREEN*, a funcionalidade foi ampliada com:
+
+-   Switch para ocultar hábitos expirados
+-   Separação de lógica de filtragem
+-   Melhor UX
+-   Aderência ao princípio Open/Closed
+
+------------------------------------------------------------------------
+
+# 6. Estrutura de Arquivos (Organização do Trabalho)
+
+    📦 projeto
+     ┣ 📁 src
+     │   ┣ 📁 controllers
+     │   ┣ 📁 models
+     │   ┣ 📁 utils
+     │   ┣ 📁 views
+     │   ┗ 📁 services
+     ┣ 📁 tests
+     ┣ 📁 docs
+     ┣ 📁 arquivos
+     ┗── README.md
+
