@@ -90,7 +90,7 @@ const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) 
 ```
 
 
-Alem disso há verificação de erros na filtragem para verificar se está descartando os que expirou no arquivo ...
+Alem disso há verificação de erros automaticos na filtragem para verificar se está descartando os que expirou no arquivo /src/testes/Leonardo/hideExpiredHabits.test.js
 
 
 ![PRINT DO TERMINAL VERDE](arquivos/Leonardo/testes_expirou.png)
