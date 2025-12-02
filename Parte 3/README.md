@@ -13,7 +13,7 @@ Este diretório contém os entregáveis referentes à **Terceira Entrega** da di
 - **[📄 Cenários Tiago](docs/testeTiago.md)** - Senha Forte e Validação de Hábitos
 
 ### 💻 **Implementação de Testes (10%)**
-- **[🧪 Suite de Testes Backend](../../Parte%202/EngSoftware/Backend/src/testes/)** - Testes automatizados organizados por desenvolvedor
+- **[🧪 Suite de Testes Backend](../Parte%202/EngSoftware/Backend/src/testes/)** - Testes automatizados organizados por desenvolvedor
   - `Gabriel/` - emailValidator.test.js, categoryValidator.test.js
   - `Leonardo/` - sendFriendRequest.test.js, hideExpiredHabits.test.js
   - `Tiago/` - passwordValidator.test.js, habitValidator.test.js
@@ -79,8 +79,8 @@ Este diretório contém os entregáveis referentes à **Terceira Entrega** da di
 ```
 
 ### 🔗 **Integração T2 + T3 (10%)**
-- **✅ Sistema Backend Integrado:** [EngSoftware Backend](../../Parte%202/EngSoftware/Backend/)
-- **✅ Sistema Frontend Integrado:** [EngSoftware FrontEnd](../../Parte%202/EngSoftware/FrontEnd/)
+- **✅ Sistema Backend Integrado:** [EngSoftware Backend](../Parte%202/EngSoftware/Backend/)
+- **✅ Sistema Frontend Integrado:** [EngSoftware FrontEnd](../Parte%202/EngSoftware/FrontEnd/)
 - **✅ Funcionalidades Completas:** 
   - Autenticação com validações
   - CRUD de Hábitos com categorização
