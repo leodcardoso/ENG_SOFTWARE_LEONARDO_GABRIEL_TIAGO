@@ -143,56 +143,35 @@ Criação para ocultar habitos expirados.
 
 ```javascript
 
-const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) : habits;
+function validarSolicitacaoAmizade(friendId, { usuarioExiste, jaEnviou, jaAmigo }) {
 
-
-<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-  <Text style={styles.sectionTitle}>Hábitos em Progresso</Text>
-  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-    <Text style={{ color: '#666' }}>Ocultar expirados</Text>
-    <Switch value={hideExpired} onValueChange={setHideExpired} />
-  </View>
-</View>
-<FlatList
-  data={filteredHabits}
-  keyExtractor={(item) => item.id.toString()}
-  renderItem={({ item }) => (
-    <Pressable onPress={() => handlePressHabit(item.id)}>
-      <View style={{ marginVertical: 8 }}>
-        <HabitoProgresso idd={item.id} titulo={item.name} progresso={item.progress} onView={handlePressHabit} iconName={item.iconName} />
-      </View>
-    </Pressable>
-  )}
-  contentContainerStyle={{ minHeight: 200 }}
-  ListEmptyComponent={
-    <Text style={{ textAlign: "center", marginTop: 10, color: "gray" }}>
-      Nenhum Hábito em Progresso.
-    </Text>
-  }
-/>
-```
-```javascript
-
-  // Cenário 2: Usuário destino não existe
-  if (!estado.usuarioExiste) {
-    return { status: 404, mensagem: 'Usuário não encontrado' };
+  if (!usuarioExiste) {
+    return {
+      status: 404,
+      mensagem: 'Usuário não encontrado'
+    };
   }
 
-  // Cenário 3: Solicitação já enviada
-  if (estado.jaEnviou) {
-    return { status: 409, mensagem: 'Solicitação já enviada' };
+  if (jaEnviou) {
+    return {
+      status: 409,
+      mensagem: 'Solicitação já enviada'
+    };
   }
 
-  // Cenário 4: Usuários já são amigos
-  if (estado.jaAmigo) {
-    return { status: 400, mensagem: 'Usuários já são amigos' };
+
+  if (jaAmigo) {
+    return {
+      status: 400,
+      mensagem: 'Usuários já são amigos'
+    };
   }
 
-  // Cenário 1: Sucesso
-  return { status: 200, mensagem: 'Solicitação enviada com sucesso' };
-
-
-
+  return {
+    status: 200,
+    mensagem: 'Solicitação enviada com sucesso'
+  };
+}
 ```
 
 ![PRINT DO TERMINAL VERDE](arquivos/Leonardo/resposta_testes.png)
@@ -200,23 +179,6 @@ const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) 
 
 -----
 
-## 4\. Prova de Integração (Postman)
-
-Demonstração do validador de senha funcionando integrado ao fluxo de registro (`auth.controller.js`).
-
-### ❌ Cenário de Erro (Senha Fraca)
-
-O sistema retorna **400 Bad Request** com a mensagem de validação.
-
-![Cenário de Erro](arquivos/Tiago/authErrado.png)
-
-### ✅ Cenário de Sucesso (Senha Forte)
-
-O sistema retorna **201 Created** quando os critérios são atendidos.
-
-![Cenário de Sucesso](arquivos/Tiago/authCerto.png)
-
------
 
 ## 5\. Justificativas Técnicas
 
