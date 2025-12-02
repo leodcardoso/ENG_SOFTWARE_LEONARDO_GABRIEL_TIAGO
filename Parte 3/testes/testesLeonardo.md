@@ -5,7 +5,7 @@
 
   * **Problema 1:** Botão "VISUALIZAR HABITO" não faz nada
   * **Solução:** Apenas a remoção dele já que ao clicar em qualquer lugar do card ja abre a visualização do habito.
-  * 
+    
   **Problema 2:** Icons de categoria não aparecem nos cards.
   * **Solução:** Adicionar os Icons na tela principal.
 
@@ -24,7 +24,7 @@
             </View>
 
 ```
-
+Alem das alterações citadas acima diveros arquivos como view, model, control, habit.ts dentre outros tiveram que ser alterados para salvar o icon
 -----
 
 ## 2\. TDD 1: FeedBack Habito expirado
@@ -91,6 +91,9 @@ const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) 
 
 
 ![PRINT DO TERMINAL VERDE](arquivos/Leonardo/ocultar.png)
+
+
+
 
 > **[]**
 ![PRINT DO CÓDIGO REFATORADO E TESTE VERDE](arquivos/Tiago/habitController.png)
