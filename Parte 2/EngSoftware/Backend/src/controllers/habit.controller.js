@@ -1,10 +1,21 @@
 const HabitService = require('../services/habit.service');
+const { validateCategory } = require('../utils/categoryValidator');
 
 class HabitController {
   static async createHabit(req, res) {
     try {
       const { title, description, category, expirationDate } = req.body;
       const userId = req.userId;
+
+      // Validar categoria antes de criar o hábito
+      const validation = validateCategory(category);
+      if (!validation.isValid) {
+        return res.status(400).json({
+          success: false,
+          message: 'Erro de validação',
+          errors: validation.errors
+        });
+      }
 
       const habit = await HabitService.createHabit({
         userId,

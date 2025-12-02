@@ -1,14 +1,27 @@
 const AuthService = require('../services/auth.service');
+const { validateEmail } = require('../utils/emailValidator');
 const { validateStrongPassword } = require('../utils/passwordValidator');
 
-class AuthController {
-  static async register(req, res) {
+const register = async (req, res) => {
   try {
     const { name, email, password, remindersDefault, bio } = req.body;
 
-    const passwordCheck = validateStrongPassword(password);
-    if(!passwordCheck.isValid) {
-      throw new Error(passwordCheck.errors[0])
+    // 🟢 VALIDAÇÃO DE EMAIL (Gabriel)
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      return res.status(400).json({
+        success: false,
+        message: emailValidation.errors.join(', ')
+      });
+    }
+
+    // 🟢 VALIDAÇÃO DE SENHA FORTE (Tiago)
+    const passwordValidation = validateStrongPassword(password);
+    if (!passwordValidation.isValid) {
+      return res.status(400).json({
+        success: false,
+        message: passwordValidation.errors.join(', ')
+      });
     }
 
     const result = await AuthService.register({
@@ -29,7 +42,7 @@ class AuthController {
     
     if (error.message.includes('já cadastrado') || error.message.includes('já existe')) {
       statusCode = 409;
-    } else if (error.message.includes('erro de conexao') || error.message.includes('connect')){
+    } else if (error.message.includes('erro de conexao') || error.message.includes('connect') || error.message.includes('ECONNREFUSED')){
       statusCode = 500;
     }
 
@@ -40,26 +53,25 @@ class AuthController {
       message: error.message
     });
   }
-}
+};
 
-  static async login(req, res) {
-    try {
-      const { email, password } = req.body;
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-      const result = await AuthService.login({ email, password });
+    const result = await AuthService.login({ email, password });
 
-      return res.status(200).json({
-        success: true,
-        message: 'Login realizado com sucesso',
-        data: result
-      });
-    } catch (error) {
-      return res.status(401).json({
-        success: false,
-        message: error.message
-      });
-    }
+    return res.status(200).json({
+      success: true,
+      message: 'Login realizado com sucesso',
+      data: result
+    });
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: error.message
+    });
   }
-}
+};
 
-module.exports = AuthController;
+module.exports = { register, login };

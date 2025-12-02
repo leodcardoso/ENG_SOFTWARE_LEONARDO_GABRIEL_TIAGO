@@ -42,6 +42,6 @@ A Tabela B.2 expõe as informações da equipe de **3 pessoas** alocada para o t
 
 | Papel (Título) | Nome (Recurso Alocado) | Módulo de teste(TDD)|
 | :--- | :--- | :--- |
-| Desenvolvedor Frontend & Backend (Notificações) | Gabriel | Sistema de Notificações |
+| Desenvolvedor Frontend & Backend (Notificações) | Gabriel | Validação de Email e Hábitos |
 | Desenvolvedor Frontend (Habitos e Coringas) | Leonardo | Gerenciamento de Amizade |
 | Desenvolvedor Backend (Auth & Core) | Tiago | Autenticação e Criação de Hábitos |
