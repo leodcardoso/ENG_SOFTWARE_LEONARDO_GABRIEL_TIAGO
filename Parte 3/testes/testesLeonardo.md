@@ -27,14 +27,15 @@
 
 -----
 
-## 2\. TDD 1: Validação de Senha Forte (Autenticação)
+## 2\. TDD 1: FeedBack Habito expirado (Autenticação)
 
-**Objetivo:** Impedir cadastro com senhas fracas.
-**Arquivo:** `src/utils/tiago/passwordValidator.js`
+**Objetivo:** Informar ao usuario que um habito expirou.
+**Arquivo:** ``
 
 ### 🔴 Fase 1: RED (O Teste que Falha)
 
-Teste criado esperando a função `validateStrongPassword`, que ainda não existia.
+Clicar no botão "CHECK-IN" em um habito expirado gera uma resposta de erro que não era tratado.
+![PRINT DO TERMINAL VERMELHO](arquivos/Leonardo/erro_checkin.png)
 
   * **Erro:** `Cannot find module`.
 
@@ -42,25 +43,24 @@ Teste criado esperando a função `validateStrongPassword`, que ainda não exist
 
 ### 🟢 Fase 2: GREEN (Funciona, mas Simples)
 
-Implementação inicial "ingênua" apenas para fazer o teste passar (uso de múltiplos `if`s).
+Implementação inicial "ingênua" apenas para informar o usuario que habito expirou.
+
 
 ```javascript
-function validateStrongPassword(password) {
-  const errors = [];
-  // Implementação procedural simples
-  if (!password) return { isValid: false, errors: ['Senha vazia'] };
-  if (password.length < 8) errors.push('Mínimo de 8 caracteres');
-  if (!/\d/.test(password)) errors.push('Deve conter número');
-  
-  return { isValid: errors.length === 0, errors };
-}
+const res = await checkIn();
+ if (!res) return;
+ if (res.expired) {
+   const msg = 'Este hábito está expirado e não pode ser marcado como concluído.';
+   Alert.alert('Hábito expirado', msg);
+   setFeedback(msg);
+} 
 ```
 
-![PRINT DO TERMINAL VERDE](arquivos/Tiago/TDD_senha_GREEN.png)
+![PRINT DO TERMINAL VERDE](arquivos/Leonardo/expirou.png)
 
 ### 🔵 Fase 3: REFACTOR (Melhoria Arquitetural)
 
-Evolução do código para um padrão mais extensível (Strategy Pattern com lista de regras), facilitando a adição de novas validações futuras sem alterar a lógica principal.
+Criação para ocultar habitos expirados.
 
 ```javascript
 // Lista de regras declarativa
@@ -119,19 +119,33 @@ function validarCamposHabito(titulo, categoria) {
 
 ```javascript
 
-function validarCamposHabito(titulo, categoria) {
-  if (!titulo || titulo.trim() === '') {
-    return { valido: false, erro: 'Título é obrigatório' };
-  }
-  if (titulo.length < 5) {
-    return { valido: false, erro: 'Título deve ter pelo menos 5 caracteres' };
-  }
-  if (!categoria || categoria.trim() === '') {
-    return { valido: false, erro: 'Categoria é obrigatória' };
-  }
-  return { valido: true, erro: null };
-}
+const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) : habits;
 
+
+<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+  <Text style={styles.sectionTitle}>Hábitos em Progresso</Text>
+  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+    <Text style={{ color: '#666' }}>Ocultar expirados</Text>
+    <Switch value={hideExpired} onValueChange={setHideExpired} />
+  </View>
+</View>
+<FlatList
+  data={filteredHabits}
+  keyExtractor={(item) => item.id.toString()}
+  renderItem={({ item }) => (
+    <Pressable onPress={() => handlePressHabit(item.id)}>
+      <View style={{ marginVertical: 8 }}>
+        <HabitoProgresso idd={item.id} titulo={item.name} progresso={item.progress} onView={handlePressHabit} iconName={item.iconName} />
+      </View>
+    </Pressable>
+  )}
+  contentContainerStyle={{ minHeight: 200 }}
+  ListEmptyComponent={
+    <Text style={{ textAlign: "center", marginTop: 10, color: "gray" }}>
+      Nenhum Hábito em Progresso.
+    </Text>
+  }
+/>
 ```
 
 > **[]**
