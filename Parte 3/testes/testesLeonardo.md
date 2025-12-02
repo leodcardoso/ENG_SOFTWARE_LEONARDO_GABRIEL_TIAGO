@@ -269,19 +269,4 @@ Após o *GREEN*, a funcionalidade foi ampliada com:
 -   Melhor UX
 -   Aderência ao princípio Open/Closed
 
-------------------------------------------------------------------------
-
-# 6. Estrutura de Arquivos (Organização do Trabalho)
-
-    📦 projeto
-     ┣ 📁 src
-     │   ┣ 📁 controllers
-     │   ┣ 📁 models
-     │   ┣ 📁 utils
-     │   ┣ 📁 views
-     │   ┗ 📁 services
-     ┣ 📁 tests
-     ┣ 📁 docs
-     ┣ 📁 arquivos
-     ┗── README.md
 
