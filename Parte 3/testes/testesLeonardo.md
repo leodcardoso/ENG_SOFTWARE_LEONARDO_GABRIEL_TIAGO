@@ -27,7 +27,7 @@
 
 -----
 
-## 2\. TDD 1: FeedBack Habito expirado (Autenticação)
+## 2\. TDD 1: FeedBack Habito expirado
 
 **Objetivo:** Informar ao usuario que um habito expirou.
 **Arquivo:** ``
