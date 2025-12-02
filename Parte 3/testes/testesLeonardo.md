@@ -97,8 +97,6 @@ const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) 
 
 > **[]**
 ## 2\. TDD 2: Lista de amigos (Teste automatizados)
-![Uploading image.png…]()
-
 
 
 Os testes automatizados seguem os casos descritos em [descrição dos testes](../docs/testeLeonardo.md)
@@ -118,16 +116,26 @@ Implementação inicial "ingênua" apenas para informar o usuario que habito exp
 
 
 ```javascript
-const res = await checkIn();
- if (!res) return;
- if (res.expired) {
-   const msg = 'Este hábito está expirado e não pode ser marcado como concluído.';
-   Alert.alert('Hábito expirado', msg);
-   setFeedback(msg);
-} 
+// Cenário 2: Usuário destino não existe
+  if (!estado.usuarioExiste) {
+    return { status: 404, mensagem: 'Usuário não encontrado' };
+  }
+
+  // Cenário 3: Solicitação já enviada
+  if (estado.jaEnviou) {
+    return { status: 409, mensagem: 'Solicitação já enviada' };
+  }
+
+  // Cenário 4: Usuários já são amigos
+  if (estado.jaAmigo) {
+    return { status: 400, mensagem: 'Usuários já são amigos' };
+  }
+
+  // Cenário 1: Sucesso
+  return { status: 200, mensagem: 'Solicitação enviada com sucesso' };
 ```
 
-![PRINT DO TERMINAL VERDE](arquivos/Leonardo/expirou.png)
+![PRINT DO TERMINAL VERDE](arquivos/Leonardo/passou.png)
 
 ### 🔵 Fase 3: REFACTOR (Melhoria Arquitetural e integração de funcionalidade antiga com uma nova)
 
