@@ -3,8 +3,9 @@
 
 ### 1.2. Refatoração da tela principal (`MainScreen.tsx`)
 
-  * **Problema 1:** Botão "VISUALIZAR HABITO" não faz nadaa
+  * **Problema 1:** Botão "VISUALIZAR HABITO" não faz nada
   * **Solução:** Apenas a remoção dele já que ao clicar em qualquer lugar do card ja abre a visualização do habito.
+  * 
   **Problema 2:** Icons de categoria não aparecem nos cards.
   * **Solução:** Adicionar os Icons na tela principal.
 
