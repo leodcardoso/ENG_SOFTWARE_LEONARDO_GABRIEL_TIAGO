@@ -96,8 +96,13 @@ const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) 
 
 
 > **[]**
-![PRINT DO CÓDIGO REFATORADO E TESTE VERDE](arquivos/Tiago/habitController.png)
-![PRINT TESTE VERDE](arquivos/Tiago/TDD_habitoId_GREEN.png)
+## 2\. TDD 2: Lista de amigos (Teste automatizados)
+Os testes automatizados seguem os casos descritos em ![descrição dos testes](../docs/testeLeonardo.md)
+Para isso foram criados os arquivos ![descrição dos testes](../src/utils/FriendRequestService.js) e ![descrição dos testes](../src/testes/Leonardo/sendFriendRequest.test.js)
+
+
+
+
 
 -----
 
