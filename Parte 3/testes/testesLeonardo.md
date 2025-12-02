@@ -103,7 +103,7 @@ Alem disso há verificação de erros na filtragem para verificar se está desca
 
 
 Os testes automatizados seguem os casos descritos em [descrição dos testes](../docs/testeLeonardo.md)
-Para isso foram criados os arquivos de [validação](../src/utils/FriendRequestService.js) e de [casos de teste](../src/testes/Leonardo/sendFriendRequest.test.js)
+Para isso foram criados os arquivos de [validação](../../Parte2/src/utils/FriendRequestService.js) e de [casos de teste](../src/testes/Leonardo/sendFriendRequest.test.js)
 
 **Objetivo:** Informar ao usuario que um habito expirou.
 **Arquivo:** ``
