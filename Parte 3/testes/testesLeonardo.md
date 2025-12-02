@@ -97,9 +97,72 @@ const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) 
 
 > **[]**
 ## 2\. TDD 2: Lista de amigos (Teste automatizados)
+![Uploading image.png…]()
+
+
+
 Os testes automatizados seguem os casos descritos em [descrição dos testes](../docs/testeLeonardo.md)
 Para isso foram criados os arquivos de [validação](../src/utils/FriendRequestService.js) e de [casos de teste](../src/testes/Leonardo/sendFriendRequest.test.js)
 
+**Objetivo:** Informar ao usuario que um habito expirou.
+**Arquivo:** ``
+
+### 🔴 Fase 1: RED (O Teste que Falha)
+
+Não havia função de validação de dos casos de amizade
+![PRINT DO TERMINAL VERMELHO](arquivos/Leonardo/RED.png)
+
+### 🟢 Fase 2: GREEN (Funciona, mas Simples)
+
+Implementação inicial "ingênua" apenas para informar o usuario que habito expirou.
+
+
+```javascript
+const res = await checkIn();
+ if (!res) return;
+ if (res.expired) {
+   const msg = 'Este hábito está expirado e não pode ser marcado como concluído.';
+   Alert.alert('Hábito expirado', msg);
+   setFeedback(msg);
+} 
+```
+
+![PRINT DO TERMINAL VERDE](arquivos/Leonardo/expirou.png)
+
+### 🔵 Fase 3: REFACTOR (Melhoria Arquitetural e integração de funcionalidade antiga com uma nova)
+
+Criação para ocultar habitos expirados.
+
+```javascript
+
+const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) : habits;
+
+
+<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+  <Text style={styles.sectionTitle}>Hábitos em Progresso</Text>
+  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+    <Text style={{ color: '#666' }}>Ocultar expirados</Text>
+    <Switch value={hideExpired} onValueChange={setHideExpired} />
+  </View>
+</View>
+<FlatList
+  data={filteredHabits}
+  keyExtractor={(item) => item.id.toString()}
+  renderItem={({ item }) => (
+    <Pressable onPress={() => handlePressHabit(item.id)}>
+      <View style={{ marginVertical: 8 }}>
+        <HabitoProgresso idd={item.id} titulo={item.name} progresso={item.progress} onView={handlePressHabit} iconName={item.iconName} />
+      </View>
+    </Pressable>
+  )}
+  contentContainerStyle={{ minHeight: 200 }}
+  ListEmptyComponent={
+    <Text style={{ textAlign: "center", marginTop: 10, color: "gray" }}>
+      Nenhum Hábito em Progresso.
+    </Text>
+  }
+/>
+```
 ```javascript
 
   // Cenário 2: Usuário destino não existe
