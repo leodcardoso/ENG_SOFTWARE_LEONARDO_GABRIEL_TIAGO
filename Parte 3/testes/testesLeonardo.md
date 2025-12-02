@@ -98,10 +98,33 @@ const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) 
 > **[]**
 ## 2\. TDD 2: Lista de amigos (Teste automatizados)
 Os testes automatizados seguem os casos descritos em [descrição dos testes](../docs/testeLeonardo.md)
-Para isso foram criados os arquivos [descrição dos testes](../src/utils/FriendRequestService.js) e [descrição dos testes](../src/testes/Leonardo/sendFriendRequest.test.js)
+Para isso foram criados os arquivos de [validação](../src/utils/FriendRequestService.js) e de [casos de teste](../src/testes/Leonardo/sendFriendRequest.test.js)
+
+```javascript
+
+  // Cenário 2: Usuário destino não existe
+  if (!estado.usuarioExiste) {
+    return { status: 404, mensagem: 'Usuário não encontrado' };
+  }
+
+  // Cenário 3: Solicitação já enviada
+  if (estado.jaEnviou) {
+    return { status: 409, mensagem: 'Solicitação já enviada' };
+  }
+
+  // Cenário 4: Usuários já são amigos
+  if (estado.jaAmigo) {
+    return { status: 400, mensagem: 'Usuários já são amigos' };
+  }
+
+  // Cenário 1: Sucesso
+  return { status: 200, mensagem: 'Solicitação enviada com sucesso' };
 
 
 
+```
+
+![PRINT DO TERMINAL VERDE](arquivos/Leonardo/resposta_testes.png)
 
 
 -----
