@@ -37,7 +37,6 @@
 Clicar no botão "CHECK-IN" em um habito expirado gera uma resposta de erro que não era tratado.
 ![PRINT DO TERMINAL VERMELHO](arquivos/Leonardo/erro_checkin.png)
 
-  * **Erro:** `Cannot find module`.
 
 ![PRINT DO TERMINAL VERMELHO](arquivos/Tiago/TDD_senha_RED.png)
 
@@ -61,61 +60,6 @@ const res = await checkIn();
 ### 🔵 Fase 3: REFACTOR (Melhoria Arquitetural)
 
 Criação para ocultar habitos expirados.
-
-```javascript
-// Lista de regras declarativa
-const rules = [
-  { test: (pwd) => pwd.length >= 8, message: 'Mínimo de 8 caracteres' },
-  { test: (pwd) => /\d/.test(pwd), message: 'Deve conter número' }
-];
-
-function validateStrongPassword(password) {
-  if (!password) return { isValid: false, errors: ['Senha vazia'] };
-
-  // Programação funcional: Filtra regras violadas
-  const errors = rules
-    .filter(rule => !rule.test(password))
-    .map(rule => rule.message);
-
-  return { isValid: errors.length === 0, errors };
-}
-```
-
-![PRINT DO CÓDIGO REFATORADO](arquivos/Tiago/passwordValidator.png)
-
------
-
-## 3\. TDD 2: Validação de Hábito (Core)
-
-**Objetivo:** Garantir integridade de dados na criação de hábitos.
-**Arquivo:** `src/utils/tiago/habitValidator.js`
-
-### 🔴 Fase 1: RED
-
-Teste criado exigindo validação de título (min 5 chars) e categoria.
-
-![PRINT DO TERMINAL VERMELHO](arquivos/Tiago/TDD_habitoId_RED.png)
-
-### 🟢 Fase 2: GREEN
-
-Implementação da lógica de validação.
-
-```javascript
-function validarCamposHabito(titulo, categoria) {
-  if (!titulo || titulo.length < 5) {
-    return { valido: false, erro: 'Título inválido (min 5 chars)' };
-  }
-  if (!categoria) {
-    return { valido: false, erro: 'Categoria obrigatória' };
-  }
-  return { valido: true, erro: null };
-}
-```
-
-![PRINT DO TERMINAL VERDE](arquivos/Tiago/TDD_habitoId_GREEN.png)
-
-### 🔵 Fase 3: REFACTOR (Padronização de Interface)
-**Melhoria:** O código foi refatorado para retornar `{ isValid, errors: [] }`, padronizando a comunicação com o Frontend e alinhando com a estrutura do Validador de Senha.
 
 ```javascript
 
@@ -147,6 +91,9 @@ const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) 
   }
 />
 ```
+
+
+
 
 > **[]**
 ![PRINT DO CÓDIGO REFATORADO E TESTE VERDE](arquivos/Tiago/habitController.png)
