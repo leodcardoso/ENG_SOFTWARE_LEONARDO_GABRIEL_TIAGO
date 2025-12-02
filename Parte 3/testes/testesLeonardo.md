@@ -37,9 +37,6 @@
 Clicar no botão "CHECK-IN" em um habito expirado gera uma resposta de erro que não era tratado.
 ![PRINT DO TERMINAL VERMELHO](arquivos/Leonardo/erro_checkin.png)
 
-
-![PRINT DO TERMINAL VERMELHO](arquivos/Tiago/TDD_senha_RED.png)
-
 ### 🟢 Fase 2: GREEN (Funciona, mas Simples)
 
 Implementação inicial "ingênua" apenas para informar o usuario que habito expirou.
@@ -93,7 +90,7 @@ const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) 
 ```
 
 
-
+![PRINT DO TERMINAL VERDE](arquivos/Leonardo/ocultar.png)
 
 > **[]**
 ![PRINT DO CÓDIGO REFATORADO E TESTE VERDE](arquivos/Tiago/habitController.png)
