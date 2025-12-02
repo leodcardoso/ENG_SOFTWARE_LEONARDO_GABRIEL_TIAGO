@@ -27,7 +27,7 @@
 Alem das alterações citadas acima diveros arquivos como view, model, control, habit.ts dentre outros tiveram que ser alterados para salvar o icon
 -----
 
-## 2\. TDD 1: FeedBack Habito expirado
+## 2\. TDD 1: FeedBack Habito expirado (NOVO)
 
 **Objetivo:** Informar ao usuario que um habito expirou.
 **Arquivo:** ``
@@ -99,7 +99,7 @@ Alem disso há verificação de erros automaticos na filtragem para verificar se
 
 
 > **[]**
-## 2\. TDD 2: Lista de amigos (Teste automatizados)
+## 2\. TDD 2: Lista de amigos (Teste automatizados de uma funcinalidade do trabalho 2)
 
 
 Os testes automatizados seguem os casos descritos em [descrição dos testes](../docs/testeLeonardo.md)
