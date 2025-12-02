@@ -1,42 +1,22 @@
-import { jwtDecode } from "jwt-decode";
 import { Challenge } from "../models/Challenge";
 import RankingModel from "../models/Ranking";
+import { HABIT_CATEGORIES } from "../models/HabitoCategoria";
 
-interface CustomJwtPayload {
-  userId?: string;
-  id?: string;
-  sub?: string;
-  // adicione outros campos se precisar
-}
-interface JwtPayload {
-  userId: string;
-  email: string;
-  role: string;
-}
 export const challengeService = {
-  async getByToken(token: string): Promise<Challenge[]> {
+  async getByToken(token: string): Promise<(Challenge & { iconName?: string; progress?: number })[]> {
     if (!token || token.trim() === "") {
-      throw new Error("Token vazio — impossível decodificar");
+      throw new Error("Token vazio — impossível buscar desafios");
     }
-    console.log("antes", token);
-    // decodifica o token JWT
-    const decoded = jwtDecode<JwtPayload>(token); // .replace(/^Bearer\s+/i, "")
-    console.log("decoded", decoded);
-    // tenta extrair o ID do usuário
-    const userId = decoded.userId;
-    if (!userId) throw new Error("Token inválido ou sem userId");
 
-    // faz a requisição passando o ID como query param ou header
-    const response = await fetch(
-      `http://localhost:3000/challenges?userId=${userId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const authHeader = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
+
+    const response = await fetch(`http://localhost:3000/challenges`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authHeader,
+      },
+    });
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -44,8 +24,16 @@ export const challengeService = {
     }
 
     const data = await response.json();
-    console.log("data2", data);
-    return Array.isArray(data.data) ? data.data : [];
+    const items = Array.isArray(data.data) ? data.data : [];
+
+    return items.map((ch: any) => {
+      const found = HABIT_CATEGORIES.find((c) => c.id === ch.category || c.title === ch.category);
+      return {
+        ...ch,
+        iconName: found?.iconName ?? "flag-outline",
+        progress: typeof ch.progress === "number" ? ch.progress : 0,
+      } as Challenge & { iconName?: string; progress?: number };
+    });
   },
 
 

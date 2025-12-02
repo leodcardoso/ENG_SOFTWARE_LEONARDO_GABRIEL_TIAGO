@@ -18,11 +18,26 @@ export function useHabitDetailViewModel(token?: string | null, habitId?: string)
       setLoading(false);
     }
   }
-  async function checkIn(){
-    if (!habitId || !token) return;
+  // Return a structured result so UI can react without uncaught exceptions
+  async function checkIn() : Promise<{ success: boolean; expired?: boolean; message?: string; data?: HabitModel } | undefined> {
+    if (!habitId || !token) return { success: false, message: 'Missing token or habitId' };
     try {
       const data = await HabitService.setCheckIn(token, habitId);
-    } finally {
+      return { success: true, data };
+    } catch (err: any) {
+      const raw = err?.message ?? String(err);
+      // If backend returned JSON string, try to parse it
+      let message = raw;
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object' && parsed.message) message = parsed.message;
+      } catch (e) {
+        // not JSON
+      }
+      if (typeof message === 'string' && message.includes('Hábito expirado')) {
+        return { success: false, expired: true, message };
+      }
+      return { success: false, message };
     }
   }
   useEffect(() => {

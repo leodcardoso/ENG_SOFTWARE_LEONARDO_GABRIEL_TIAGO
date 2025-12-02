@@ -1,4 +1,5 @@
 import HabitModel, { IHabit } from '../models/Habit';
+import { HABIT_CATEGORIES } from '../models/HabitoCategoria';
 
 const API_URL = 'http://localhost:3000'; // substitua pela URL real da sua API
 
@@ -21,14 +22,24 @@ export const HabitService = {
     const rawData = (await response.json()).data;
 
     // 🔄 Converter o retorno em IHabit[]
-    const data: IHabit[] = rawData.map((item: any) => ({
-      id: item.id,
-      name: item.title ?? "Sem título",
-      description: item.description ?? "",
-      frequency: item.category ?? "Diário", // ou ajuste conforme sua regra
-      streak: item.points ?? 0, // se points for usado como sequência
-      progress: item.active ? 50 : 100, // exemplo: 50% se ativo, 100% se concluído
-    }));
+    const data: IHabit[] = rawData.map((item: any) => {
+      const categoryId = item.category;
+      // backend might store category as id or title, so try matching both
+      const category = HABIT_CATEGORIES.find(
+        (c) => c.id === categoryId || c.title === categoryId || String(c.id) === String(categoryId)
+      );
+      return {
+        id: item.id,
+        name: item.title ?? "Sem título",
+        description: item.description ?? "",
+        frequency: item.category ?? "Diário",
+        streak: item.points ?? 0,
+        progress: item.active ? 0.5 : 1, // keep previous semantics but normalized [0-1]
+        iconName: category?.iconName || undefined,
+        is_expired: item.is_expired ?? false,
+        expiration_date: item.expiration_date ?? null,
+      } as IHabit;
+    });
     return data;
   },
 
@@ -48,8 +59,16 @@ export const HabitService = {
     }
 
     const data = (await response.json()).data;
-    console.log("d10", data);
-    return new HabitModel({id:data.id, name:data.title, description:data.description, streak:data.updated_at});
+    const category = HABIT_CATEGORIES.find(c => c.id === data.category);
+    return new HabitModel({
+      id: data.id,
+      name: data.title,
+      description: data.description,
+      streak: data.updated_at,
+      iconName: category?.iconName,
+      is_expired: data.is_expired ?? false,
+      expiration_date: data.expiration_date ?? null,
+    });
   },
 
 
@@ -64,7 +83,18 @@ export const HabitService = {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(errorText || 'Erro ao dar checkin.');
+      // Try to parse JSON error body like { success:false, message: 'Hábito expirado' }
+      let parsedMessage = errorText;
+      try {
+        const parsed = JSON.parse(errorText);
+        if (parsed && typeof parsed === 'object') {
+          if (parsed.message) parsedMessage = parsed.message;
+          else if (parsed.error) parsedMessage = parsed.error;
+        }
+      } catch (e) {
+        // not JSON, keep raw text
+      }
+      throw new Error(parsedMessage || 'Erro ao dar checkin.');
     }
 
     const data: IHabit = await response.json();

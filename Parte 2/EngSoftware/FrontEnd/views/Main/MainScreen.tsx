@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { Switch } from 'react-native';
 
 import { useHabitListViewModel } from "../../viewmodels/useHabitListViewModel";
 import { useUserViewModel } from "../../viewmodels/ProfileViewModel";
@@ -76,6 +77,9 @@ export default function MainScreen() {
 
   // Call token-dependent hooks unconditionally so hook order stays stable across renders.
   // These hooks themselves guard side-effects based on the token value.
+  // UI state: whether to hide expired habits
+  const [hideExpired, setHideExpired] = useState(false);
+
   const { user } = useUserViewModel(token);
   console.log("t", token);
   const { habits, loading } = useHabitListViewModel(token);
@@ -101,6 +105,9 @@ export default function MainScreen() {
   }
 
   // ✅ hooks are already called above; continue rendering
+
+  // compute filtered list
+  const filteredHabits = hideExpired ? habits.filter(h => !(h as any).is_expired) : habits;
 
   if (loading || loading2)
     return (
@@ -165,10 +172,9 @@ const handleGoToAddFriends = () => {
         renderItem={({ item }) => (
             <Pressable onPress={() => handlePressChallenge(item.id)}>
             <View style={{ marginVertical: 8 }}>
-              <HabitoProgresso idd={item.id} titulo={item.title} progresso={0} />
+              <HabitoProgresso idd={item.id} titulo={item.title || item.name} progresso={item.progress ?? 0} onView={handlePressChallenge} iconName={(item as any).iconName} />
             </View>
           </Pressable>
-        
         )}
         contentContainerStyle={{ minHeight: 200 }}
         ListEmptyComponent={
@@ -181,14 +187,20 @@ const handleGoToAddFriends = () => {
       />
 
       {/* 🔄 Hábitos em progresso */}
-      <Text style={styles.sectionTitle}>Hábitos em Progresso</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={styles.sectionTitle}>Hábitos em Progresso</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <Text style={{ color: '#666' }}>Ocultar expirados</Text>
+          <Switch value={hideExpired} onValueChange={setHideExpired} />
+        </View>
+      </View>
       <FlatList
-        data={habits}
+        data={filteredHabits}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Pressable onPress={() => handlePressHabit(item.id)}>
             <View style={{ marginVertical: 8 }}>
-              <HabitoProgresso idd={item.id} titulo={item.name} progresso={item.progress} />
+              <HabitoProgresso idd={item.id} titulo={item.name} progresso={item.progress} onView={handlePressHabit} iconName={item.iconName} />
             </View>
           </Pressable>
         )}

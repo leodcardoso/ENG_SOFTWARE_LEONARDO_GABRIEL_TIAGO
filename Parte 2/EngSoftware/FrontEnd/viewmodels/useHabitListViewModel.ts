@@ -13,6 +13,7 @@ export function useHabitListViewModel(token?: string | null) {
     try {
       const data = await HabitService.getAllHabits(token);
       setHabits(data);
+      console.log('Loaded habits:', data);
     } finally {
       setLoading(false);
     }

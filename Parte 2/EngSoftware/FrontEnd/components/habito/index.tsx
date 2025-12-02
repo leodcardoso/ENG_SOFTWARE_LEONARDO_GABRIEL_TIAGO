@@ -2,12 +2,14 @@ import { TouchableOpacity, Text, ViewProps, View, Button} from "react-native"
 import {styles} from "./habitos";
 import { Circle } from "react-native-progress";
 import {router} from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 
 type Props = ViewProps & {
     idd:string;
     titulo: string;
     progresso: number;
+    iconName?: string;
 }
 
 type Props2 = ViewProps & {
@@ -35,15 +37,17 @@ function AbreHabito(idd: string){
 
 
 
-export function HabitoProgresso({idd, titulo, progresso, ... rest}: Props) {
+export function HabitoProgresso({idd, titulo, progresso, iconName, ... rest}: Props) {
     // preciso pegar o titulo e o progresso usando o idd no back
     titulo = idd + " - " + titulo;
 
     if (progresso == 1){
         return (
             <View style={styles.habitCard}>
-                <Button title="Visualizar Habito" onPress={() => {AbreHabito(idd)}}/>
-                <Text>{titulo}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                  <Ionicons name={iconName || (rest as any).iconName || 'book-outline'} size={24} color="#333" />
+                  <Text>{titulo}</Text>
+                </View>
                 <Circle progress={progresso} showsText size={70} formatText={progress => `${Math.round(progresso)}%`} />
                 <Button title="Concluir Habito" onPress={() => {}} />
                 
@@ -52,8 +56,10 @@ export function HabitoProgresso({idd, titulo, progresso, ... rest}: Props) {
     }else{
         return (
             <View style={styles.habitCard}>
-                <Button title="Visualizar Habito" onPress={() => {AbreHabito(idd)}}/>
-                <Text>{titulo}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                  <Ionicons name={iconName || (rest as any).iconName || 'book-outline'} size={24} color="#333" />
+                  <Text>{titulo}</Text>
+                </View>
                 <Circle progress={progresso} showsText size={70} formatText={progress => `${Math.round(progresso)}%`} />
             
             </View>
