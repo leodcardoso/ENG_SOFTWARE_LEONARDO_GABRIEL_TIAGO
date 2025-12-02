@@ -78,3 +78,30 @@ que já é seu amigo.
 `/friends/request`.\
 **Então:** o sistema deve responder com **status 400 (Requisição
 Inválida)** e informar que os usuários já são amigos.
+
+
+## Apêndice C: Cenários de Testes Funcionais
+
+Abaixo estão os cenários de validação para as funcionalidades críticas do sistema, documentando o comportamento esperado.
+
+### 1. Funcionalidade: Autenticação
+**Cenário:** Login com Sucesso
+- **Dado que** existe um usuário cadastrado com email `joao.silva@email.com` e senha válida no banco de dados.
+- **Quando** o usuário envia uma requisição `POST` para `/api/auth/login` com essas credenciais corretas.
+- **Então** o sistema deve retornar status **200 (OK)** e um objeto contendo um **Token JWT** válido para acesso às rotas protegidas.
+
+### 2. Funcionalidade: Gestão de Hábitos
+**Cenário:** Criação de Hábito com Validação
+- **Dado que** o usuário está autenticado com um Token JWT válido.
+- **Quando** envia um `POST` para `/api/habits` com Título, Descrição e Categoria preenchidos corretamente.
+- **Então** o sistema deve persistir o hábito associado ao ID do usuário no banco e retornar status **201 (Created)** com os dados do registro criado.
+
+---
+
+## Apêndice D: Relatório de Cobertura de Testes
+
+Tabela consolidada das funcionalidades verificadas e seus respectivos módulos no Backend.
+
+| Funcionalidade | Arquivos Analisados | Demandas Cobertas |
+| :--- | :--- | :--- |
+| **Gerenciamento de amigos** | `FrontEnd/components/views/Friends/FriendsScreen.tsx`|  Visualização de respostas adequadas para os testes citados acima |
