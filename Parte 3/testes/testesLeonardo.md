@@ -54,7 +54,7 @@ const res = await checkIn();
 
 ![PRINT DO TERMINAL VERDE](arquivos/Leonardo/expirou.png)
 
-### 🔵 Fase 3: REFACTOR (Melhoria Arquitetural)
+### 🔵 Fase 3: REFACTOR (Melhoria Arquitetural e integração de funcionalidade antiga com uma nova)
 
 Criação para ocultar habitos expirados.
 
