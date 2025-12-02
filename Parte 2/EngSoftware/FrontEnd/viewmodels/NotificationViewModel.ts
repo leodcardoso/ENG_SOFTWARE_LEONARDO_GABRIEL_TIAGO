@@ -44,6 +44,31 @@ export function useNotificationViewModel(token: string) {
     [token, loadNotifications]
   );
 
+  const acceptAllNotifications = useCallback(async () => {
+    if (!token) return;
+    try {
+      // Filter pending friend invites
+      const friendInvites = notifications.filter(
+        (n) => n.type === "FRIEND_INVITE" && n.requiresAction && !n.isRead
+      );
+
+      // Use the existing acceptNotification function so behavior (notifications reload,
+      // friendship creation, error handling) remains consistent.
+      for (const invite of friendInvites) {
+        try {
+          await acceptNotification(invite);
+        } catch (err) {
+          console.error("Erro ao aceitar um pedido de amizade (aceitar todos):", err);
+        }
+      }
+
+      // Final reload to ensure UI is in sync
+      await loadNotifications();
+    } catch (error) {
+      console.error("Erro ao aceitar todos os convites:", error);
+    }
+  }, [token, loadNotifications, notifications, acceptNotification]);
+
   const rejectNotification = useCallback(
     async (notification: NotificationModel) => {
       if (!token) return;
@@ -91,6 +116,7 @@ export function useNotificationViewModel(token: string) {
     acceptNotification, 
     rejectNotification, 
     markAsRead,
-    reload: loadNotifications 
+    reload: loadNotifications,
+    acceptAllNotifications,
   };
 }

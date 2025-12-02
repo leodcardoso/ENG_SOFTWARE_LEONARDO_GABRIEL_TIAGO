@@ -146,6 +146,18 @@ export const NotificationService = {
     return response.json();
   },
 
+  async acceptAllFriendRequests(token: string) {
+    const response = await fetch(`http://localhost:3000/friend/status/accept-all`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+    return response.json();
+  },
+
   async acceptChallengeInvite(token: string, inviteId: string) {
     //                            http://localhost:3000/challenges/invite/13/status
     const response = await fetch(`http://localhost:3000/challenges/invite/${inviteId}/status`, {

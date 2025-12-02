@@ -16,8 +16,10 @@ export default function NotificationScreen() {
   const [loadingToken, setLoadingToken] = useState(true);
 
   // ✅ Hook SEMPRE é chamado (mesmo antes do token existir)
-  const { notifications, loading, acceptNotification, rejectNotification, markAsRead, reload } =
+  const { notifications, loading, acceptNotification, rejectNotification, markAsRead, reload, acceptAllNotifications } =
     useNotificationViewModel(token ?? "");
+
+  const [acceptingAll, setAcceptingAll] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -153,6 +155,36 @@ export default function NotificationScreen() {
       <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 16 }}>
         Notificações
       </Text>
+
+      {/* Button to accept all pending friend requests */}
+      <View style={{ flexDirection: "row", justifyContent: "flex-end", marginBottom: 12 }}>
+        <TouchableOpacity
+          disabled={acceptingAll || notifications.filter(n => n.type === 'FRIEND_INVITE' && n.requiresAction && !n.isRead).length === 0}
+          onPress={async () => {
+            try {
+              setAcceptingAll(true);
+              await acceptAllNotifications();
+            } catch (err) {
+              console.error('Erro ao aceitar todos:', err);
+            } finally {
+              setAcceptingAll(false);
+            }
+          }}
+          style={{
+            backgroundColor: "#4CAF50",
+            paddingVertical: 8,
+            paddingHorizontal: 12,
+            borderRadius: 6,
+            opacity: acceptingAll ? 0.7 : 1,
+          }}
+        >
+          {acceptingAll ? (
+            <Text style={{ color: "#fff", fontWeight: "bold" }}>Aceitando...</Text>
+          ) : (
+            <Text style={{ color: "#fff", fontWeight: "bold" }}>Aceitar todos</Text>
+          )}
+        </TouchableOpacity>
+      </View>
 
       <FlatList
         data={notifications}
