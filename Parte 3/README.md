@@ -60,7 +60,7 @@ Este diretório contém os entregáveis referentes à **Terceira Entrega** da di
 - **✅ Validação de ID:** parseInt com verificação NaN e valores negativos
 - **✅ Tratamento de Estados:** Códigos HTTP específicos (404, 400, 500)
 - **✅ Validação de Categoria:** Integração com categoryValidator
-- 
+
 #### Melhorias na Visualização
 - **✅ Remoção/Modificação de botão para visualizar que não funcionavaa.
 - **✅ Icon não era exibido anteriormente nos habitos.
